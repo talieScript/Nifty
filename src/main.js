@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import App from './App.vue'
-// import '@/styles/style.css';
+import Vue from 'vue';
+import App from './App.vue';
 import router from '@/router.ts';
+import './styles/css/tailwind.css'
 
 Vue.config.productionTip = false
 
