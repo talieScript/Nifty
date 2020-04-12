@@ -2,10 +2,10 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router.ts';
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
-import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer } from 'vue-material/dist/components'
+import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent } from 'vue-material/dist/components'
 
 Vue.use(MdApp)
+Vue.use(MdContent)
 Vue.use(MdTabs)
 Vue.use(MdIcon)
 Vue.use(MdToolbar)
