@@ -7,7 +7,8 @@
             <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
               <md-icon>menu</md-icon>
             </md-button>
-            <span class="md-title">Nifty</span>
+            <img class="logo" src="./assets/nifty-logo.svg" alt="nifty logo">
+            <span class="md-headline">Nifty</span>
             <md-tabs class="md-primary">
               <md-tab id="tab-home" md-label="Home"></md-tab>
               <md-tab id="tab-pages" md-label="Pages"></md-tab>
@@ -24,9 +25,7 @@
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
-        <md-toolbar class="md-transparent" md-elevation="0">
-          Navigation
-        </md-toolbar>
+
       </md-app-drawer>
 
       <md-app-content>
@@ -69,6 +68,10 @@ export default {
 .md-toolbar-row, .md-toolbar, .md-tabs-navigation {
   min-height: 0 !important;
   // background-color: #2C3D50 !important;
+}
+
+.logo {
+  height: 35px !important;
 }
 
 /* .contact-btn {
