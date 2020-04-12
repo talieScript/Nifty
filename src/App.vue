@@ -10,15 +10,19 @@
             <img class="logo" src="./assets/nifty-logo.svg" alt="nifty logo">
             <span class="md-headline">Nifty</span>
             <md-tabs class="md-primary">
-              <md-tab id="tab-home" md-label="Home"></md-tab>
-              <md-tab id="tab-pages" md-label="Pages"></md-tab>
-              <md-tab id="tab-posts" md-label="Posts"></md-tab>
-              <md-tab id="tab-favorites" md-label="Favorites"></md-tab>
+              <md-tab id="tab-home" md-label="Home" to="/" exact />
+              <md-tab id="tab-artist" md-label="Artist" to="/artist" />
+              <md-tab id="tab-collections" md-label="Collections" to="/collections">
+                <md-list class="md-primary">
+                  <md-list-item id="tab-collections-1" md-label="collections 1" to="/collection/1">collection 1</md-list-item>
+                  <md-list-item id="tab-collections-2" md-label="collections 2" to="/collections/2">collection 2</md-list-item>
+                </md-list>
+              </md-tab>
             </md-tabs>
           </div>
           <div class="md-toolbar-section-end">
             <md-tabs class="md-primary">
-              <md-tab id="tab-home" md-label="Contact"></md-tab>
+              <md-tab id="tab-contact" md-label="Contact" to="/contact" exact/>
             </md-tabs>
           </div>
           </div>
