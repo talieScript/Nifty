@@ -1,37 +1,22 @@
 <template>
   <div id="app">
     <md-app md-waterfall md-mode="fixed">
+      <!-- Main -->
       <md-app-toolbar class="md-large md-dense md-primary">
-        <div class="md-toolbar-row">
-          <div class="md-toolbar-section-start">
-            <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
-              <md-icon>menu</md-icon>
-            </md-button>
-            <img class="logo" src="./assets/nifty-logo.svg" alt="nifty logo">
-            <span class="md-headline">Nifty</span>
-            <md-tabs class="md-primary">
-              <md-tab id="tab-home" md-label="Home" to="/" exact />
-              <md-tab id="tab-artist" md-label="Artist" to="/artist" />
-              <md-tab id="tab-collections" md-label="Collections" to="/collections">
-                <md-list class="md-primary">
-                  <md-list-item id="tab-collections-1" md-label="collections 1" to="/collection/1">collection 1</md-list-item>
-                  <md-list-item id="tab-collections-2" md-label="collections 2" to="/collections/2">collection 2</md-list-item>
-                </md-list>
-              </md-tab>
-            </md-tabs>
-          </div>
-          <div class="md-toolbar-section-end">
-            <md-tabs class="md-primary">
-              <md-tab id="tab-contact" md-label="Contact" to="/contact" exact/>
-            </md-tabs>
-          </div>
-          </div>
+        <main-nav
+          @showCollections="changeCollectionsTabs"
+          @drawVisible="drawVisible = !drawVisible"
+        />
+
+        <!-- Collections tabs -->
+        <collections v-if="collectionTabs" />
+
       </md-app-toolbar>
+       <!-- Phone navigation  -->
+        <md-app-drawer :md-active.sync="drawVisible"></md-app-drawer>
 
-      <md-app-drawer :md-active.sync="menuVisible">
 
-      </md-app-drawer>
-
+      <!-- Page Content -->
       <md-app-content>
          <router-view></router-view>
       </md-app-content>
@@ -40,17 +25,26 @@
 </template>
 
 <script>
+import MainNav from './components/Navigation/MainNav.vue';
+import Collections from './components/Navigation/Collections.vue';
 
 export default {
   name: 'App',
   data() {
     return {
-      menuVisible: false,
+      drawVisible: false,
+      collectionTabs: false,
     }
   },
   components: {
-
-  }
+    MainNav,
+    Collections,
+  },
+  methods: {
+    changeCollectionsTabs(value) {
+      this.collectionTabs = value;
+    }
+  },
 }
 </script>
 
@@ -72,6 +66,10 @@ export default {
 .md-toolbar-row, .md-toolbar, .md-tabs-navigation {
   min-height: 0 !important;
   // background-color: #2C3D50 !important;
+}
+
+#tab-collections {
+  position: absolute;
 }
 
 .logo {

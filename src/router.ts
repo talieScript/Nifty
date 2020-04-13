@@ -8,14 +8,12 @@ function loadView(view) {
 }
 
 const router = new Router({
+    mode: 'history',
     routes: [
         {
-            path: '',
+            path: '/',
             name: 'home',
             component: loadView('Home'),
-            meta: {
-                authenticated: true,
-            },
         },
     ]
 })
