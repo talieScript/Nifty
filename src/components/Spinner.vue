@@ -1,18 +1,22 @@
 <template>
-  <div class="lds-default">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
+    <div class="loading-container">
+        <p>Please wait a moment</p>
+        <div class="lds-default">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
 </template>
 
 <script lang="ts">
@@ -21,7 +25,18 @@ import Vue from "vue";
 export default Vue.extend({});
 </script>
 
-<style lang="scss"> scoped>
+<style lang="scss" scoped>
+.loading-container {
+    position: absolute;
+    top: 40vh;
+    left: 50vw;
+    transform: translate(-50px, -50px);
+    width: 100px;
+    height: 100px;
+    p {
+        color: grey;
+    }
+}
 .lds-default {
   display: inline-block;
   position: relative;
