@@ -1,9 +1,10 @@
 <template>
-    <md-app-toolbar class="md-large md-dense md-primary">
-        <md-tabs md-sync-route class="md-primary" @click.native="changed">
-            <md-tab id="tab-home" md-label="Home" to="/" exact />
-        </md-tabs>
-    </md-app-toolbar>
+    <md-tabs md-sync-route class="md-primary" @click.native="changed">
+        <md-tab id="tab-home" md-label="Home" to="/" exact />
+        <md-tab id="tab-pages" md-label="Pages"></md-tab>
+        <md-tab id="tab-posts" md-label="Posts"></md-tab>
+        <md-tab id="tab-favorites" md-label="Favorites"></md-tab>
+    </md-tabs>
 </template>
 
 <script lang="ts">

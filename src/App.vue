@@ -1,32 +1,34 @@
 <template>
   <div id="app">
-    <spinner v-if="loading" />
-    <md-app v-else md-waterfall md-mode="fixed">
-      <!-- Main -->
-      <md-app-toolbar class="md-large md-dense md-primary">
-        <main-nav
-          @showCollections="changeCollectionsTabs"
-          @drawVisible="drawVisible = !drawVisible"
-          class="main-tab"
-        />
+    <transition name="fade">
+      <spinner v-if="loading" />
+      <md-app v-else md-waterfall md-mode="fixed-last">
+        <!-- Main -->
+        <md-app-toolbar class="md-large md-dense md-primary">
+          <main-nav
+            @showCollections="changeCollectionsTabs"
+            @drawVisible="drawVisible = !drawVisible"
+            class="main-tab"
+          />
 
-        <!-- Collections tabs -->
-        <transition name="fade">
-          <collections class="collections-tab" v-if="collectionTabs" />
-        </transition>
+          <!-- Collections tabs -->
+          <transition name="fade">
+            <collections class="collections-tab" v-if="collectionTabs" />
+          </transition>
 
-      </md-app-toolbar>
-       <!-- Phone navigation  -->
-        <md-app-drawer :md-active.sync="drawVisible">
-          <draw @close='drawVisible = false' />
-        </md-app-drawer>
+        </md-app-toolbar>
+        <!-- Phone navigation  -->
+          <md-app-drawer :md-active.sync="drawVisible">
+            <draw @close='drawVisible = false' />
+          </md-app-drawer>
 
 
-      <!-- Page Content -->
-      <md-app-content>
-         <router-view></router-view>
-      </md-app-content>
-    </md-app>
+        <!-- Page Content -->
+        <md-app-content>
+          <router-view></router-view>
+        </md-app-content>
+      </md-app>
+    </transition>
   </div>
 </template>
 
@@ -57,6 +59,11 @@ export default {
       this.collectionTabs = value;
     }
   },
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000)
+  }
 }
 </script>
 
@@ -84,10 +91,10 @@ export default {
 
 $tertiary: #F0F3F4;
 
-.slide-enter-active, .fade-leave-active {
+.fade-enter-active, .fade-leave-active {
   transition: opacity .3s;
 }
-.slide-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
 

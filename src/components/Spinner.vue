@@ -22,11 +22,14 @@
 <script lang="ts">
 import Vue from "vue";
 
-export default Vue.extend({});
+export default Vue.extend({
+    name: 'Spinner',
+});
 </script>
 
 <style lang="scss" scoped>
 .loading-container {
+    text-align: center;
     position: absolute;
     top: 40vh;
     left: 50vw;
