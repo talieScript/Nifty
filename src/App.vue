@@ -16,7 +16,9 @@
 
       </md-app-toolbar>
        <!-- Phone navigation  -->
-        <md-app-drawer :md-active.sync="drawVisible"></md-app-drawer>
+        <md-app-drawer :md-active.sync="drawVisible">
+          <draw @close='drawVisible = false' />
+        </md-app-drawer>
 
 
       <!-- Page Content -->
@@ -30,6 +32,8 @@
 <script>
 import MainNav from './components/Navigation/MainNav.vue';
 import Collections from './components/Navigation/Collections.vue';
+import Draw from './components/Navigation/Draw.vue';
+
 
 export default {
   name: 'App',
@@ -42,6 +46,7 @@ export default {
   components: {
     MainNav,
     Collections,
+    Draw,
   },
   methods: {
     changeCollectionsTabs(value) {
