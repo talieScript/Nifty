@@ -44,6 +44,10 @@ export default Vue.extend({
   // background-color: #2C3D50 !important;
 }
 
+.md-headline {
+  margin-left: 10px;
+}
+
 #tab-collections {
   position: absolute;
 }

@@ -6,10 +6,13 @@
         <main-nav
           @showCollections="changeCollectionsTabs"
           @drawVisible="drawVisible = !drawVisible"
+          class="main-tab"
         />
 
         <!-- Collections tabs -->
-        <collections v-if="collectionTabs" />
+        <transition name="fade">
+          <collections class="collections-tab" v-if="collectionTabs" />
+        </transition>
 
       </md-app-toolbar>
        <!-- Phone navigation  -->
@@ -48,6 +51,18 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+  .md-app {
+    height: 100%;
+    font-family: 'Volkhov', serif;
+  }
+
+  #tab-collections {
+    position: absolute;
+  }
+</style>
+
+
 <style lang="scss">
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
 
@@ -58,34 +73,26 @@ export default {
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
-.md-app {
-  height: 100%;
-  font-family: 'Volkhov', serif;
+.slide-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.slide-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
-.md-toolbar-row, .md-toolbar, .md-tabs-navigation {
-  min-height: 0 !important;
-  // background-color: #2C3D50 !important;
+.collections-tab {
+  z-index: 1;
 }
 
-#tab-collections {
-  position: absolute;
+.main-tab {
+  z-index: 2;
 }
 
-.logo {
-  height: 35px !important;
+.md-toolbar {
+    min-height: 0 !important,
 }
 
-/* .contact-btn {
-  he
-} */
 #app {
   height: 100vh;
-  /* font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px; */
 }
 </style>
