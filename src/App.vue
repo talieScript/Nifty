@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <md-app md-waterfall md-mode="fixed">
+    <spinner v-if="loading" />
+    <md-app v-else md-waterfall md-mode="fixed">
       <!-- Main -->
       <md-app-toolbar class="md-large md-dense md-primary">
         <main-nav
@@ -33,6 +34,7 @@
 import MainNav from './components/Navigation/MainNav.vue';
 import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
+import Spinner from './components/Spinner.vue'
 
 
 export default {
@@ -41,12 +43,14 @@ export default {
     return {
       drawVisible: false,
       collectionTabs: false,
+      loading: true,
     }
   },
   components: {
     MainNav,
     Collections,
     Draw,
+    Spinner,
   },
   methods: {
     changeCollectionsTabs(value) {
@@ -78,6 +82,8 @@ export default {
 
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
+$tertiary: #F0F3F4;
+
 .slide-enter-active, .fade-leave-active {
   transition: opacity .3s;
 }
@@ -99,5 +105,6 @@ export default {
 
 #app {
   height: 100vh;
+  background-color: $tertiary;
 }
 </style>
