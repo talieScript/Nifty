@@ -38,12 +38,14 @@ import MainNav from './components/Navigation/MainNav.vue';
 import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
 import Spinner from './components/Spinner.vue'
+import { API } from './API.ts'
 
 
 export default {
   name: 'App',
   data() {
     return {
+      collections: [],
       collectionTabs: this.$route.path.includes('/collections'),
       drawVisible: false,
       loading: true,
@@ -66,6 +68,12 @@ export default {
     }
   },
   methods: {
+    getCollections() {
+      API.get('/collections')
+      .then(res => {
+        this.collections = res.data;
+      })
+    },
     changeCollectionsTabs(value) {
       console.log(value)
       this.collectionTabs = value;
@@ -86,6 +94,7 @@ export default {
     },
   },
   mounted() {
+    this.getCollections();
      window.addEventListener('resize', () => {
        this.debouncedGetWindowWidth()
     })

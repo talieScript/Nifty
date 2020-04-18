@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
+import dotenv from 'dotenv'
 import router from '@/router.ts';
 import 'vue-material/dist/vue-material.min.css'
 import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList } from 'vue-material/dist/components'
 
+dotenv.config()
+
+Vue.use(dotenv)
 Vue.use(MdApp)
 Vue.use(MdContent)
 Vue.use(MdTabs)

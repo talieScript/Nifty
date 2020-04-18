@@ -26,10 +26,10 @@
                     <span class="md-list-item-text">Collections</span>
                 </router-link>
                 <md-list @click="$emit('close')" slot="md-expand">
-                        <md-list-item class="md-inset">World</md-list-item>
-                        <md-list-item class="md-inset">Europe</md-list-item>
-                        <md-list-item class="md-inset">South America</md-list-item>
-                    </md-list>
+                    <md-list-item class="md-inset">World</md-list-item>
+                    <md-list-item class="md-inset">Europe</md-list-item>
+                    <md-list-item class="md-inset">South America</md-list-item>
+                </md-list>
             </md-list-item>
             <md-list-item>
                 <router-link @click="$emit('close')" to='/contact' class="link">
