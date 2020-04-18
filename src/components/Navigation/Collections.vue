@@ -1,5 +1,5 @@
 <template>
-    <md-tabs class="collection-tabs md-primary" @md-changed='changed'>
+    <md-tabs :md-active-tab="active" class="collection-tabs md-primary" @md-changed='active = $event'>
         <template v-for="collection in collections">
             <md-tab
                 v-bind:key="collection"
@@ -33,9 +33,15 @@
                 toKebabCase,
             }
         },
-        methods: {
-            changed(collection) {
-                this.$emit('activeCollectionChange', collection)
+        computed: {
+            active: {
+                get() {
+                    return this.activeCollection;
+                },
+                set(collection) {
+                    console.log(collection);
+                    this.$emit('activeCollectionChange', collection)
+                }
             }
         },
     })
