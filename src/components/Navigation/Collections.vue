@@ -1,11 +1,10 @@
 <template>
-    <md-tabs md-sync-route class="md-primary">
+    <md-tabs class="collection-tabs md-primary" @md-changed='changed'>
         <template v-for="collection in collections">
             <md-tab
                 v-bind:key="collection"
-                :id="`tab-${collection}`"
+                :id="`${toKebabCase(collection)}`"
                 :md-label="collection"
-                :to="`/collections/${toKebabCase(collection)}`"
                 exact
             />
         </template>
@@ -24,23 +23,32 @@
                 type: Array,
                 required: true,
             },
+            activeCollection: {
+                type: String,
+                required: true,
+            }
         },
         data() {
             return {
-                toKebabCase
+                toKebabCase,
             }
         },
-        mounted () {
-            console.log(toKebabCase);
-        },
         methods: {
-            changed(value) {
-                console.log(value)
+            changed(collection) {
+                this.$emit('activeCollectionChange', collection)
             }
         },
     })
 </script>
 
 <style scoped>
+    .collection-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
 
+    ::v-deep .md-tabs-navigation {
+        width: 100%;
+        min-width: 1200px;
+    }
 </style>

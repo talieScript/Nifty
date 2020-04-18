@@ -6,7 +6,7 @@
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
-            @showCollections="changeCollectionsTabs"
+            @showCollections="showCollectionsTabs"
             @drawVisible="drawVisible = !drawVisible"
             class="main-tab"
             :windowWidth="windowWidth"
@@ -14,7 +14,13 @@
 
           <!-- Collections tabs -->
           <transition name="fade">
-            <collections :collections="collectionTitles" class="collections-tab" v-if="collectionTabs && windowWidth > 1000" />
+            <collections
+              @activeCollectionChange="activeCollectionChange"
+              :collections="collectionTitles"
+              :activeCollection="activeCollection"
+              class="collections-tab"
+              v-if="collectionTabs && windowWidth > 1000"
+            />
           </transition>
 
         </md-app-toolbar>
@@ -47,6 +53,7 @@ export default {
     return {
       collections: [],
       collectionTabs: this.$route.path.includes('/collections'),
+      activeCollection: {},
       drawVisible: false,
       loading: true,
       windowWidth: window.innerWidth,
@@ -70,14 +77,11 @@ export default {
     }
   },
   methods: {
-    getCollections() {
-      API.get('/collections')
-      .then(res => {
-        this.collections = res.data;
-      })
+    activeCollectionChange(collection) {
+      this.$router.push(collection);
+      this.activeCollection = collection;
     },
-    changeCollectionsTabs(value) {
-      console.log(value)
+    showCollectionsTabs(value) {
       this.collectionTabs = value;
     },
     debounce(func, wait, immediate) {
@@ -94,6 +98,15 @@ export default {
         if (callNow) func.apply(context, args);
       };
     },
+    getCollections() {
+      this.loading = true;
+      API.get('/collections')
+      .then(res => {
+        this.collections = res.data;
+        this.activeCollection = this.collections[0].Title;
+        this.loading = false;
+      })
+    },
   },
   mounted() {
     this.getCollections();
@@ -103,7 +116,7 @@ export default {
     setTimeout(() => {
       this.loading = false;
     }, 1000)
-  }
+  },
 }
 </script>
 
@@ -150,10 +163,13 @@ $tertiary: #F0F3F4;
 
 .main-tab {
   z-index: 2;
+  padding: 0 10px;
+  box-shadow: 0px 6px 20px -5px rgba(0,0,0,0.33);
 }
 
 .md-toolbar {
-    min-height: 0 !important,
+    min-height: 0 !important;
+    padding: 0 !important;
 }
 
 #app {
