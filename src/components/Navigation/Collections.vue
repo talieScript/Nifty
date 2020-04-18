@@ -1,11 +1,11 @@
 <template>
-    <md-tabs md-sync-route class="md-primary" @click.native="changed">
+    <md-tabs md-sync-route class="md-primary">
         <template v-for="collection in collections">
             <md-tab
                 v-bind:key="collection"
                 :id="`tab-${collection}`"
                 :md-label="collection"
-                :to="`/collections/${collection}`"
+                :to="`/collections/${toKebabCase(collection)}`"
                 exact
             />
         </template>
@@ -14,6 +14,7 @@
 
 <script lang="ts">
     import Vue from 'vue'
+    import { toKebabCase } from '../../utils.js'
 
 
     export default Vue.extend({
@@ -24,8 +25,18 @@
                 required: true,
             },
         },
+        data() {
+            return {
+                toKebabCase
+            }
+        },
         mounted () {
-            console.log(this.collections);
+            console.log(toKebabCase);
+        },
+        methods: {
+            changed(value) {
+                console.log(value)
+            }
         },
     })
 </script>

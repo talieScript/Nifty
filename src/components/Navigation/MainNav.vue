@@ -42,7 +42,6 @@ export default Vue.extend({
         changed() {
             if (this.$router.currentRoute.path === '/collections') {
                 this.$emit('showCollections', true);
-                console.log('here')
             } else {
                 this.$emit('showCollections', false)
             }

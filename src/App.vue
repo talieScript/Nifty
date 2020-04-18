@@ -52,7 +52,6 @@ export default {
       windowWidth: window.innerWidth,
       debouncedGetWindowWidth: this.debounce(() => {
         this.windowWidth = window.innerWidth
-        console.log(this.windowWidth)
       }, 200, false)
     }
   },
@@ -67,7 +66,7 @@ export default {
       return this.data
     },
     collectionTitles() {
-      return this.collections.map(collection => console.log(collection) || collection.Title)
+      return this.collections.map(collection => collection.Title)
     }
   },
   methods: {
