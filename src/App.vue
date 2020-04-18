@@ -17,7 +17,7 @@
             <collections
               @activeCollectionChange="activeCollectionChange"
               :collections="collectionTitles"
-              :activeCollection="activeCollection"
+              :activeCollection="activeCollection.Title"
               class="collections-tab"
               v-if="collectionTabs && windowWidth > 1000"
             />
@@ -28,13 +28,11 @@
           <md-app-drawer  v-if="windowWidth < 1000" class="drawer-menu" :md-active.sync="drawVisible">
             <draw
               :collections="collectionTitles"
-              :activeCollection="activeCollection"
+              :activeCollection="activeCollection.Title"
               @activeCollectionChange="activeCollectionChange"
               @close='drawVisible = false'
             />
           </md-app-drawer>
-
-
         <!-- Page Content -->
         <md-app-content>
           <router-view></router-view>
@@ -50,6 +48,7 @@ import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
 import Spinner from './components/Spinner.vue'
 import { API } from './API.ts'
+ import { toKebabCase } from './utils.js'
 
 
 export default {
@@ -82,10 +81,16 @@ export default {
     }
   },
   methods: {
-    activeCollectionChange(collection) {
-      console.log(collection)
-      this.$router.push(`collections/${collection}`);
-      this.activeCollection = collection;
+    activeCollectionChange(collectionTitle) {
+      this.activeCollection = this.collections.find(
+        collection => toKebabCase(collection.Title) === collectionTitle
+      );
+      if(!this.$router.currentRoute.path.includes(collectionTitle)) {
+        this.$router.push({
+          name: 'collections',
+          params: { name: collectionTitle },
+          props: { activeCollection: this.activeCollection }})
+      }
     },
     showCollectionsTabs(value) {
       this.collectionTabs = value;
@@ -109,7 +114,7 @@ export default {
       API.get('/collections')
       .then(res => {
         this.collections = res.data;
-        this.activeCollection = this.collections[0].Title;
+        this.activeCollection = this.collections[0];
         this.loading = false;
       })
     },

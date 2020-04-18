@@ -15,6 +15,27 @@ const router = new Router({
             name: 'home',
             component: loadView('Home'),
         },
+        {
+            path: '/artist',
+            name: 'artist',
+            component: loadView('Artist'),
+        },
+        {
+            path: '/collections/:name',
+            name: 'collections',
+            component: loadView('Collection'),
+            props: true,
+        },
+        {
+            path: '/',
+            name: 'contact',
+            component: loadView('Contact'),
+        },
+        {
+            path: '*',
+            component: loadView('Home'),
+        }
+
     ]
 })
 

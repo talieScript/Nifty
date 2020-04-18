@@ -1,9 +1,9 @@
 <template>
-    <md-tabs :md-active-tab="active" class="collection-tabs md-primary" @md-changed='active = $event'>
+    <md-tabs :md-active-tab="active.toLowerCase()" class="collection-tabs md-primary" @md-changed='active = $event'>
         <template v-for="collection in collections">
             <md-tab
                 v-bind:key="collection"
-                :id="`${toKebabCase(collection)}`"
+                :id="`${toKebabCase(collection).toLowerCase()}`"
                 :md-label="collection"
                 exact
             />
@@ -36,11 +36,10 @@
         computed: {
             active: {
                 get() {
-                    return this.activeCollection;
+                    return toKebabCase(this.activeCollection);
                 },
                 set(collection) {
-                    console.log(collection);
-                    this.$emit('activeCollectionChange', collection)
+                    this.$emit('activeCollectionChange', toKebabCase(collection))
                 }
             }
         },

@@ -81,7 +81,6 @@
                     return this.activeCollection;
                 },
                 set(collection) {
-                    console.log(collection);
                     this.$emit('activeCollectionChange', collection)
                 }
             }
