@@ -8,6 +8,7 @@
           <main-nav
             @showCollections="showCollectionsTabs"
             @drawVisible="drawVisible = !drawVisible"
+            :activeCollection="activeCollection.Title"
             class="main-tab"
             :windowWidth="windowWidth"
           />
@@ -56,7 +57,7 @@ export default {
   data() {
     return {
       collections: [],
-      collectionTabs: this.$route.path.includes('/collections'),
+      collectionTabs: false,
       activeCollection: {},
       drawVisible: false,
       loading: true,
@@ -114,7 +115,15 @@ export default {
       API.get('/collections')
       .then(res => {
         this.collections = res.data;
-        this.activeCollection = this.collections[0];
+        if(window.location.href.includes('/collections')) {
+          const collectionTitle = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+          this.activeCollection = this.collections.find(collection => {            return collectionTitle === toKebabCase(collection.Title.toLowerCase());
+          });
+          console.log(this.activeCollection);
+          this.collectionTabs = true;
+        } else {
+          this.activeCollection = this.collections[0]
+        }
         this.loading = false;
       })
     },
@@ -124,17 +133,20 @@ export default {
      window.addEventListener('resize', () => {
        this.debouncedGetWindowWidth()
     })
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000)
   },
 }
 </script>
 
 <style lang="scss" scoped>
+  $tertiary: #F0F3F4;
+
   .md-app {
     height: 100%;
     font-family: 'Volkhov', serif;
+  }
+
+  .md-content {
+    background-color: $tertiary !important;
   }
 
   #tab-collections {

@@ -11,7 +11,12 @@
         <md-tabs v-if="windowWidth > 1000" md-sync-route class="md-primary md-layout-item main-tabs" @click.native="changed">
           <md-tab id="tab-home" md-label="Home" to="/" exact />
           <md-tab id="tab-artist" md-label="Artist" to="/artist" exact />
-          <md-tab id="tab-collections" md-label="Collections" to="/collections" />
+          <md-tab
+            id="tab-collections"
+            md-label="Collections"
+            :to="`/collections/${toKebabCase(activeCollection.toLowerCase())}`"
+            @click="changed"
+          />
         </md-tabs>
       </div>
       <div v-if="windowWidth > 1000" class="md-toolbar-section-end">
@@ -24,6 +29,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { toKebabCase } from '../../utils.js'
 
 export default Vue.extend({
     name: 'MainNav',
@@ -32,10 +38,19 @@ export default Vue.extend({
         type: Number,
         requied: true,
       },
+      activeCollection: {
+        type: String,
+        required: true,
+      }
+    },
+    data() {
+      return {
+        toKebabCase
+      }
     },
     methods: {
         changed() {
-            if (this.$router.currentRoute.path === '/collections') {
+            if (this.$router.currentRoute.path.includes('/collections')) {
                 this.$emit('showCollections', true);
             } else {
                 this.$emit('showCollections', false)
