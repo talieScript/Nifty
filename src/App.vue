@@ -44,6 +44,7 @@ export default {
   name: 'App',
   data() {
     return {
+      collectionTabs: this.$route.path.includes('/collections'),
       drawVisible: false,
       loading: true,
       windowWidth: window.innerWidth,
@@ -66,6 +67,7 @@ export default {
   },
   methods: {
     changeCollectionsTabs(value) {
+      console.log(value)
       this.collectionTabs = value;
     },
     debounce(func, wait, immediate) {
