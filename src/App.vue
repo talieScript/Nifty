@@ -92,6 +92,7 @@ export default {
           params: { name: collectionTitle },
           props: { activeCollection: this.activeCollection }})
       }
+      this.collectionTabs = true;
     },
     showCollectionsTabs(value) {
       this.collectionTabs = value;
