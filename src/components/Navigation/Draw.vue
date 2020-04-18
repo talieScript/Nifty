@@ -21,15 +21,23 @@
                 </router-link>
             </md-list-item>
             <md-list-item md-expand :md-expanded.sync="expandCollections">
-                <router-link to='/collections' class="link">
+                <router-link :to="`/collections/${activeCollection}`" class="link">
                     <md-icon>collections</md-icon>
                     <span class="md-list-item-text">Collections</span>
                 </router-link>
                 <md-list @click="$emit('close')" slot="md-expand">
-                        <md-list-item class="md-inset">World</md-list-item>
-                        <md-list-item class="md-inset">Europe</md-list-item>
-                        <md-list-item class="md-inset">South America</md-list-item>
-                    </md-list>
+                    <template
+                        v-for="collection in collections"
+                    >
+                        <md-list-item
+                            :key="collection"
+                            class="md-inset"
+                            @click="active = toKebabCase(collection)"
+                        >
+                            {{ collection }}
+                        </md-list-item>
+                    </template>
+                </md-list>
             </md-list-item>
             <md-list-item>
                 <router-link @click="$emit('close')" to='/contact' class="link">
@@ -44,15 +52,37 @@
 <script lang="ts">
     import Vue from 'vue'
     import Icon from '../Icon.vue'
+    import { toKebabCase } from '../../utils.js'
 
     export default Vue.extend({
         name: 'Draw',
         components: {
             Icon,
         },
+        props: {
+            activeCollection: {
+                type: String,
+                required: true,
+            },
+            collections: {
+                type: Array,
+                required: true,
+            }
+        },
         data() {
             return {
                 expandCollections: false,
+                toKebabCase,
+            }
+        },
+        computed: {
+            active: {
+                get() {
+                    return this.activeCollection;
+                },
+                set(collection) {
+                    this.$emit('activeCollectionChange', collection)
+                }
             }
         },
     })

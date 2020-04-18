@@ -33,16 +33,10 @@ export default Vue.extend({
         requied: true,
       },
     },
-    watch: {
-      windowWidth(val) {
-        console.log(val > 1000);
-      }
-    },
     methods: {
         changed() {
             if (this.$router.currentRoute.path === '/collections') {
                 this.$emit('showCollections', true);
-                console.log('here')
             } else {
                 this.$emit('showCollections', false)
             }
