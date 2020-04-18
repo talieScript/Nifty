@@ -14,12 +14,12 @@
 
           <!-- Collections tabs -->
           <transition name="fade">
-            <collections class="collections-tab" v-if="collectionTabs && windowWidth > 1000" />
+            <collections :collections="collectionTitles" class="collections-tab" v-if="collectionTabs && windowWidth > 1000" />
           </transition>
 
         </md-app-toolbar>
         <!-- Phone navigation  -->
-          <md-app-drawer v-if="windowWidth < 1000" class="drawer-menu" :md-active.sync="drawVisible">
+          <md-app-drawer  v-if="windowWidth < 1000" class="drawer-menu" :md-active.sync="drawVisible">
             <draw @close='drawVisible = false' />
           </md-app-drawer>
 
@@ -65,6 +65,9 @@ export default {
   computed: {
     name() {
       return this.data
+    },
+    collectionTitles() {
+      return this.collections.map(collection => console.log(collection) || collection.Title)
     }
   },
   methods: {
