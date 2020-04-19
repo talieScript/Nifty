@@ -1,47 +1,95 @@
 <template>
-    <div class="swiper-container">
-        <transition name="fade">
+    <div>
+        <div v-if="!loading" class="swiper-container">
             <div class="swiper-wrapper">
-                <div v-if="loading" class="swiper-slide">
-                    <spinner noText />
+                <div
+                    v-for="picture in sliderPics"
+                    :key="picture.id"
+                    class="swiper-slide"
+                    :style="`width: ${getImgWidth(picture.id)}`"
+                >
+                    <img
+                        :id="`img-${picture.id}`"
+                        class="slider-img"
+                        :src="getPicUrl(picture)"
+                    >
+                    <p class="slider-caption">text here</p>
                 </div>
-                <!-- <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div> -->
             </div>
             <!-- Add Arrows -->
-            <div v-if="!loading" class="swiper-button-next"></div>
-            <div v-if="!loading" class="swiper-button-prev"></div>
-        </transition>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    import Spinner from '../components/Spinner.vue'
-    import { API } from './API.ts'
+    import { API, IMAGE_URL } from '../API.ts'
 
     export default Vue.extend({
         name: 'Home',
         components: {
-            Spinner
         },
         data() {
             return {
                 swiper: null,
                 loading: true,
+                data: {},
+                loaded: false,
             }
         },
-        created() {
-            this.swiper = new window.Swiper('.swiper-container', {
-                cssMode: true,
-                navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-                },
-            });
-
-        }
+        methods: {
+            getData() {
+                if(!this.loaded) {
+                    API.get('/home-page')
+                        .then(res => {
+                            this.data = res.data
+                            this.loading = false;
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
+            },
+            getPicUrl(picObj) {
+                const path = picObj.Image.url;
+                return `${IMAGE_URL}${path}`;
+            },
+            getImgWidth(img) {
+                console.log(document.getElementById(`img-${img}`))
+            }
+        },
+        watch: {
+            sliderPics(val) {
+                if(val && !this.loaded) {
+                    console.log(val)
+                    setTimeout(() => {
+                        this.swiper = new window.Swiper('.swiper-container', {
+                            slidesPerView: 'auto',
+                            centeredSlides: true,
+                            spaceBetween: 30,
+                            // Navigation arrows
+                            navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                            autoplay: {
+                                delay: 5000,
+                            },
+                            },
+                        });
+                     }, 10)
+                }
+            }
+        },
+        computed: {
+            sliderPics() {
+                return this.data.slider ? this.data.slider.pictures : null;
+            }
+        },
+        mounted () {
+            this.getData()
+        },
     })
 </script>
 
@@ -49,20 +97,22 @@
     .swiper-container {
         width: 100vw;
         height: 80vh;
+        background-color:  #EEEEEE;
+    }
+    .slider-img {
+        // width: 100%;
+        max-height: 90%;
+        box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
     }
     .swiper-slide {
-        background-color:  #F0F3F4;;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+    }
 
-    }
-    .swiper-button-next, .swiper-button-prev {
-        color:  #F0F3F4;
-    }
+    .slider-caption {
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .3s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
     }
 
 </style>
