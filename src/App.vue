@@ -118,9 +118,9 @@ export default {
         this.collections = res.data;
         if(window.location.href.includes('/collections')) {
           const collectionTitle = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-          this.activeCollection = this.collections.find(collection => {            return collectionTitle === toKebabCase(collection.Title.toLowerCase());
+          this.activeCollection = this.collections.find(collection => {
+            return collectionTitle === toKebabCase(collection.Title.toLowerCase());
           });
-          console.log(this.activeCollection);
           this.collectionTabs = true;
         } else {
           this.activeCollection = this.collections[0]
