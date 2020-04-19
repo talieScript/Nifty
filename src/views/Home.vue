@@ -3,17 +3,24 @@
         <div v-if="!loading" class="swiper-container">
             <div class="swiper-wrapper">
                 <div
-                    v-for="picture in sliderPics"
+                    v-for="(picture, index) in sliderPics"
                     :key="picture.id"
                     class="swiper-slide"
-                    :style="`width: ${getImgWidth(picture.id)}`"
                 >
-                    <img
-                        :id="`img-${picture.id}`"
-                        class="slider-img"
-                        :src="getPicUrl(picture)"
-                    >
-                    <p class="slider-caption">text here</p>
+                    <div class="slider-img-card">
+                        <img
+                            class="slider-img"
+                            :src="getPicUrl(picture)"
+                        >
+                        <transition name="fade">
+                            <p v-if="index + 1 === activeSlide + 1" class="slider-caption">
+                                {{ picture.Title }}
+                                <md-button class="md-dense md-accent">
+                                    See More <md-icon>chevron_right</md-icon>
+                                </md-button>
+                            </p>
+                        </transition>
+                    </div>
                 </div>
             </div>
             <!-- Add Arrows -->
@@ -37,6 +44,7 @@
                 loading: true,
                 data: {},
                 loaded: false,
+                activeSlide: 0
             }
         },
         methods: {
@@ -56,29 +64,28 @@
                 const path = picObj.Image.url;
                 return `${IMAGE_URL}${path}`;
             },
-            getImgWidth(img) {
-                console.log(document.getElementById(`img-${img}`))
-            }
         },
         watch: {
-            sliderPics(val) {
+            async sliderPics(val) {
                 if(val && !this.loaded) {
-                    console.log(val)
                     setTimeout(() => {
                         this.swiper = new window.Swiper('.swiper-container', {
                             slidesPerView: 'auto',
                             centeredSlides: true,
-                            spaceBetween: 30,
-                            // Navigation arrows
                             navigation: {
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                            autoplay: {
-                                delay: 5000,
+                                nextEl: '.swiper-button-next',
+                                prevEl: '.swiper-button-prev',
                             },
+                            autoplay: {
+                                delay: 10000,
                             },
                         });
                      }, 10)
+                    setTimeout(() => {
+                        this.swiper.on('slideChange', () => {
+                            this.activeSlide = this.swiper.realIndex
+                        });
+                    }, 20)
                 }
             }
         },
@@ -100,9 +107,9 @@
         background-color:  #EEEEEE;
     }
     .slider-img {
-        // width: 100%;
-        max-height: 90%;
         box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
+        max-height: 90%;
+
     }
     .swiper-slide {
         display: flex;
@@ -111,8 +118,34 @@
         width: fit-content;
     }
 
-    .slider-caption {
-
+    .swiper-button-next, .swiper-button-prev {
+        color: #2F89A0;
     }
+
+    .slider-caption {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .slider-img-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 95%;
+        padding: 15px;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+     .fade-enter-active {
+        transition-delay: .2s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+    }
+
 
 </style>
