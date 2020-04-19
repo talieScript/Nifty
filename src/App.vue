@@ -129,7 +129,7 @@ export default {
       })
     },
   },
-  mounted() {
+  created() {
     this.getCollections();
      window.addEventListener('resize', () => {
        this.debouncedGetWindowWidth()
@@ -148,6 +148,7 @@ export default {
 
   .md-content {
     background-color: $tertiary !important;
+    padding: 0;
   }
 
   #tab-collections {
