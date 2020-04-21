@@ -2,7 +2,7 @@
   <div id="app">
     <transition name="fade">
       <spinner v-if="loading" />
-      <md-app v-else md-waterfall md-mode="fixed-last">
+      <md-app v-else md-waterfall :md-mode="collectionTabs ? 'fixed-last' : 'fixed'">
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav

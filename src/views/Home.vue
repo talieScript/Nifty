@@ -1,5 +1,10 @@
 <template>
-    <div>
+    <div class="home">
+        <div class="nifty-header">
+            <h1 class="heading">{{data.Heading}}</h1>
+            <p v-html="into"></p>
+        </div>
+        <h3 class="recent-additions">Recent Additions</h3>
         <div v-if="!loading" class="swiper-container">
             <div class="swiper-wrapper">
                 <div
@@ -13,12 +18,14 @@
                             :src="getPicUrl(picture)"
                         >
                         <transition name="fade">
-                            <p v-if="index + 1 === activeSlide + 1" class="slider-caption">
-                                {{ picture.Title }}
+                            <div v-if="index === activeSlide" class="slider-caption">
+                                <p>
+                                    {{ picture.Title }}
+                                </p>
                                 <md-button class="md-dense md-accent">
                                     See More <md-icon>chevron_right</md-icon>
                                 </md-button>
-                            </p>
+                            </div>
                         </transition>
                     </div>
                 </div>
@@ -32,7 +39,9 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { API, IMAGE_URL } from '../API.ts'
+    import { getPicUrl } from '../utils.ts'
+    import { API } from '../API.ts'
+    import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
     export default Vue.extend({
         name: 'Home',
@@ -44,7 +53,8 @@
                 loading: true,
                 data: {},
                 loaded: false,
-                activeSlide: 0
+                activeSlide: 0,
+                getPicUrl
             }
         },
         methods: {
@@ -60,18 +70,18 @@
                         })
                 }
             },
-            getPicUrl(picObj) {
-                const path = picObj.Image.url;
-                return `${IMAGE_URL}${path}`;
-            },
         },
         watch: {
+            into(val) {
+                console.log(val)
+            },
             async sliderPics(val) {
                 if(val && !this.loaded) {
                     setTimeout(() => {
                         this.swiper = new window.Swiper('.swiper-container', {
                             slidesPerView: 'auto',
                             centeredSlides: true,
+                            speed: 1000,
                             navigation: {
                                 nextEl: '.swiper-button-next',
                                 prevEl: '.swiper-button-prev',
@@ -92,7 +102,27 @@
         computed: {
             sliderPics() {
                 return this.data.slider ? this.data.slider.pictures : null;
-            }
+            },
+            into() {
+                if (this.data.Intro){
+                    const splitContent = this.data.Intro.split("\n");
+                    const doc = {
+                        nodeType: 'document',
+                        content: splitContent.map(para => {
+                            return {
+                                nodeType: 'paragraph',
+                                content: [{
+                                    nodeType: 'text',
+                                    value: para,
+                                    marks: []
+                                }]
+                            }
+                        })
+                    }
+                    return documentToHtmlString(doc)
+                }
+                return '';
+            },
         },
         mounted () {
             this.getData()
@@ -101,10 +131,38 @@
 </script>
 
 <style lang="scss" scoped>
+    .home {
+        padding-top: 10px;
+        background-color: #F0F3F4;
+    }
+    .nifty-header {
+        padding: 30px 25px;
+        width: 98%;
+        margin: 25px auto;
+        border-top: solid #222831 1px;
+        border-bottom: solid 1px #222831;
+
+        h1 {
+            font-size: 25px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 23px
+        }
+    }
+    .heading {
+        margin: 0;
+        color: #222831;
+        line-height: 25px;
+    }
+    .recent-additions {
+        font-size: 25px;
+        text-align: center;
+    }
     .swiper-container {
-        width: 100vw;
-        height: 80vh;
-        background-color:  #EEEEEE;
+        width: 100%;
+        height: 60vh;
     }
     .slider-img {
         box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
@@ -119,13 +177,24 @@
     }
 
     .swiper-button-next, .swiper-button-prev {
-        color: #2F89A0;
+        color: #222831;
+        border-radius: 5px;
+        height: 60px;
+        margin-top: calc(-1 * 60px/ 2);
+        transition: background-color .5s;
+        &:hover {
+            background-color: rgba(#F0F3F4, .4);
+        }
     }
 
     .slider-caption {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+         p {
+             margin: 0;
+         }
     }
 
     .slider-img-card {
