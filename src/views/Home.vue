@@ -15,7 +15,7 @@
                     <div class="slider-img-card">
                         <img
                             class="slider-img"
-                            :src="getPicUrl(picture)"
+                            :src="getPicUrl(picture.Image.url)"
                         >
                         <transition name="fade">
                             <div v-if="index === activeSlide" class="slider-caption">
@@ -72,9 +72,6 @@
             },
         },
         watch: {
-            into(val) {
-                console.log(val)
-            },
             async sliderPics(val) {
                 if(val && !this.loaded) {
                     setTimeout(() => {
@@ -167,7 +164,7 @@
     .slider-img {
         box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
         max-height: 90%;
-
+        border-radius: 5px;
     }
     .swiper-slide {
         display: flex;
