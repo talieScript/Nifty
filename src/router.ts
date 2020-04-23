@@ -27,7 +27,7 @@ const router = new Router({
             props: true,
         },
         {
-            path: '/',
+            path: '/contact',
             name: 'contact',
             component: loadView('Contact'),
         },

@@ -36,7 +36,9 @@
           </md-app-drawer>
         <!-- Page Content -->
         <md-app-content>
-          <router-view></router-view>
+          <router-view
+            :windowWidth="windowWidth"
+          ></router-view>
         </md-app-content>
       </md-app>
     </transition>

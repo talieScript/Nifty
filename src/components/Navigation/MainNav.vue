@@ -2,7 +2,7 @@
     <div class="md-toolbar-row">
       <div class="md-layout md-toolbar-section-start">
         <md-button class="md-icon-button drawer-menu-btn" @click="$emit('drawVisible')">
-          <md-icon>menu</md-icon>
+          map
         </md-button>
         <div class="nifty-title">
           <img class="logo" src="../../assets/nifty-logo.svg" alt="nifty logo" />
