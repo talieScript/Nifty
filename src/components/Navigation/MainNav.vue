@@ -50,11 +50,13 @@ export default Vue.extend({
     },
     methods: {
         changed() {
+          setTimeout(() => {
             if (this.$router.currentRoute.path.includes('/collections')) {
                 this.$emit('showCollections', true);
             } else {
                 this.$emit('showCollections', false)
             }
+          }, 50)
         }
     }
 });
