@@ -36,7 +36,9 @@
           </md-app-drawer>
         <!-- Page Content -->
         <md-app-content>
-          <router-view></router-view>
+          <transition name="fade">
+            <router-view></router-view>
+          </transition>
         </md-app-content>
       </md-app>
     </transition>
@@ -177,6 +179,9 @@ $tertiary: #F0F3F4;
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s;
+}
+.fade-enter-active {
+  transition-delay: .7s
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
