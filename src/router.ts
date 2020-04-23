@@ -30,6 +30,7 @@ const router = new Router({
             path: '/contact',
             name: 'contact',
             component: loadView('Contact'),
+            props: true,
         },
         {
             path: '*',
