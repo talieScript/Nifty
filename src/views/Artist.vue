@@ -68,7 +68,8 @@
 .content {
     margin: 0;
     padding: 20px;
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.30);;
+    font-size: 20px;
+    line-height: 25px;
 }
 
 .mug-shot {
