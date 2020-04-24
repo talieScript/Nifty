@@ -37,7 +37,7 @@
         <!-- Page Content -->
         <md-app-content>
           <transition name="fade-delay">
-            <router-view></router-view>
+            <router-view :collection="activeCollection"></router-view>
           </transition>
         </md-app-content>
       </md-app>
