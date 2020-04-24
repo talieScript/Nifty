@@ -36,7 +36,7 @@
           </md-app-drawer>
         <!-- Page Content -->
         <md-app-content>
-          <transition name="fade">
+          <transition name="fade-delay">
             <router-view></router-view>
           </transition>
         </md-app-content>
@@ -177,15 +177,23 @@ export default {
 
 $tertiary: #F0F3F4;
 
-.fade-enter-active, .fade-leave-active {
+.fade-delay-enter-active, .fade-delay-leave-active {
   transition: opacity .3s;
 }
-.fade-enter-active {
-  transition-delay: .7s
+.fade-delay-enter-active {
+  transition-delay: .5s
+}
+.fade-delay-enter, .fade-delay-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
 
 .collections-tab {
   z-index: 1;

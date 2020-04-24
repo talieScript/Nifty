@@ -149,6 +149,7 @@
     }
     .detail {
         display: flex;
+        align-items: center;
         i {
             color: #2F89A0!important;
             margin: 0;
