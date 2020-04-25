@@ -87,11 +87,6 @@ export default {
       return this.collections.map(collection => collection.Title)
     }
   },
-  watch: {
-    collectionTabs(val) {
-      console.log(val)
-    }
-  },
   methods: {
     activeCollectionChange(collectionTitle) {
       this.activeCollection = this.collections.find(
@@ -106,7 +101,6 @@ export default {
       this.collectionTabs = true;
     },
     showCollectionsTabs(value) {
-      console.log(value)
       this.collectionTabs = value;
     },
     debounce(func, wait, immediate) {
