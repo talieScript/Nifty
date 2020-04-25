@@ -1,33 +1,27 @@
 <template>
     <div class="collection">
-        <div v-if="timeout" v-masonry fit-width stamp=".desc" :collumn-width="20" :gutter="10" class="container" transition-duration="0.3s" item-selector=".item">
+        <div v-masonry fit-width stamp=".desc" :collumn-width="20" :gutter="10" class="container" transition-duration="0.3s" item-selector=".item">
             <div class="desc-container">
                 <h2 class="title">{{collection.Title}}</h2>
                 <p class="desc" v-html="collection.Description"></p>
             </div>
             <div v-masonry-tile class="image-container item" v-for="(picture, index) in collection.pictures" :key="index">
-                <img
-                    class="image"
-                    :src="getPicUrl(picture.Image.url)"
-                    :alt="picture.Title">
-                <p class="caption">
-                    {{ picture.Title }}
-                </p>
+                <collection-image
+                    :url="picture.Image.url"
+                    :title="picture.Title"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import { getPicUrl } from '../utils.ts'
      import { toKebabCase } from '../utils.js'
+     import CollectionImage from '../components/CollectionImage.vue';
     export default {
         name: 'Collection',
-        data() {
-            return {
-                getPicUrl,
-                timeout: false,
-            }
+        components: {
+            CollectionImage,
         },
         props: {
             collection: {
@@ -41,11 +35,6 @@
                     this.$emit('activeCollectionChange', toKebabCase(this.collection.Title))
                 }
             }
-        },
-        created () {
-            setTimeout(() => {
-                this.timeout = true;
-            }, 200)
         },
         beforeDestroy() {
             this.$emit('closeCollections'),
@@ -105,15 +94,5 @@
             width: 40vw
          };
     }
-    .image {
-        box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);        border-radius: 5px;
-        width: 100%;
-    }
-    .caption {
-        // text-align: center;
-        width: 80%;
-        margin: 0 auto;
-        border-bottom: 2px #ADADAD solid;
-        padding: 15px  25px;
-    }
+
 </style>
