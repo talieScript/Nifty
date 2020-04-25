@@ -16,6 +16,7 @@
                         <img
                             class="slider-img"
                             :src="getPicUrl(picture.Image.url)"
+                            :alt="picture.Title"
                         >
                         <transition name="fade">
                             <div v-if="index === activeSlide" class="slider-caption">
@@ -156,9 +157,11 @@
         margin: 25px auto;
         border-top: solid #222831 1px;
         border-bottom: solid 1px #222831;
+        color: #5d5b6a;
 
         h1 {
             font-size: 25px;
+            color: #5d5b6a
         }
 
         p {
@@ -168,12 +171,13 @@
     }
     .heading {
         margin: 0;
-        color: #222831;
+        color: #5d5b6a;
         line-height: 25px;
     }
     .recent-additions {
         font-size: 25px;
         text-align: center;
+        color: #5d5b6a;
     }
     .swiper-container {
         width: 100%;
@@ -209,6 +213,7 @@
 
          p {
              margin: 0;
+             color: #5d5b6a
          }
     }
 

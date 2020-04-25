@@ -2,7 +2,7 @@
   <div id="app">
     <transition name="fade">
       <spinner v-if="loading" />
-      <md-app v-else md-waterfall :md-mode="collectionTabs ? 'fixed-last' : 'fixed'">
+      <md-app v-else md-waterfall :md-mode="'fixed-last'">
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
@@ -37,7 +37,11 @@
         <!-- Page Content -->
         <md-app-content>
           <transition name="fade-delay">
-            <router-view @closeCollections='showCollectionsTabs(false)' @activeCollectionChange="activeCollectionChange" :collections="collections" :collection="activeCollection"></router-view>
+            <router-view
+              @closeCollections='showCollectionsTabs(false)'
+              @activeCollectionChange="activeCollectionChange"
+              :collections="collections"
+              :collection="activeCollection"></router-view>
           </transition>
         </md-app-content>
       </md-app>
@@ -83,6 +87,11 @@ export default {
       return this.collections.map(collection => collection.Title)
     }
   },
+  watch: {
+    collectionTabs(val) {
+      console.log(val)
+    }
+  },
   methods: {
     activeCollectionChange(collectionTitle) {
       this.activeCollection = this.collections.find(
@@ -94,7 +103,6 @@ export default {
           params: { name: collectionTitle },
           props: { activeCollection: this.activeCollection }})
       }
-      console.log(collectionTitle)
       this.collectionTabs = true;
     },
     showCollectionsTabs(value) {
@@ -178,6 +186,7 @@ export default {
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 $tertiary: #F0F3F4;
+$text: #ADADAD;
 
 .fade-delay-enter-active, .fade-delay-leave-active {
   transition: opacity .3s;

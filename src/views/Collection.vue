@@ -1,6 +1,6 @@
 <template>
     <div class="collection">
-        <div v-masonry fit-width stamp=".desc" :collumn-width="20" :gutter="10" class="container" transition-duration="0.3s" item-selector=".item">
+        <div v-if="timeout" v-masonry fit-width stamp=".desc" :collumn-width="20" :gutter="10" class="container" transition-duration="0.3s" item-selector=".item">
             <div class="desc-container">
                 <h2 class="title">{{collection.Title}}</h2>
                 <p class="desc" v-html="collection.Description"></p>
@@ -9,7 +9,7 @@
                 <img
                     class="image"
                     :src="getPicUrl(picture.Image.url)"
-                >
+                    :alt="picture.Title">
                 <p class="caption">
                     {{ picture.Title }}
                 </p>
@@ -20,11 +20,13 @@
 
 <script>
     import { getPicUrl } from '../utils.ts'
+     import { toKebabCase } from '../utils.js'
     export default {
         name: 'Collection',
         data() {
             return {
-                getPicUrl
+                getPicUrl,
+                timeout: false,
             }
         },
         props: {
@@ -33,21 +35,31 @@
                 requied: true,
             },
         },
-        mounted() {
-            // this.$emit('activeCollectionChange', this.collection.Title)
+        watch: {
+            collection(val) {
+                if(val) {
+                    this.$emit('activeCollectionChange', toKebabCase(this.collection.Title))
+                }
+            }
+        },
+        created () {
+            setTimeout(() => {
+                this.timeout = true;
+            }, 200)
         },
         beforeDestroy() {
-            this.$emit('closeCollections')
+            this.$emit('closeCollections'),
+            this.timeout = false;
         }
     }
 </script>
 
 <style lang="scss" scoped>
     .collection {
-        padding-top: 20px;
+        padding-top: 60px;
 
         @media only screen and (min-width: 1000px) {
-            margin-top: 50px;
+            margin-top: 40px;
         }
     }
     .desc-container {
@@ -71,8 +83,8 @@
         font-size: 18px;
         line-height: 23px;
         @media only screen and (max-width: 75em) {
-                font-size: 14px;
-    line-height: 17px;
+            font-size: 14px;
+            line-height: 17px;
         }
     }
     .container {
@@ -98,6 +110,10 @@
         width: 100%;
     }
     .caption {
-        text-align: center;
+        // text-align: center;
+        width: 80%;
+        margin: 0 auto;
+        border-bottom: 2px #ADADAD solid;
+        padding: 15px  25px;
     }
 </style>
