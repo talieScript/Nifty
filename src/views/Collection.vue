@@ -33,6 +33,12 @@
                 requied: true,
             },
         },
+        mounted() {
+            // this.$emit('activeCollectionChange', this.collection.Title)
+        },
+        beforeDestroy() {
+            this.$emit('closeCollections')
+        }
     }
 </script>
 
@@ -53,6 +59,9 @@
         @media only screen and (max-width: 75em) {
             width: 30vw;
         }
+        @media only screen and (max-width: 56.25em) {
+             width: 40vw;
+        }
     }
     .title {
       font-size: 25px;
@@ -60,13 +69,18 @@
     }
     .desc {
         font-size: 18px;
-        line-height: 23px
+        line-height: 23px;
+        @media only screen and (max-width: 75em) {
+                font-size: 14px;
+    line-height: 17px;
+        }
     }
     .container {
         padding-left: 15px;
         @media only screen and (max-width: 75em) {
             padding-left: 7px;
         }
+
     }
     .image-container {
         margin-bottom: 10px;
@@ -75,6 +89,9 @@
         @media only screen and (max-width: 75em) {
             width: 32vw;
         };
+        @media only screen and (max-width: 56.25em) {
+            width: 40vw
+         };
     }
     .image {
         box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);        border-radius: 5px;

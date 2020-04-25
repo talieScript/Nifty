@@ -37,7 +37,7 @@
         <!-- Page Content -->
         <md-app-content>
           <transition name="fade-delay">
-            <router-view :collection="activeCollection"></router-view>
+            <router-view @closeCollections='showCollectionsTabs(false)' @activeCollectionChange="activeCollectionChange" :collections="collections" :collection="activeCollection"></router-view>
           </transition>
         </md-app-content>
       </md-app>
@@ -51,7 +51,7 @@ import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
 import Spinner from './components/Spinner.vue'
 import { API } from './API.ts'
- import { toKebabCase } from './utils.js'
+import { toKebabCase } from './utils.js'
 
 
 export default {
@@ -94,9 +94,11 @@ export default {
           params: { name: collectionTitle },
           props: { activeCollection: this.activeCollection }})
       }
+      console.log(collectionTitle)
       this.collectionTabs = true;
     },
     showCollectionsTabs(value) {
+      console.log(value)
       this.collectionTabs = value;
     },
     debounce(func, wait, immediate) {

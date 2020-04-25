@@ -22,7 +22,10 @@
                                 <p>
                                     {{ picture.Title }}
                                 </p>
-                                <md-button class="md-dense md-accent">
+                                <md-button
+                                    @click="test"
+                                    :to="`/collections/${toKebabCase(findCollection(picture.collection).Title)}`"
+                                    class="md-dense md-accent">
                                     See More <md-icon>chevron_right</md-icon>
                                 </md-button>
                             </div>
@@ -42,10 +45,15 @@
     import { getPicUrl } from '../utils.ts'
     import { API } from '../API.ts'
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+     import { toKebabCase } from '../utils.js'
 
     export default Vue.extend({
         name: 'Home',
-        components: {
+        props: {
+            collections: {
+                type: Array,
+                required: true,
+            }
         },
         data() {
             return {
@@ -54,7 +62,8 @@
                 data: {},
                 loaded: false,
                 activeSlide: 0,
-                getPicUrl
+                getPicUrl,
+                toKebabCase
             }
         },
         methods: {
@@ -70,6 +79,12 @@
                         })
                 }
             },
+            findCollection(id) {
+                return this.collections.find(collection => collection.id == id);
+            },
+            test() {
+                console.log('here')
+            }
         },
         watch: {
             async sliderPics(val) {
