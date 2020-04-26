@@ -36,6 +36,9 @@
                 }
             }
         },
+        mounted () {
+            this.$emit('activeCollectionChange', toKebabCase(this.collection.Title));
+        },
         beforeDestroy() {
             this.$emit('closeCollections'),
             this.timeout = false;
