@@ -8,13 +8,13 @@
         <div v-if="!loading" class="swiper-container">
             <div class="swiper-wrapper">
                 <div
-                    v-for="(picture) in sliderPics"
+                    v-for="(picture, index) in sliderPics"
                     :key="picture.id"
                     class="swiper-slide"
                 >
                     <silder-image
                         :picture="picture"
-                        :active="true"
+                        :active="activeSlide === index"
                         :collection="toKebabCase(findCollection(picture.collection).Title)"
                     />
                 </div>
