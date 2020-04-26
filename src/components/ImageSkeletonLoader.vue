@@ -2,7 +2,6 @@
     <div
         v-if="show"
         class="loader"
-        :style="`height: ${height}px`"
     >
         &nbsp;
     </div>
@@ -16,10 +15,6 @@
                 type: Boolean,
                 required: true,
             },
-            height: {
-                type: Number,
-                required: true,
-            }
         }
     }
 </script>
