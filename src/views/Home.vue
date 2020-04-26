@@ -8,26 +8,15 @@
         <div v-if="!loading" class="swiper-container">
             <div class="swiper-wrapper">
                 <div
-                    v-for="(picture, index) in sliderPics"
+                    v-for="(picture) in sliderPics"
                     :key="picture.id"
                     class="swiper-slide"
                 >
-                    <div class="slider-img-card">
-                        <img
-                            class="slider-img"
-                            :src="getPicUrl(picture.Image.url)"
-                        >
-                        <transition name="fade">
-                            <div v-if="index === activeSlide" class="slider-caption">
-                                <p>
-                                    {{ picture.Title }}
-                                </p>
-                                <md-button class="md-dense md-accent">
-                                    See More <md-icon>chevron_right</md-icon>
-                                </md-button>
-                            </div>
-                        </transition>
-                    </div>
+                    <silder-image
+                        :picture="picture"
+                        :active="true"
+                        :collection="toKebabCase(findCollection(picture.collection).Title)"
+                    />
                 </div>
             </div>
             <!-- Add Arrows -->
@@ -39,13 +28,22 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { getPicUrl } from '../utils.ts'
-    import { API } from '../API.ts'
+    import { API } from '../API.ts';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+    import { toKebabCase } from '../utils.js';
+    import SilderImage from '../components/SliderImage.vue'
+
 
     export default Vue.extend({
         name: 'Home',
+        props: {
+            collections: {
+                type: Array,
+                required: true,
+            }
+        },
         components: {
+            SilderImage,
         },
         data() {
             return {
@@ -54,7 +52,8 @@
                 data: {},
                 loaded: false,
                 activeSlide: 0,
-                getPicUrl
+                toKebabCase,
+                loadedImages: {}
             }
         },
         methods: {
@@ -69,6 +68,9 @@
                             console.log(err)
                         })
                 }
+            },
+            findCollection(id) {
+                return this.collections.find(collection => collection.id == id);
             },
         },
         watch: {
@@ -89,6 +91,7 @@
                             mousewheel: {
                                 invert: true,
                             },
+                            preloadImages: true,
                         });
                      }, 10)
                     setTimeout(() => {
@@ -96,6 +99,8 @@
                             this.activeSlide = this.swiper.realIndex
                         });
                     }, 20)
+                    // create object with false values
+                    // set event listener to set value to true  when finnished loading
                 }
             }
         },
@@ -141,9 +146,11 @@
         margin: 25px auto;
         border-top: solid #222831 1px;
         border-bottom: solid 1px #222831;
+        color: #5d5b6a;
 
         h1 {
             font-size: 25px;
+            color: #5d5b6a
         }
 
         p {
@@ -153,29 +160,18 @@
     }
     .heading {
         margin: 0;
-        color: #222831;
+        color: #5d5b6a;
         line-height: 25px;
     }
     .recent-additions {
         font-size: 25px;
         text-align: center;
+        color: #5d5b6a;
     }
     .swiper-container {
         width: 100%;
         height: 60vh;
     }
-    .slider-img {
-        box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
-        max-height: 90%;
-        border-radius: 5px;
-    }
-    .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: fit-content;
-    }
-
     .swiper-button-next, .swiper-button-prev {
         color: #222831;
         border-radius: 5px;
@@ -186,35 +182,4 @@
             background-color: rgba(#F0F3F4, .4);
         }
     }
-
-    .slider-caption {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-         p {
-             margin: 0;
-         }
-    }
-
-    .slider-img-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        height: 95%;
-        padding: 15px;
-    }
-
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s
-    }
-     .fade-enter-active {
-        transition-delay: .2s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-    }
-
-
 </style>

@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import router from '@/router.ts';
 import 'vue-material/dist/vue-material.min.css'
 import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList } from 'vue-material/dist/components'
+import { VueMasonryPlugin } from 'vue-masonry';
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ Vue.use(MdToolbar)
 Vue.use(MdButton)
 Vue.use(MdDrawer)
 Vue.use(MdList)
+Vue.use(VueMasonryPlugin);
 
 Vue.config.productionTip = false
 

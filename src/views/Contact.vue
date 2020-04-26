@@ -31,12 +31,6 @@
 
     export default Vue.extend({
         name: 'Contact',
-        props: {
-            windowWidth: {
-                type: Number,
-                required: true,
-            },
-        },
         data() {
             return {
                 content: '',
@@ -50,7 +44,6 @@
             API.get('/contact-page')
                 .then(({data}) => {
                     this.content = data.content;
-                    console.log(data)
                     this.imageUrl = getPicUrl(data.Picture.url)
                     this.address = data.Address;
                     this.phone = data.Phone;
@@ -149,6 +142,7 @@
     }
     .detail {
         display: flex;
+        align-items: center;
         i {
             color: #2F89A0!important;
             margin: 0;

@@ -2,7 +2,7 @@
   <div id="app">
     <transition name="fade">
       <spinner v-if="loading" />
-      <md-app v-else md-waterfall :md-mode="collectionTabs ? 'fixed-last' : 'fixed'">
+      <md-app v-else md-waterfall :md-mode="'fixed-last'">
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
@@ -36,9 +36,13 @@
           </md-app-drawer>
         <!-- Page Content -->
         <md-app-content>
-          <router-view
-            :windowWidth="windowWidth"
-          ></router-view>
+          <transition name="fade-delay">
+            <router-view
+              @closeCollections='showCollectionsTabs(false)'
+              @activeCollectionChange="activeCollectionChange"
+              :collections="collections"
+              :collection="activeCollection"></router-view>
+          </transition>
         </md-app-content>
       </md-app>
     </transition>
@@ -51,7 +55,7 @@ import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
 import Spinner from './components/Spinner.vue'
 import { API } from './API.ts'
- import { toKebabCase } from './utils.js'
+import { toKebabCase } from './utils.js'
 
 
 export default {
@@ -176,6 +180,17 @@ export default {
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 $tertiary: #F0F3F4;
+$text: #ADADAD;
+
+.fade-delay-enter-active, .fade-delay-leave-active {
+  transition: opacity .3s;
+}
+.fade-delay-enter-active {
+  transition-delay: .5s
+}
+.fade-delay-enter, .fade-delay-leave-to {
+  opacity: 0;
+}
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s;
@@ -183,6 +198,7 @@ $tertiary: #F0F3F4;
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
 
 .collections-tab {
   z-index: 1;
