@@ -70,6 +70,10 @@
     .title {
       font-size: 25px;
       line-height: 23px;
+      @media only screen and (max-width: 75em) {
+          font-size: 19px;
+          line-height: 17px;
+      }
     }
     .desc {
         font-size: 18px;
@@ -80,11 +84,10 @@
         }
     }
     .container {
-        padding-left: 15px;
-        @media only screen and (max-width: 75em) {
-            padding-left: 7px;
+        padding-left: 10vw;
+        @media only screen and (max-width: 56.25em) {
+            padding-left: 8vw;
         }
-
     }
     .image-container {
         margin-bottom: 10px;
