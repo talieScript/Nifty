@@ -75,12 +75,6 @@
         max-height: 90%;
         border-radius: 5px;
     }
-    .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: fit-content;
-    }
     .slider-caption {
         display: flex;
         align-items: center;

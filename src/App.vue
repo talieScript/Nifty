@@ -41,7 +41,10 @@
               @closeCollections='showCollectionsTabs(false)'
               @activeCollectionChange="activeCollectionChange"
               :collections="collections"
-              :collection="activeCollection"></router-view>
+              :collection="activeCollection"
+              class="router-view"
+            >
+            </router-view>
           </transition>
         </md-app-content>
       </md-app>
@@ -155,6 +158,7 @@ export default {
   .md-content {
     background-color: $tertiary !important;
     padding: 0;
+    padding-bottom: 150px;
   }
 
   #tab-collections {

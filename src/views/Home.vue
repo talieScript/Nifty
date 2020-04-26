@@ -91,7 +91,6 @@
                             mousewheel: {
                                 invert: true,
                             },
-                            preloadImages: true,
                         });
                      }, 10)
                     setTimeout(() => {
@@ -157,6 +156,12 @@
             font-size: 15px;
             line-height: 23px
         }
+    }
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
     }
     .heading {
         margin: 0;
