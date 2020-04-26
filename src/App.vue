@@ -158,7 +158,7 @@ export default {
   .md-content {
     background-color: $tertiary !important;
     padding: 0;
-    padding-bottom: 150px;
+    padding-bottom: 75px;
   }
 
   #tab-collections {
