@@ -1,15 +1,18 @@
 <template>
     <div class="collection">
-        <div v-masonry fit-width stamp=".desc" :collumn-width="20" :gutter="10" class="container" transition-duration="0.3s" item-selector=".item">
-            <div class="desc-container">
-                <h2 class="title">{{collection.Title}}</h2>
-                <p class="desc" v-html="collection.Description"></p>
-            </div>
-            <div v-masonry-tile class="image-container item" v-for="(picture, index) in collection.pictures" :key="index">
-                <collection-image
-                    :url="picture.Image.url"
-                    :title="picture.Title"
-                />
+        <div class="another-one">
+            <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
+                <div class="desc-container">
+                    <h2 class="title">{{collection.Title}}</h2>
+                    <p class="desc" v-html="collection.Description"></p>
+                </div>
+                <div class="gutter-sizer"></div>
+                <div v-masonry-tile fit-width="true" class="image-container item" v-for="(picture, index) in collection.pictures" :key="index">
+                    <collection-image
+                        :url="picture.Image.url"
+                        :title="picture.Title"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -18,10 +21,20 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
+     import PayPal from 'vue-paypal-checkout';
     export default {
         name: 'Collection',
+        data() {
+            return {
+                paypal: {
+                    sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
+                    production: '<production client id>'
+                }
+            }
+        },
         components: {
             CollectionImage,
+            PayPal
         },
         props: {
             collection: {
@@ -48,6 +61,7 @@
 
 <style lang="scss" scoped>
     .collection {
+        width: 100%;
         padding-top: 60px;
 
         @media only screen and (min-width: 1000px) {
@@ -84,14 +98,16 @@
         }
     }
     .container {
-        padding-left: 10vw;
-        @media only screen and (max-width: 56.25em) {
-            padding-left: 8vw;
-        }
+        // padding-left: 10vw;
+        // @media only screen and (max-width: 56.25em) {
+        //     padding-left: 8vw;
+        // }
+        margin: 0 auto;
     }
     .image-container {
+        margin: 0 auto;
         margin-bottom: 10px;
-        width: 24vw;
+        width: 20vw;
         position: absolute;
         @media only screen and (max-width: 75em) {
             width: 32vw;
@@ -99,6 +115,13 @@
         @media only screen and (max-width: 56.25em) {
             width: 40vw
          };
+    }
+    .gutter-sizer {
+        width: 10vw;
+    }
+    .another-one {
+        width: 90%;
+        margin: 0 auto;
     }
 
 </style>
