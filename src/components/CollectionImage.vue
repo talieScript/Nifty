@@ -10,6 +10,7 @@
             :alt="title"
             ref="image"
             :style="`display: ${loading ? 'none' : 'block'}`"
+            @click="$emit('openModal', title)"
         >
         <p class="caption">
             {{ title }}

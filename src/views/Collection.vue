@@ -11,6 +11,7 @@
                     <collection-image
                         :url="picture.Image.url"
                         :title="picture.Title"
+                        @openModal="openModal"
                     />
                 </div>
             </div>
@@ -29,7 +30,9 @@
                 paypal: {
                     sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
                     production: '<production client id>'
-                }
+                },
+                activeImage: {},
+                openModal: false,
             }
         },
         components: {
@@ -55,7 +58,13 @@
         beforeDestroy() {
             this.$emit('closeCollections'),
             this.timeout = false;
-        }
+        },
+        methods: {
+            openModal(title) {
+                this.activeImage = this.collection.pictures.find(picture => picture.Title === title);
+                this.openModal = true;
+            }
+        },
     }
 </script>
 
