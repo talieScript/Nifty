@@ -21,7 +21,7 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
-     import PayPal from 'vue-paypal-checkout';
+    //  import PayPal from 'vue-paypal-checkout';
     export default {
         name: 'Collection',
         data() {
@@ -34,7 +34,7 @@
         },
         components: {
             CollectionImage,
-            PayPal
+            // PayPal
         },
         props: {
             collection: {
@@ -66,6 +66,9 @@
 
         @media only screen and (min-width: 1000px) {
             margin-top: 40px;
+        }
+        @media only screen and (max-width: 1000px) {
+            padding-top: 20px;
         }
     }
     .desc-container {
@@ -117,7 +120,13 @@
          };
     }
     .gutter-sizer {
-        width: 10vw;
+        width: 3vw;
+        @media only screen and (max-width: 75em) {
+            width: 8vw;
+        };
+        @media only screen and (max-width: 56.25em) {
+            width: 3vw
+         };
     }
     .another-one {
         width: 90%;

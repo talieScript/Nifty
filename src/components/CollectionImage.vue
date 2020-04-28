@@ -62,7 +62,6 @@
         text-align: center;
         width: 80%;
         margin: 0 auto;
-        border-bottom: 2px #ADADAD solid;
         padding: 15px  25px;
     }
     .loader {
