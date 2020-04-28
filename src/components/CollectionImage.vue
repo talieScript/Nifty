@@ -41,13 +41,14 @@
             return {
                 getPicUrl,
                 loading: true,
+                imageHeight: 0,
             }
         },
         mounted() {
             this.$refs.image.addEventListener('load', () => {
                 this.loading = false;
+                this.imageHeight = this.$refs.image.height;
             });
-
         },
     })
 </script>
@@ -57,6 +58,11 @@
         box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);        border-radius: 5px;
         width: 100%;
         display: none;
+        transition: all .5s;
+        cursor: pointer;
+        &:hover {
+            filter: brightness(80%);
+        }
     }
     .caption {
         text-align: center;
