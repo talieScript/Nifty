@@ -3,8 +3,11 @@ import App from './App.vue'
 import dotenv from 'dotenv'
 import router from '@/router.ts';
 import 'vue-material/dist/vue-material.min.css'
-import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList } from 'vue-material/dist/components'
+import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList, MdDialog} from 'vue-material/dist/components'
 import { VueMasonryPlugin } from 'vue-masonry';
+import vSelect from 'vue-select'
+
+
 
 dotenv.config()
 
@@ -18,6 +21,9 @@ Vue.use(MdButton)
 Vue.use(MdDrawer)
 Vue.use(MdList)
 Vue.use(VueMasonryPlugin);
+Vue.use(MdDialog);
+
+Vue.component('v-select', vSelect.VueSelect)
 
 Vue.config.productionTip = false
 

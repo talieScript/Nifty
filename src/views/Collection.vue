@@ -1,5 +1,10 @@
 <template>
     <div class="collection">
+        <picture-modal
+            :pic="activePicture"
+            :show="modal"
+            @close="closeModal"
+        />
         <div class="another-one">
             <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
                 <div class="desc-container">
@@ -22,6 +27,7 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
+     import PictureModal from '../components/PictureModal.vue';
     //  import PayPal from 'vue-paypal-checkout';
     export default {
         name: 'Collection',
@@ -31,13 +37,14 @@
                     sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
                     production: '<production client id>'
                 },
-                activeImage: {},
-                openModal: false,
+                activePicture: {},
+                modal: false,
             }
         },
         components: {
             CollectionImage,
             // PayPal
+            PictureModal,
         },
         props: {
             collection: {
@@ -61,8 +68,12 @@
         },
         methods: {
             openModal(title) {
-                this.activeImage = this.collection.pictures.find(picture => picture.Title === title);
-                this.openModal = true;
+                this.activePicture = this.collection.pictures.find(picture => picture.Title === title);
+                this.modal = true;
+                console
+            },
+            closeModal() {
+                this.modal = false;
             }
         },
     }
