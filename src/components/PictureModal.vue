@@ -133,14 +133,14 @@
     .image {
         width: 70%;
         max-height: 100%;
-        margin-bottom: 10px;
-        margin-left: 12px;
+        margin: 15px;
         box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
         border-radius: 5px;
     }
     .image-container {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         flex-direction: column;
         height: 100%
     }
