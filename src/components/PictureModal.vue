@@ -11,6 +11,7 @@
             </div>
             <div class="prices-sizes">
                 <span class="price">£{{ activePrice }}</span>
+                Format: {{ pic.Format }}
                 <label for="sizes">Size:</label>
                 <v-select id="sizes" @input="changeSelect" :value="selected"  :options="dropdownOptions">
                     <template #selected-option="item">
