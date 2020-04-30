@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <picture-modal
+        :picture="activePicture"
+        @close="activePicture = null"
+    />
     <transition name="fade">
       <spinner v-if="loading" />
       <md-app v-else md-waterfall :md-mode="'fixed-last'">
@@ -40,6 +44,7 @@
             <router-view
               @closeCollections='showCollectionsTabs(false)'
               @activeCollectionChange="activeCollectionChange"
+              @activePictureChange="changeActivePicture"
               :collections="collections"
               :collection="activeCollection"
               class="router-view"
@@ -59,6 +64,7 @@ import Draw from './components/Navigation/Draw.vue';
 import Spinner from './components/Spinner.vue'
 import { API } from './API.ts'
 import { toKebabCase } from './utils.js'
+import PictureModal from './components/PictureModal.vue';
 
 
 export default {
@@ -68,6 +74,7 @@ export default {
       collections: [],
       collectionTabs: false,
       activeCollection: {},
+      activePicture: null,
       drawVisible: false,
       loading: true,
       windowWidth: window.innerWidth,
@@ -81,6 +88,7 @@ export default {
     Collections,
     Draw,
     Spinner,
+    PictureModal
   },
   computed: {
     name() {
@@ -91,6 +99,10 @@ export default {
     }
   },
   methods: {
+    changeActivePicture(picture) {
+      console.log(picture)
+      this.activePicture = picture;
+    },
     activeCollectionChange(collectionTitle) {
       this.activeCollection = this.collections.find(
         collection => toKebabCase(collection.Title) === collectionTitle

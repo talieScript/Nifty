@@ -16,7 +16,7 @@
             :style="`display: ${loading ? 'none' : 'block'}`"
         >
         <p class="caption">
-            {{ title }}
+            {{ title.split("-").join(" ") }}
         </p>
     </div>
 </template>

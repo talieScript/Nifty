@@ -1,10 +1,5 @@
 <template>
     <div class="collection">
-        <!-- <picture-modal
-            :pic="activePicture"
-            :show="modal"
-            @close="closeModal"
-        /> -->
         <div class="another-one">
             <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
                 <div class="desc-container">
@@ -67,8 +62,7 @@
         methods: {
             openModal(title) {
                 this.activePicture = this.collection.pictures.find(picture => picture.Title === title);
-                this.modal = true;
-                console
+                this.$emit('activePictureChange', this.activePicture)
             },
             closeModal() {
                 this.modal = false;
