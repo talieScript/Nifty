@@ -6,12 +6,11 @@
                     class="image"
                     :src="getPicUrl(picture.Image.url)"
                     :alt="picture.Title"
-                    @click="nothing"
                     v-on:click.stop
                 >
                 <div class="caption">
                     <span>{{picture.Title}}</span>
-                    <md-button v-on:click.stop class="md-accent md-raised caption-btn">
+                    <md-button @click="toPicturePage" v-on:click.stop class="md-accent md-raised caption-btn">
                         See options
                     </md-button>
                 </div>
@@ -23,6 +22,7 @@
 <script>
     import Vue from 'vue'
     import { getPicUrl } from '../utils.ts';
+    import { toKebabCase } from '../utils.js';
 
     export default Vue.extend({
          name: 'PictureModal',
@@ -30,6 +30,10 @@
             picture: {
                 type: Object,
                 default: null,
+            },
+            collections: {
+                type: Array,
+                required: true,
             }
         },
         data() {
@@ -38,8 +42,8 @@
             }
         },
         methods: {
-            nothing() {
-                console.log('nothing')
+            toPicturePage() {
+                this.$router.push({ path: toKebabCase(this.picture.Title) });
             }
         },
         created () {

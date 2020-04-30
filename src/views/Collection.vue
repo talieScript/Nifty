@@ -22,7 +22,6 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
-    //  import PictureModal from '../components/PictureModal.vue';
     export default {
         name: 'Collection',
         data() {
@@ -37,7 +36,6 @@
         },
         components: {
             CollectionImage,
-            // PictureModal,
         },
         props: {
             collection: {

@@ -2,6 +2,7 @@
   <div id="app">
     <picture-modal
         :picture="activePicture"
+        :collections="collections"
         @close="activePicture = null"
     />
     <transition name="fade">
@@ -100,13 +101,13 @@ export default {
   },
   methods: {
     changeActivePicture(picture) {
-      console.log(picture)
       this.activePicture = picture;
     },
     activeCollectionChange(collectionTitle) {
       this.activeCollection = this.collections.find(
         collection => toKebabCase(collection.Title) === collectionTitle
       );
+      console.log(this.activeCollection)
       if(!this.$router.currentRoute.path.includes(collectionTitle)) {
         this.$router.push({
           name: 'collections',
@@ -138,10 +139,16 @@ export default {
       .then(res => {
         this.collections = res.data;
         if(window.location.href.includes('/collections')) {
-          const collectionTitle = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+          const collectionTitle = window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
           this.activeCollection = this.collections.find(collection => {
             return collectionTitle === toKebabCase(collection.Title.toLowerCase());
           });
+          if (!this.activeCollection) {
+            this.activeCollection = this.collections[0];
+            this.$router.push('/')
+            this.loading = false;
+            return;
+          }
           this.collectionTabs = true;
         } else {
           this.activeCollection = this.collections[0]
