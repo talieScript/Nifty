@@ -10,6 +10,13 @@
                 >
             </div>
             <div class="prices-sizes">
+                <p>These limited edition fine art giclee prints are produced under the guide lines of the Fine Arts    Trade Guild using archival quality 210gsm Hahnemuhle Albrecht Durer paper and lightfast inks including a 50mm border all round ready for framing with or without a mount.</p>
+                <p>Each giclee print is produced individually, hand signed and numbered by the artist and released as a limited or open edition.</p>
+                <p>All prints are rolled and packaged with an accompanying certificate.</p>
+                <p>As each giclee print is individually produced please allow up to 2 weeks for delivery.These limited edition fine art giclee prints are produced under the guide lines of the Fine Arts    Trade Guild using archival quality 210gsm Hahnemuhle Albrecht Durer paper and lightfast inks including a 50mm border all round ready for framing with or without a mount.</p>
+                <p>Each giclee print is produced individually, hand signed and numbered by the artist and released as a limited or open edition.</p>
+                <p>All prints are rolled and packaged with an accompanying certificate.</p>
+                <p>As each giclee print is individually produced please allow up to 2 weeks for delivery.</p>
                 <span class="price">£{{ activePrice }}</span>
                 Format: {{ pic.Format }}
                 <label for="sizes">Size:</label>
@@ -40,7 +47,7 @@
     import { getPicUrl } from '../utils.ts';
     import 'vue-select/dist/vue-select.css';
     import VSelect from 'vue-select';
-     import PayPal from 'vue-paypal-checkout';
+    import PayPal from 'vue-paypal-checkout';
     export default {
         name: 'PictureModal',
         components: {

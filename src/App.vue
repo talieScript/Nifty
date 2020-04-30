@@ -152,7 +152,7 @@ export default {
 
   .md-app {
     height: 100%;
-    font-family: 'Volkhov', serif;
+    font-family: 'Raleway', serif;
   }
 
   .md-content {
@@ -175,6 +175,8 @@ export default {
 
 <style lang="scss">
 @import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+@import url('https://fonts.googleapis.com/css2?family=Crete+Round&family=Raleway&display=swap');
 
 @include md-register-theme("default", (
   primary: #2C3D50, // The primary color of your application

@@ -28,7 +28,6 @@
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
      import PictureModal from '../components/PictureModal.vue';
-    //  import PayPal from 'vue-paypal-checkout';
     export default {
         name: 'Collection',
         data() {
