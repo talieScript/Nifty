@@ -1,21 +1,27 @@
 <template>
-    <div class="image-card">
+    <div @mouseleave="hover = false" class="image-card">
         <ImageSkeletonLoader
             :show="loading"
             class="loader"
         />
-        <div @click="$emit('openModal', title)" class="expand-icon">
-            <md-icon class="overlay-icon">fullscreen</md-icon>
-            <md-tooltip md-direction="bottom">Fullscreen</md-tooltip>
-        </div>
+        <transition name="fade">
+            <div
+                v-if="hover" @click="$emit('openModal', title)"
+                class="expand-icon"
+            >
+                <md-icon class="overlay-icon">fullscreen</md-icon>
+                <md-tooltip md-direction="bottom">Fullscreen</md-tooltip>
+            </div>
+        </transition>
         <img
             class="image"
             :src="getPicUrl(url)"
             :alt="title"
             ref="image"
             :style="`display: ${loading ? 'none' : 'block'}`"
+            @mouseover="hover = true"
         >
-        <p class="caption">
+        <p @mouseover="hover = false" class="caption">
             {{ title.split("-").join(" ") }}
         </p>
     </div>
@@ -46,6 +52,7 @@
                 getPicUrl,
                 loading: true,
                 imageHeight: 0,
+                hover: false,
             }
         },
         mounted() {
@@ -92,8 +99,8 @@
     }
     .caption {
         text-align: center;
-        width: 80%;
-        margin: 0 auto;
+        width: 100%;
+        margin: 0;
         padding: 15px  25px;
     }
     .loader {

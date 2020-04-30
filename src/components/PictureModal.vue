@@ -6,12 +6,12 @@
                     class="image"
                     :src="getPicUrl(picture.Image.url)"
                     :alt="picture.Title"
-                    v-on:click.stop
+                    @click.stop
                 >
                 <div class="caption">
                     <span>{{picture.Title}}</span>
-                    <md-button @click="toPicturePage" v-on:click.stop class="md-accent md-raised caption-btn">
-                        See options
+                    <md-button @click="toPicturePage" @click.stop class="md-accent md-raised caption-btn">
+                        Purchase Options
                     </md-button>
                 </div>
             </div>
