@@ -43,7 +43,12 @@
         },
         methods: {
             toPicturePage() {
-                this.$router.push({ path: toKebabCase(this.picture.Title) });
+                const collection = this.collections.find(collection => collection.id == this.picture.collection);
+                const path =
+                    `/collections/${toKebabCase(collection.Title)}/${toKebabCase(this.picture.Title)}`;
+                this.$emit('close');
+
+                this.$router.push({ path, props: this.picture });
             }
         },
         created () {

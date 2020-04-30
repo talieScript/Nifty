@@ -39,8 +39,8 @@
                     </template>
                 </md-list>
             </md-list-item>
-            <md-list-item>
-                <router-link @click="$emit('close')" to='/contact' class="link">
+            <md-list-item @click="$emit('close')">
+                <router-link to='/contact' class="link">
                     <md-icon>info</md-icon>
                     <span class="md-list-item-text">Contact</span>
                 </router-link>

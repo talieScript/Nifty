@@ -29,6 +29,12 @@ const router = new Router({
             ]
         },
         {
+            path: '/collections/:collection/:picture',
+            name: 'picture',
+            props: true,
+            component: loadView('Picture'),
+        },
+        {
             path: '/contact',
             name: 'contact',
             component: loadView('Contact'),

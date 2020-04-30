@@ -81,6 +81,10 @@
             color: rgba(255, 255, 255, 0.7) !important;
             cursor: pointer;
             font-size: 35px !important;
+
+            &:hover {
+                color: rgba(255, 255, 255, 0.9) !important;
+            }
         }
     }
     .image:hover ~ .expand-icon {

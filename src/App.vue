@@ -139,16 +139,24 @@ export default {
       .then(res => {
         this.collections = res.data;
         if(window.location.href.includes('/collections')) {
-          const collectionTitle = window.location.href.substring(window.location.href.lastIndexOf('/') + 1)
-          this.activeCollection = this.collections.find(collection => {
-            return collectionTitle === toKebabCase(collection.Title.toLowerCase());
-          });
-          if (!this.activeCollection) {
+          const splitStr = window.location.href.split('/');
+          let collectionTitle = '';
+          if (splitStr.length === 5) {
+            collectionTitle = splitStr[splitStr.length - 1];
+          } else if (splitStr.length < 7) {
+            collectionTitle = splitStr[splitStr.length - 2];
+          } else {
             this.activeCollection = this.collections[0];
             this.$router.push('/')
             this.loading = false;
             return;
           }
+          console.log({collectionTitle});
+          this.activeCollection = this.collections.find(collection => {
+            console.log(toKebabCase(collection.Title.toLowerCase()))
+            return collectionTitle === toKebabCase(collection.Title.toLowerCase());
+          });
+          console.log(this.activeCollection)
           this.collectionTabs = true;
         } else {
           this.activeCollection = this.collections[0]
