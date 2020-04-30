@@ -1,13 +1,21 @@
 <template>
     <transition name="fade">
         <div @click="$emit('close')" v-if="picture" class="container">
-            <img
-                class="image"
-                :src="getPicUrl(picture.Image.url)"
-                :alt="picture.Title"
-                @click="nothing"
-                v-on:click.stop
-            >
+            <div class="image-card">>
+                <img
+                    class="image"
+                    :src="getPicUrl(picture.Image.url)"
+                    :alt="picture.Title"
+                    @click="nothing"
+                    v-on:click.stop
+                >
+                <div class="caption">
+                    <span>{{picture.Title}}</span>
+                    <md-button v-on:click.stop class="md-accent md-raised caption-btn">
+                        See options
+                    </md-button>
+                </div>
+            </div>
         </div>
     </transition>
 </template>
@@ -50,15 +58,44 @@
         position: fixed;
         top: 0;
         left: 0;
-        background-color: rgba(0,0,0,0.5);
+        background-color: rgba(0,0,0,0.65);
         height: 100%;
         width: 100%;
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 0;
+    }
+    .image-card {
+        display: flex;
+        width: fit-content;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
     .image {
-        height: 75%;
+        height: 60%;
+        border-radius: 5px;
+        @media only screen and (max-width: 45em) {
+            width: 100%;
+            height: auto;
+         };
+    }
+    .caption {
+        color: #F0F3F4;
+        font-size: 28px;
+        margin-top: 30px;
+        width: 100%;
+        position: relative;
+        text-align: center;
+    }
+    .caption-btn {
+        color: #F0F3F4;
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: -10px;
     }
     .fade-delay-enter-active, .fade-delay-leave-active {
         transition: opacity .3s;
