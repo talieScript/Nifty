@@ -1,10 +1,10 @@
 <template>
     <div class="collection">
-        <picture-modal
+        <!-- <picture-modal
             :pic="activePicture"
             :show="modal"
             @close="closeModal"
-        />
+        /> -->
         <div class="another-one">
             <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
                 <div class="desc-container">
@@ -27,7 +27,7 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
-     import PictureModal from '../components/PictureModal.vue';
+    //  import PictureModal from '../components/PictureModal.vue';
     export default {
         name: 'Collection',
         data() {
@@ -42,8 +42,7 @@
         },
         components: {
             CollectionImage,
-            // PayPal
-            PictureModal,
+            // PictureModal,
         },
         props: {
             collection: {

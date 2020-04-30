@@ -1,16 +1,19 @@
 <template>
-    <div>
+    <div class="image-card">
         <ImageSkeletonLoader
             :show="loading"
             class="loader"
         />
+        <div @click="$emit('openModal', title)" class="expand-icon">
+            <md-icon class="overlay-icon">fullscreen</md-icon>
+            <md-tooltip md-direction="bottom">Fullscreen</md-tooltip>
+        </div>
         <img
             class="image"
             :src="getPicUrl(url)"
             :alt="title"
             ref="image"
             :style="`display: ${loading ? 'none' : 'block'}`"
-            @click="$emit('openModal', title)"
         >
         <p class="caption">
             {{ title }}
@@ -61,9 +64,27 @@
         display: none;
         transition: all .5s;
         cursor: pointer;
+        position: relative;
         &:hover {
-            filter: brightness(80%);
+            filter: brightness(75%);
         }
+    }
+    .expand-icon:hover ~ .image {
+        filter: brightness(75%);
+    }
+    .expand-icon {
+        z-index: 1;
+        position: absolute;
+        right: 5px;
+        bottom: 55px;
+        i {
+            color: rgba(255, 255, 255, 0.7) !important;
+            cursor: pointer;
+            font-size: 35px !important;
+        }
+    }
+    .image:hover ~ .expand-icon {
+        opacity: 0;
     }
     .caption {
         text-align: center;

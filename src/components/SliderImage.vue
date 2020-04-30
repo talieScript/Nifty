@@ -17,7 +17,7 @@
                         {{ picture.Title }}
                     </p>
                     <md-button
-                        :to="`/collections/${collection}`"
+                        @click="goToCollection"
                         class="md-dense md-accent">
                         See More <md-icon>chevron_right</md-icon>
                     </md-button>
@@ -48,6 +48,11 @@
             collection: {
                 type: String,
                 required: true
+            }
+        },
+        methods: {
+            goToCollection() {
+                this.$emit('changeActiveCollection', this.collection)
             }
         },
         data() {

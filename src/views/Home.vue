@@ -16,6 +16,7 @@
                         :picture="picture"
                         :active="activeSlide === index"
                         :collection="toKebabCase(findCollection(picture.collection).Title)"
+                        @changeActiveCollection="changeActiveCollection"
                     />
                 </div>
             </div>
@@ -72,6 +73,9 @@
             findCollection(id) {
                 return this.collections.find(collection => collection.id == id);
             },
+            changeActiveCollection(collection) {
+                this.$emit('activeCollectionChange', collection)
+            }
         },
         watch: {
             async sliderPics(val) {
