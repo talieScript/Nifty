@@ -17,7 +17,7 @@
                         {{ picture.Title }}
                     </p>
                     <md-button
-                        :to="`/collections/${collection}`"
+                        @click="goToCollection"
                         class="md-dense md-accent">
                         See More <md-icon>chevron_right</md-icon>
                     </md-button>
@@ -28,7 +28,7 @@
 
 <script>
     import ImageSkeletonLoader from '../components/ImageSkeletonLoader.vue';
-    import { getPicUrl } from '../utils.ts';
+    import { getPicUrl } from '../utils.js';
     import { toKebabCase } from '../utils.js';
 
     export default {
@@ -48,6 +48,11 @@
             collection: {
                 type: String,
                 required: true
+            }
+        },
+        methods: {
+            goToCollection() {
+                this.$emit('changeActiveCollection', this.collection)
             }
         },
         data() {

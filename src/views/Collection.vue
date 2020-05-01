@@ -1,10 +1,5 @@
 <template>
     <div class="collection">
-        <picture-modal
-            :pic="activePicture"
-            :show="modal"
-            @close="closeModal"
-        />
         <div class="another-one">
             <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
                 <div class="desc-container">
@@ -16,7 +11,9 @@
                     <collection-image
                         :url="picture.Image.url"
                         :title="picture.Title"
+                        :windowWidth="windowWidth"
                         @openModal="openModal"
+                        @toImagePage="toImagePage"
                     />
                 </div>
             </div>
@@ -27,7 +24,6 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
-     import PictureModal from '../components/PictureModal.vue';
     export default {
         name: 'Collection',
         data() {
@@ -42,14 +38,16 @@
         },
         components: {
             CollectionImage,
-            // PayPal
-            PictureModal,
         },
         props: {
             collection: {
                 type: Object,
                 requied: true,
             },
+            windowWidth: {
+                type: Number,
+                requied: true,
+            }
         },
         watch: {
             collection(val) {
@@ -62,17 +60,18 @@
             this.$emit('activeCollectionChange', toKebabCase(this.collection.Title));
         },
         beforeDestroy() {
-            this.$emit('closeCollections'),
+            this.$emit('showCollectionTabs', false),
             this.timeout = false;
         },
         methods: {
             openModal(title) {
-                this.activePicture = this.collection.pictures.find(picture => picture.Title === title);
-                this.modal = true;
-                console
+                const picture = this.collection.pictures.find(picture => picture.Title === title);
+                this.$emit('openModal', picture)
             },
-            closeModal() {
-                this.modal = false;
+            toImagePage(title) {
+                const path =
+                    `/collections/${toKebabCase(this.collection.Title)}/${toKebabCase(title)}`;
+                this.$router.push({ path });
             }
         },
     }

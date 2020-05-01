@@ -24,7 +24,15 @@ const router = new Router({
             path: '/collections/:name',
             name: 'collections',
             component: loadView('Collection'),
+            children: [
+                { path: 'collection/:name/:picture', component: loadView('Collection')},
+            ]
+        },
+        {
+            path: '/collections/:collection/:picture',
+            name: 'picture',
             props: true,
+            component: loadView('Picture'),
         },
         {
             path: '/contact',
@@ -33,7 +41,7 @@ const router = new Router({
             props: true,
         },
         {
-            path: '*',
+            path: '*/*',
             component: loadView('Home'),
         }
 

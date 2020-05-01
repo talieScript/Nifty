@@ -52,9 +52,9 @@ export default Vue.extend({
         changed() {
           setTimeout(() => {
             if (this.$router.currentRoute.path.includes('/collections')) {
-                this.$emit('showCollections', true);
+                this.$emit('showCollectionTabs', true);
             } else {
-                this.$emit('showCollections', false)
+                this.$emit('showCollectionTabs', false)
             }
           }, 50)
         }

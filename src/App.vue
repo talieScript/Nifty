@@ -1,12 +1,19 @@
 <template>
   <div id="app">
+    <picture-modal
+        :picture="activePicture"
+        :collections="collections"
+        :show="pictureModal"
+        @toPicturePage="toPicturePage"
+        @close="pictureModal = false"
+    />
     <transition name="fade">
       <spinner v-if="loading" />
       <md-app v-else md-waterfall :md-mode="'fixed-last'">
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
-            @showCollections="showCollectionsTabs"
+            @showCollections="showCollectionTabs"
             @drawVisible="drawVisible = !drawVisible"
             :activeCollection="activeCollection.Title"
             class="main-tab"
@@ -38,10 +45,14 @@
         <md-app-content>
           <transition name="fade-delay">
             <router-view
-              @closeCollections='showCollectionsTabs(false)'
+              @showCollectionTabs='showCollectionTabs'
               @activeCollectionChange="activeCollectionChange"
+              @activePictureChange="changeActivePicture"
+              @openModal="openModal"
               :collections="collections"
               :collection="activeCollection"
+              :windowWidth="windowWidth"
+              :activePicture="activePicture"
               class="router-view"
             >
             </router-view>
@@ -59,6 +70,7 @@ import Draw from './components/Navigation/Draw.vue';
 import Spinner from './components/Spinner.vue'
 import { API } from './API.ts'
 import { toKebabCase } from './utils.js'
+import PictureModal from './components/PictureModal.vue';
 
 
 export default {
@@ -68,6 +80,8 @@ export default {
       collections: [],
       collectionTabs: false,
       activeCollection: {},
+      activePicture: {},
+      pictureModal: false,
       drawVisible: false,
       loading: true,
       windowWidth: window.innerWidth,
@@ -81,6 +95,7 @@ export default {
     Collections,
     Draw,
     Spinner,
+    PictureModal
   },
   computed: {
     name() {
@@ -91,6 +106,19 @@ export default {
     }
   },
   methods: {
+    openModal(picture) {
+      this.changeActivePicture(picture)
+      this.pictureModal = true;
+    },
+    changeActivePicture(picture) {
+      this.activeCollection = this.collections.find(collection => collection.id == picture.collection);
+      this.activePicture = picture;
+    },
+    toPicturePage() {
+      const path =
+        `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
+      this.$router.push({ path });
+    },
     activeCollectionChange(collectionTitle) {
       this.activeCollection = this.collections.find(
         collection => toKebabCase(collection.Title) === collectionTitle
@@ -103,7 +131,7 @@ export default {
       }
       this.collectionTabs = true;
     },
-    showCollectionsTabs(value) {
+    showCollectionTabs(value) {
       this.collectionTabs = value;
     },
     debounce(func, wait, immediate) {
@@ -126,13 +154,28 @@ export default {
       .then(res => {
         this.collections = res.data;
         if(window.location.href.includes('/collections')) {
-          const collectionTitle = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+          const splitStr = window.location.href.split('/');
+          let collectionTitle = '';
+          if (splitStr.length === 5) {
+            collectionTitle = splitStr[splitStr.length - 1];
+          } else if (splitStr.length < 7) {
+            collectionTitle = splitStr[splitStr.length - 2];
+          } else {
+            this.activeCollection = this.collections[0];
+            this.$router.push('/')
+            this.loading = false;
+            return;
+          }
           this.activeCollection = this.collections.find(collection => {
             return collectionTitle === toKebabCase(collection.Title.toLowerCase());
           });
           this.collectionTabs = true;
         } else {
           this.activeCollection = this.collections[0]
+        }
+        if(!this.activeCollection) {
+          this.activeCollection = this.collections[0];
+          this.$router.push('/')
         }
         this.loading = false;
       })
@@ -186,7 +229,7 @@ export default {
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 $tertiary: #F0F3F4;
-$text: #ADADAD;
+$text: rgb(145, 145, 145);
 
 .fade-delay-enter-active, .fade-delay-leave-active {
   transition: opacity .3s;
