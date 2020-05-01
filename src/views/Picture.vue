@@ -27,7 +27,7 @@
                     </v-select>
                     <span class="price">£{{price}}</span>
                 </div>
-                <div ref="paypal"></div>
+                <div class="paypal-btn" ref="paypal"></div>
             </div>
         </div>
     </div>
@@ -229,7 +229,7 @@
         font-size: 25px;
     }
     .paypal-btn {
-        width: 40%;
+        width: 50%;
         margin-top: 20px;
     }
 </style>
