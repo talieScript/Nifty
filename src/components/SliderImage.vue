@@ -28,7 +28,7 @@
 
 <script>
     import ImageSkeletonLoader from '../components/ImageSkeletonLoader.vue';
-    import { getPicUrl } from '../utils.ts';
+    import { getPicUrl } from '../utils.js';
     import { toKebabCase } from '../utils.js';
 
     export default {

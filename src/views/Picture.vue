@@ -1,24 +1,26 @@
 <template>
-    <div>
+    <div class="picture">
         <!-- <collection-image
-            url=""
+            :src="getPicUrl(picture.Image.url)"
             title=""
             :windowWidth="0"
         /> -->
         {{ picture }}
+        {{ getPicUrl }}
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
     // import CollectionImage from '../components/CollectionImage.vue';
-    import { toKebabCase } from '../utils.js'
+    import { toKebabCase, getPicUrl } from '../utils.js'
 
     export default Vue.extend({
         name: 'Picture',
         data() {
             return {
-                picture: {}
+                picture: {},
+                getPicUrl
             }
         },
         components: {
@@ -48,6 +50,16 @@
     })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    .picture {
+        width: 100%;
+        padding-top: 60px;
 
+        @media only screen and (min-width: 1000px) {
+            margin-top: 40px;
+        }
+        @media only screen and (max-width: 1000px) {
+            padding-top: 20px;
+        }
+    }
 </style>

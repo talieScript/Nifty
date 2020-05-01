@@ -21,7 +21,7 @@
 
 <script>
     import Vue from 'vue'
-    import { getPicUrl } from '../utils.ts'
+    import { getPicUrl } from '../utils.js'
     import { toKebabCase } from '../utils.js';
 
     export default Vue.extend({

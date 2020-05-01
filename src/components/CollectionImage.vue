@@ -30,7 +30,7 @@
 
 <script>
     import Vue from 'vue';
-    import { getPicUrl } from '../utils.ts';
+    import { getPicUrl } from '../utils.js';
     import ImageSkeletonLoader from './ImageSkeletonLoader.vue'
 
     export default Vue.extend({

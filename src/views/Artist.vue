@@ -13,7 +13,7 @@
     import Vue from 'vue'
     import { API } from '../API.ts'
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-    import { getPicUrl } from '../utils.ts'
+    import { getPicUrl } from '../utils.js'
 
 
     export default Vue.extend({

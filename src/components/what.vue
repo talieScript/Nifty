@@ -44,7 +44,7 @@
 </template>
 
 <script>
-    import { getPicUrl } from '../utils.ts';
+    import { getPicUrl } from '../utils.js';
     import 'vue-select/dist/vue-select.css';
     import VSelect from 'vue-select';
     import PayPal from 'vue-paypal-checkout';
