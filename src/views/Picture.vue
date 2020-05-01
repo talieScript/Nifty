@@ -1,18 +1,24 @@
 <template>
     <div class="picture">
-        <!-- <collection-image
-            :src="getPicUrl(picture.Image.url)"
-            title=""
-            :windowWidth="0"
-        /> -->
-        {{ picture }}
-        {{ getPicUrl }}
+        <md-button @click="toPicturePage" @click.stop class="md-accent back-btn">
+            <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
+        </md-button>
+        <div class="image">
+            <collection-image
+                :url="picture.Image.url"
+                :title="picture.Title"
+                :windowWidth="0"
+            />
+        </div>
+        <div class="infomation">
+            {{ picture }}
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import Vue from 'vue';
-    // import CollectionImage from '../components/CollectionImage.vue';
+    import CollectionImage from '../components/CollectionImage.vue';
     import { toKebabCase, getPicUrl } from '../utils.js'
 
     export default Vue.extend({
@@ -24,7 +30,7 @@
             }
         },
         components: {
-            // CollectionImage,
+            CollectionImage,
         },
         props: {
             collections: {
@@ -46,12 +52,17 @@
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
             })
             this.picture = picture;
+            console.log(picture)
         }
     })
 </script>
 
 <style lang="scss" scoped>
     .picture {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100%;
         width: 100%;
         padding-top: 60px;
 
@@ -61,5 +72,22 @@
         @media only screen and (max-width: 1000px) {
             padding-top: 20px;
         }
+    }
+    .back-btn {
+        position: absolute;
+        top: 120px;
+         @media only screen and (max-width: 1000px) {
+           top: 50px;
+         }
+    }
+    .image {
+        position: relative;
+        width: 40%;
+        margin-right: 0;
+        margin-left: 20px;
+    }
+    .infomation {
+        width: 45%;
+        margin-left: 25px;
     }
 </style>
