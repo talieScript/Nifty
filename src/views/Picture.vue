@@ -12,7 +12,8 @@
             />
         </div>
         <div class="infomation">
-            {{ picture }}
+           <h2>{{ picture.Title }}</h2>
+            <p class="description" v-html="parsedDescription"></p>
         </div>
     </div>
 </template>
@@ -20,7 +21,9 @@
 <script lang="ts">
     import Vue from 'vue';
     import CollectionImage from '../components/CollectionImage.vue';
-    import { toKebabCase, getPicUrl } from '../utils.js'
+    import { toKebabCase, getPicUrl } from '../utils.js';
+    import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+    import { API } from '../API.ts'
 
     export default Vue.extend({
         name: 'Picture',
@@ -28,7 +31,8 @@
             return {
                 picture: {},
                 getPicUrl,
-                collection: {}
+                collection: {},
+                description: ''
             }
         },
         components: {
@@ -54,11 +58,39 @@
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
             })
             this.picture = picture;
-            console.log(picture)
+        },
+        created() {
+             API.get('/picture-description')
+            .then(res => {
+                this.description = res.data.Description;
+            })
+            .catch(err => console.log(err))
         },
         methods: {
             back() {
                 this.$router.push('/collections/' + toKebabCase(this.collection.Title))
+            }
+        },
+        computed: {
+            parsedDescription() {
+                if (this.description.length){
+                    const splitContent = this.description.split("\n");
+                    const doc = {
+                        nodeType: 'document',
+                        content: splitContent.map(para => {
+                            return {
+                                nodeType: 'paragraph',
+                                content: [{
+                                    nodeType: 'text',
+                                    value: para,
+                                    marks: []
+                                }]
+                            }
+                        })
+                    }
+                    return documentToHtmlString(doc)
+                }
+                return '';
             }
         },
     })
@@ -72,6 +104,8 @@
         height: 100%;
         width: 100%;
         padding: 40px;
+        padding-top: 60px;
+        color: rgb(145, 145, 145);
 
         @media only screen and (min-width: 1000px) {
             // margin-top: 40px;
@@ -91,6 +125,8 @@
         margin-right: 0;
     }
     .infomation {
+        display: flex;
+        flex-direction: column;
         width: 50%;
         margin-left: 25px;
     }

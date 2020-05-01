@@ -234,7 +234,7 @@ export default {
 @import "~vue-material/dist/theme/all"; // Apply the theme
 
 $tertiary: #F0F3F4;
-$text: #ADADAD;
+$text: rgb(145, 145, 145);
 
 .fade-delay-enter-active, .fade-delay-leave-active {
   transition: opacity .3s;
