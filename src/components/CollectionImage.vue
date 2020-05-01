@@ -6,7 +6,7 @@
         />
         <transition name="fade">
             <div
-                v-if="hover || windowWidth < 1000" @click="$emit('openModal', title)"
+                v-if="(hover || windowWidth < 1000) && !picturePage" @click="$emit('openModal', title)"
                 class="expand-icon"
             >
                 <md-icon class="overlay-icon">fullscreen</md-icon>
@@ -18,11 +18,11 @@
             :src="getPicUrl(url)"
             :alt="title"
             ref="image"
-            :style="`display: ${loading ? 'none' : 'block'}`"
+            :style="`display: ${loading ? 'none' : 'block'}; ${picturePage ? 'filter: brightness(100%); cursor: default;' : ''}`"
             @mouseover="hover = true"
             @click="$emit('toImagePage', title)"
         >
-        <p  @mouseover="hover = false" class="caption">
+        <p v-if="!picturePage" @mouseover="hover = false" class="caption">
             {{ title.split("-").join(" ") }}
         </p>
     </div>
@@ -50,6 +50,10 @@
             windowWidth: {
                 type: Number,
                 reuired: true,
+            },
+            picturePage: {
+                type: Boolean,
+                default: false,
             }
         },
         data() {
