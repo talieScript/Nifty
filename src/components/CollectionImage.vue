@@ -6,7 +6,7 @@
         />
         <transition name="fade">
             <div
-                v-if="hover" @click="$emit('openModal', title)"
+                v-if="hover || windowWidth < 1000" @click="$emit('openModal', title)"
                 class="expand-icon"
             >
                 <md-icon class="overlay-icon">fullscreen</md-icon>
@@ -21,7 +21,7 @@
             :style="`display: ${loading ? 'none' : 'block'}`"
             @mouseover="hover = true"
         >
-        <p @mouseover="hover = false" class="caption">
+        <p  @mouseover="hover = false" class="caption">
             {{ title.split("-").join(" ") }}
         </p>
     </div>
@@ -46,6 +46,10 @@
                 type: String,
                 required: true,
             },
+            windowWidth: {
+                type: Number,
+                reuired: true,
+            }
         },
         data() {
             return {
@@ -66,7 +70,8 @@
 
 <style lang="scss" scoped>
     .image {
-        box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);        border-radius: 5px;
+        box-shadow: -1px 4px 5px 1px rgba(0,0,0,0.30);
+        border-radius: 5px;
         width: 100%;
         display: none;
         transition: all .5s;
@@ -101,7 +106,7 @@
         text-align: center;
         width: 100%;
         margin: 0;
-        padding: 15px  25px;
+        padding: 15px  0;
     }
     .loader {
         height: 24vw;

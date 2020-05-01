@@ -98,13 +98,18 @@
         width: 100%;
         position: relative;
         text-align: center;
+         @media only screen and (max-width: 45em) {
+             font-size: 20px;
+             text-align: left;
+             padding: 0 10px;
+         }
     }
     .caption-btn {
         color: #F0F3F4;
         position: absolute;
-        right: 0;
+        right: 5px;
         top: 0;
-        margin-top: -10px;
+        margin: -10px 0 0 0;
     }
     .fade-delay-enter-active, .fade-delay-leave-active {
         transition: opacity .3s;

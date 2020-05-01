@@ -48,6 +48,7 @@
               @activePictureChange="changeActivePicture"
               :collections="collections"
               :collection="activeCollection"
+              :windowWidth="windowWidth"
               class="router-view"
             >
             </router-view>

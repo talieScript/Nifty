@@ -11,6 +11,7 @@
                     <collection-image
                         :url="picture.Image.url"
                         :title="picture.Title"
+                        :windowWidth="windowWidth"
                         @openModal="openModal"
                     />
                 </div>
@@ -42,6 +43,10 @@
                 type: Object,
                 requied: true,
             },
+            windowWidth: {
+                type: Number,
+                requied: true,
+            }
         },
         watch: {
             collection(val) {
