@@ -5,6 +5,7 @@
                 <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
             </md-button>
             <collection-image
+                v-if="picture.Image"
                 :url="picture.Image.url"
                 :title="picture.Title"
                 :windowWidth="0"
@@ -14,6 +15,20 @@
         <div class="infomation">
            <h2>{{ picture.Title }}</h2>
             <p class="description" v-html="parsedDescription"></p>
+            <div class="buy">
+                <div class="size-select">
+                    <label for="sizes">Sizes</label>
+                    <v-select @input="changeSize" :value="selectedSize" :clearable="false" :searchable="false" id="sizes" :options="dropdownOptions" >
+                        <template #selected-option="item">
+                            <div style="display: flex; align-items: baseline;">
+                            {{ item.label }} cm
+                            </div>
+                        </template>
+                    </v-select>
+                    <span class="price">£{{price}}</span>
+                </div>
+                <div ref="paypal"></div>
+            </div>
         </div>
     </div>
 </template>
@@ -23,7 +38,9 @@
     import CollectionImage from '../components/CollectionImage.vue';
     import { toKebabCase, getPicUrl } from '../utils.js';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-    import { API } from '../API.ts'
+    import { API } from '../API.ts';
+    import VSelect from 'vue-select';
+    import 'vue-select/dist/vue-select.css';
 
     export default Vue.extend({
         name: 'Picture',
@@ -32,11 +49,18 @@
                 picture: {},
                 getPicUrl,
                 collection: {},
-                description: ''
+                description: '',
+                selectedSize: '',
+                paypal: {
+                    sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
+                    production: '<production client id>'
+                },
+                paidFor: false,
             }
         },
         components: {
             CollectionImage,
+            VSelect,
         },
         props: {
             collections: {
@@ -58,6 +82,14 @@
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
             })
             this.picture = picture;
+            this.selectedSize = this.picture.PriceSize.price_and_sizes[0].FrameSize;
+
+            // paypal stuff
+            const script = document.createElement('script');
+            script.src = 'https://www.paypal.com/sdk/js?currency=GBP&client-id=AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K';
+            script.addEventListener("load", this.setLoaded);
+            document.body.appendChild(script);
+
         },
         created() {
              API.get('/picture-description')
@@ -67,11 +99,63 @@
             .catch(err => console.log(err))
         },
         methods: {
+            setLoaded() {
+            this.loaded = true;
+            window.paypal
+                .Buttons({
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                    purchase_units: [
+                        {
+                        description: this.itemDescription,
+                        amount: {
+                            currency_code: "GBP",
+                            value: this.price
+                        }
+                        }
+                    ]
+                    });
+                },
+                onApprove: async (data, actions) => {
+                    const order = await actions.order.capture();
+                    this.data;
+                    this.paidFor = true;
+                    console.log(order);
+                },
+                onError: err => {
+                    console.log(err);
+                }
+                })
+                .render(this.$refs.paypal);
+            },
             back() {
                 this.$router.push('/collections/' + toKebabCase(this.collection.Title))
+            },
+            changeSize(value) {
+                this.selectedSize = value;
             }
         },
         computed: {
+            itemDescription() {
+                return `${this.picture.Title} - ${this.selectedSize}`
+            },
+            dropdownOptions() {
+                if(this.picture.PriceSize) {
+                    return this.picture.PriceSize.price_and_sizes.map(size => {
+                        return size.FrameSize
+                    });
+                }
+                return []
+            },
+            price() {
+                if(this.picture.PriceSize) {
+                    const selection = this.picture.PriceSize.price_and_sizes.find(priceSize => {
+                        return priceSize.FrameSize === this.selectedSize;
+                    });
+                    return selection.Price
+                }
+                return '-';
+            },
             parsedDescription() {
                 if (this.description.length){
                     const splitContent = this.description.split("\n");
@@ -91,6 +175,14 @@
                     return documentToHtmlString(doc)
                 }
                 return '';
+            },
+            paypalBtnStyle() {
+                return {
+                    label: 'checkout',
+                    size:  'responsive',
+                    shape: 'rect',
+                    color: 'gold'
+                }
             }
         },
     })
@@ -106,10 +198,6 @@
         padding: 40px;
         padding-top: 60px;
         color: rgb(145, 145, 145);
-
-        @media only screen and (min-width: 1000px) {
-            // margin-top: 40px;
-        }
         @media only screen and (max-width: 1000px) {
             padding-top: 20px;
         }
@@ -129,5 +217,19 @@
         flex-direction: column;
         width: 50%;
         margin-left: 25px;
+        padding-top: 60px;
+    }
+    .size-select {
+        width: 50%;
+        .v-select {
+            margin-bottom: 15px;
+        }
+    }
+    .price {
+        font-size: 25px;
+    }
+    .paypal-btn {
+        width: 40%;
+        margin-top: 20px;
     }
 </style>

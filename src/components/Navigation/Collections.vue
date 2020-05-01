@@ -33,18 +33,6 @@
                 toKebabCase,
             }
         },
-        watch: {
-            activeCollection(val) {
-                console.log(val)
-            },
-            collections(val) {
-                console.log(val)
-            }
-        },
-        mounted () {
-            console.log(this.collections)
-            console.log(this.activeCollection)
-        },
         computed: {
             active: {
                 get() {
