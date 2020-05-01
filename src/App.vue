@@ -181,11 +181,6 @@ export default {
       })
     },
   },
-  watch: {
-    collectionTabs(val) {
-      console.log(val)
-    }
-  },
   created() {
     this.getCollections();
      window.addEventListener('resize', () => {

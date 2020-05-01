@@ -3,7 +3,7 @@ import App from './App.vue'
 import dotenv from 'dotenv'
 import router from '@/router.ts';
 import 'vue-material/dist/vue-material.min.css'
-import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList, MdDialog, MdTooltip} from 'vue-material/dist/components'
+import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList, MdDialog, MdTooltip, MdSnackbar } from 'vue-material/dist/components'
 import { VueMasonryPlugin } from 'vue-masonry';
 import vSelect from 'vue-select'
 
@@ -23,6 +23,7 @@ Vue.use(MdList)
 Vue.use(VueMasonryPlugin);
 Vue.use(MdDialog);
 Vue.use(MdTooltip);
+Vue.use(MdSnackbar);
 
 Vue.component('v-select', vSelect.VueSelect)
 

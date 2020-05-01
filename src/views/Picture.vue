@@ -30,6 +30,10 @@
                 <div class="paypal-btn" ref="paypal"></div>
             </div>
         </div>
+        <md-snackbar class="snack" md-position="center" :md-duration="Infinity" :md-active.sync="showSnackbar">
+            <span>Purchase complete, please check your emails</span>
+            <md-button class="" @click="showSnackbar = false">Continue</md-button>
+        </md-snackbar>
     </div>
 </template>
 
@@ -55,7 +59,7 @@
                     sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
                     production: '<production client id>'
                 },
-                paidFor: false,
+                showSnackbar: false,
             }
         },
         components: {
@@ -119,7 +123,7 @@
                 onApprove: async (data, actions) => {
                     const order = await actions.order.capture();
                     this.data;
-                    this.paidFor = true;
+                    this.showSnackbar = true;
                     console.log(order);
                 },
                 onError: err => {
@@ -185,6 +189,9 @@
                 }
             }
         },
+        beforeDestroy() {
+            this.showSnackbar = false;
+        }
     })
 </script>
 
@@ -258,5 +265,12 @@
         @media only screen and (max-width: 37.5em) {
             width: 100%;
          };
+    }
+    .snack {
+        color: #F0F3F4;
+        background-color: #2F89A0;
+        button {
+            color: #F0F3F4;
+        }
     }
 </style>
