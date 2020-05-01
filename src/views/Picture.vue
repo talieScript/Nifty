@@ -198,19 +198,30 @@
         padding: 40px;
         padding-top: 60px;
         color: rgb(145, 145, 145);
+        @media only screen and (max-width: 56.25em) {
+            flex-direction: column;
+        }
         @media only screen and (max-width: 1000px) {
             padding-top: 20px;
         }
+        @media only screen and (max-width: 37.5em) {
+            padding: 10px;
+        }
+
     }
     .back-btn {
         position: absolute;
         top: 0;
+        z-index: 0;
     }
     .image {
         padding-top: 50px;
         position: relative;
         width: 50%;
         margin-right: 0;
+        @media only screen and (max-width: 56.25em) {
+            width: 100%;
+        }
     }
     .infomation {
         display: flex;
@@ -218,11 +229,24 @@
         width: 50%;
         margin-left: 25px;
         padding-top: 60px;
+        @media only screen and (max-width: 56.25em) {
+            width: 100%;
+            padding-top: 30px;
+            margin-left: 0;
+        }
+    }
+    .description {
+        @media only screen and (max-width: 56.25em) {
+            font-size: 12px;
+        }
     }
     .size-select {
         width: 50%;
         .v-select {
             margin-bottom: 15px;
+        }
+        @media only screen and (max-width: 37.5em) {
+            width: 100%;
         }
     }
     .price {
@@ -231,5 +255,8 @@
     .paypal-btn {
         width: 50%;
         margin-top: 20px;
+        @media only screen and (max-width: 37.5em) {
+            width: 100%;
+         };
     }
 </style>
