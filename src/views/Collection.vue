@@ -60,7 +60,7 @@
             this.$emit('activeCollectionChange', toKebabCase(this.collection.Title));
         },
         beforeDestroy() {
-            this.$emit('closeCollections'),
+            this.$emit('showCollectionTabs', false),
             this.timeout = false;
         },
         methods: {
@@ -71,7 +71,6 @@
             toImagePage(title) {
                 const path =
                     `/collections/${toKebabCase(this.collection.Title)}/${toKebabCase(title)}`;
-                    console.log(path)
                 this.$router.push({ path });
             }
         },

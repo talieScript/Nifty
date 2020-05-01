@@ -13,7 +13,7 @@
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
-            @showCollections="showCollectionsTabs"
+            @showCollections="showCollectionTabs"
             @drawVisible="drawVisible = !drawVisible"
             :activeCollection="activeCollection.Title"
             class="main-tab"
@@ -45,7 +45,7 @@
         <md-app-content>
           <transition name="fade-delay">
             <router-view
-              @closeCollections='showCollectionsTabs(false)'
+              @showCollectionTabs='showCollectionTabs'
               @activeCollectionChange="activeCollectionChange"
               @activePictureChange="changeActivePicture"
               @openModal="openModal"
@@ -131,7 +131,7 @@ export default {
       }
       this.collectionTabs = true;
     },
-    showCollectionsTabs(value) {
+    showCollectionTabs(value) {
       this.collectionTabs = value;
     },
     debounce(func, wait, immediate) {
@@ -180,6 +180,11 @@ export default {
         this.loading = false;
       })
     },
+  },
+  watch: {
+    collectionTabs(val) {
+      console.log(val)
+    }
   },
   created() {
     this.getCollections();

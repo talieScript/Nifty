@@ -30,8 +30,7 @@
                 required: true,
             }
         },
-        created() {
-            console.log('here')
+        mounted() {
             const splitRoute = this.$router.currentRoute.path.split('/');
             const collection = this.collections.find(collection => {
                 return toKebabCase(collection.Title.toLowerCase()) === splitRoute[splitRoute.length - 2]
@@ -40,6 +39,7 @@
                 'activeCollectionChange',
                 toKebabCase(collection.Title)
             )
+            this.$emit('showCollectionTabs', true)
             const picture = collection.pictures.find(picture => {
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
             })
