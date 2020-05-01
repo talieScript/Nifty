@@ -3,7 +3,9 @@
     <picture-modal
         :picture="activePicture"
         :collections="collections"
-        @close="activePicture = null"
+        :show="pictureModal"
+        @toPicturePage="toPicturePage"
+        @close="pictureModal = false"
     />
     <transition name="fade">
       <spinner v-if="loading" />
@@ -46,9 +48,11 @@
               @closeCollections='showCollectionsTabs(false)'
               @activeCollectionChange="activeCollectionChange"
               @activePictureChange="changeActivePicture"
+              @openModal="openModal"
               :collections="collections"
               :collection="activeCollection"
               :windowWidth="windowWidth"
+              :activePicture="activePicture"
               class="router-view"
             >
             </router-view>
@@ -76,7 +80,8 @@ export default {
       collections: [],
       collectionTabs: false,
       activeCollection: {},
-      activePicture: null,
+      activePicture: {},
+      pictureModal: false,
       drawVisible: false,
       loading: true,
       windowWidth: window.innerWidth,
@@ -101,14 +106,23 @@ export default {
     }
   },
   methods: {
+    openModal(picture) {
+      this.changeActivePicture(picture)
+      this.pictureModal = true;
+    },
     changeActivePicture(picture) {
+      this.activeCollection = this.collections.find(collection => collection.id == picture.collection);
       this.activePicture = picture;
+    },
+    toPicturePage() {
+      const path =
+        `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
+      this.$router.push({ path });
     },
     activeCollectionChange(collectionTitle) {
       this.activeCollection = this.collections.find(
         collection => toKebabCase(collection.Title) === collectionTitle
       );
-      console.log(this.activeCollection)
       if(!this.$router.currentRoute.path.includes(collectionTitle)) {
         this.$router.push({
           name: 'collections',
@@ -152,15 +166,16 @@ export default {
             this.loading = false;
             return;
           }
-          console.log({collectionTitle});
           this.activeCollection = this.collections.find(collection => {
-            console.log(toKebabCase(collection.Title.toLowerCase()))
             return collectionTitle === toKebabCase(collection.Title.toLowerCase());
           });
-          console.log(this.activeCollection)
           this.collectionTabs = true;
         } else {
           this.activeCollection = this.collections[0]
+        }
+        if(!this.activeCollection) {
+          this.activeCollection = this.collections[0];
+          this.$router.push('/')
         }
         this.loading = false;
       })

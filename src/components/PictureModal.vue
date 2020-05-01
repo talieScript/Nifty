@@ -1,7 +1,7 @@
 <template>
     <transition name="fade">
-        <div @click="$emit('close')" v-if="picture" class="container">
-            <div class="image-card">>
+        <div @click="$emit('close')" v-if="show" class="container">
+            <div class="image-card">
                 <img
                     class="image"
                     :src="getPicUrl(picture.Image.url)"
@@ -21,7 +21,7 @@
 
 <script>
     import Vue from 'vue'
-    import { getPicUrl } from '../utils.ts';
+    import { getPicUrl } from '../utils.ts'
     import { toKebabCase } from '../utils.js';
 
     export default Vue.extend({
@@ -33,6 +33,10 @@
             },
             collections: {
                 type: Array,
+                required: true,
+            },
+            show: {
+                type: Boolean,
                 required: true,
             }
         },

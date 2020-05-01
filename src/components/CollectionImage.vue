@@ -20,6 +20,7 @@
             ref="image"
             :style="`display: ${loading ? 'none' : 'block'}`"
             @mouseover="hover = true"
+            @click="$emit('toImagePage', title)"
         >
         <p  @mouseover="hover = false" class="caption">
             {{ title.split("-").join(" ") }}

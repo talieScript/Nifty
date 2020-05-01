@@ -13,6 +13,7 @@
                         :title="picture.Title"
                         :windowWidth="windowWidth"
                         @openModal="openModal"
+                        @toImagePage="toImagePage"
                     />
                 </div>
             </div>
@@ -64,11 +65,14 @@
         },
         methods: {
             openModal(title) {
-                this.activePicture = this.collection.pictures.find(picture => picture.Title === title);
-                this.$emit('activePictureChange', this.activePicture)
+                const picture = this.collection.pictures.find(picture => picture.Title === title);
+                this.$emit('openModal', picture)
             },
-            closeModal() {
-                this.modal = false;
+            toImagePage(title) {
+                const path =
+                    `/collections/${toKebabCase(this.collection.Title)}/${toKebabCase(title)}`;
+                    console.log(path)
+                this.$router.push({ path });
             }
         },
     }
