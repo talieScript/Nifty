@@ -122,7 +122,6 @@
                 },
                 onApprove: async (data, actions) => {
                     const order = await actions.order.capture();
-                    this.data;
                     this.showSnackbar = true;
                     console.log(order);
                 },
@@ -137,7 +136,7 @@
             },
             changeSize(value) {
                 this.selectedSize = value;
-            }
+            },
         },
         computed: {
             itemDescription() {
@@ -191,6 +190,7 @@
         },
         beforeDestroy() {
             this.showSnackbar = false;
+            this.$emit('showCollectionTabs', false);
         }
     })
 </script>

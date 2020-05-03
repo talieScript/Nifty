@@ -16,7 +16,7 @@
         <img
             class="image"
             :src="getPicUrl(url)"
-            :alt="title"
+            :alt="'Nigel Emery - ' + title"
             ref="image"
             :style="`display: ${loading ? 'none' : 'block'}; ${picturePage ? 'filter: brightness(100%); cursor: default;' : ''}`"
             @mouseover="hover = true"
