@@ -31,6 +31,14 @@
 
     export default Vue.extend({
         name: 'Contact',
+        metaInfo() {
+            return {
+                titleTemplate: '%s | Contact',
+                meta: [
+                    { name: 'description', content: 'Contact us.' },
+                ]
+            }
+        },
         data() {
             return {
                 content: '',

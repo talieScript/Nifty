@@ -26,6 +26,16 @@
      import CollectionImage from '../components/CollectionImage.vue';
     export default {
         name: 'Collection',
+        metaInfo() {
+            const title = this.collection.Title
+            const description = this.collection.Description
+            return {
+                titleTemplate: `%s | ${title}`,
+                meta: [
+                    { name: 'description', content: description },
+                ]
+            }
+        },
         data() {
             return {
                 paypal: {

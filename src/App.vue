@@ -75,6 +75,17 @@ import PictureModal from './components/PictureModal.vue';
 
 export default {
   name: 'App',
+  metaInfo() {
+      return {
+          title: 'Nifty Gallery',
+          htmlAttrs: {
+              lang: 'en',
+          },
+          meta: [
+              { name: 'author', content: 'Taliesin Bowes De Angeli' },
+          ]
+      }
+  },
   data() {
     return {
       collections: [],

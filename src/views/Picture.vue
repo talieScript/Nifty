@@ -48,6 +48,15 @@
 
     export default Vue.extend({
         name: 'Picture',
+        metaInfo() {
+            const title = this.picture.Title
+            return {
+                titleTemplate: `%s | ${title}`,
+                meta: [
+                    { name: 'description', content: 'Limited edition fine art giclee print by Nigel Emery.' },
+                ]
+            }
+        },
         data() {
             return {
                 picture: {},
@@ -111,11 +120,11 @@
                     return actions.order.create({
                     purchase_units: [
                         {
-                        description: this.itemDescription,
-                        amount: {
-                            currency_code: "GBP",
-                            value: this.price
-                        }
+                            description: this.itemDescription,
+                            amount: {
+                                currency_code: "GBP",
+                                value: this.price
+                            }
                         }
                     ]
                     });
@@ -262,6 +271,9 @@
     .paypal-btn {
         width: 50%;
         margin-top: 20px;
+        ::v-deep .component-frame {
+            z-index: 1 !important;
+        }
         @media only screen and (max-width: 37.5em) {
             width: 100%;
          };

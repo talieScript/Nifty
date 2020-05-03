@@ -5,7 +5,6 @@
             :src="mugShotUrl"
         >
         <p class="content" v-html="parsedContent"></p>
-
     </div>
 </template>
 
@@ -18,6 +17,9 @@
 
     export default Vue.extend({
         name: 'Artist',
+        metaInfo: {
+            titleTemplate: '%s | Nigel Emery',
+        },
         data() {
             return {
                 header: '',

@@ -37,6 +37,14 @@
 
     export default Vue.extend({
         name: 'Home',
+        metaInfo() {
+            return {
+                titleTemplate: '%s | Home',
+                meta: [
+                    { name: 'description', content: 'Nifty Art Gallery is the working studio and gallery of Nigel Emery.' },
+                ]
+            }
+        },
         props: {
             collections: {
                 type: Array,
