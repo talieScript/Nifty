@@ -15,7 +15,7 @@
                     <silder-image
                         :picture="picture"
                         :active="activeSlide === index"
-                        :collection="toKebabCase(findCollection(picture.collection).Title)"
+                        :collection="toKebabCase(findCollection(picture.picture_collection).Title)"
                         @changeActiveCollection="changeActiveCollection"
                     />
                 </div>
@@ -87,6 +87,7 @@
         },
         watch: {
             async sliderPics(val) {
+                console.log(val)
                 if(val && !this.loaded) {
                     setTimeout(() => {
                         this.swiper = new window.Swiper('.swiper-container', {

@@ -122,7 +122,7 @@ export default {
       this.pictureModal = true;
     },
     changeActivePicture(picture) {
-      this.activeCollection = this.collections.find(collection => collection.id == picture.collection);
+      this.activeCollection = this.collections.find(collection => collection.id == picture.picture_collection);
       this.activePicture = picture;
     },
     toPicturePage() {
@@ -163,6 +163,7 @@ export default {
       this.loading = true;
       API.get('/collections')
       .then(res => {
+        console.log(res);
         this.collections = res.data;
         if(window.location.href.includes('/collections')) {
           const splitStr = window.location.href.split('/');

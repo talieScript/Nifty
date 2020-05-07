@@ -47,7 +47,7 @@
         },
         methods: {
             toPicturePage() {
-                const collection = this.collections.find(collection => collection.id == this.picture.collection);
+                const collection = this.collections.find(collection => collection.id == this.picture.picture_collection);
                 const path =
                     `/collections/${toKebabCase(collection.Title)}/${toKebabCase(this.picture.Title)}`;
                 this.$emit('close');
