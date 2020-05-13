@@ -4,7 +4,7 @@
             <div class="image-card">
                 <img
                     class="image"
-                    :src="getPicUrl(picture.Image.url)"
+                    :src="getPicUrl(picture.Images[0].url)"
                     :alt="picture.Title"
                     @click.stop
                 >
