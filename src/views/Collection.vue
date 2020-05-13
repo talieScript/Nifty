@@ -5,9 +5,8 @@
             <p class="desc" v-html="collection.Description"></p>
         </div>
         <div class="another-one">
-            <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
-                <div class="gutter-sizer"></div>
-                <div v-masonry-tile fit-width="true" class="image-container item" v-for="(picture, index) in collection.pictures" :key="index">
+            <div v-masonry fitWidth :gutter="25" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
+                <div v-masonry-tile fit-width="true" class="image-container item" v-for="(picture, index) in collection.Pictures.pictures" :key="index">
                     <collection-image
                         :url="picture.Image.url"
                         :title="picture.Title"
@@ -38,10 +37,6 @@
         },
         data() {
             return {
-                paypal: {
-                    sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
-                    production: '<production client id>'
-                },
                 activePicture: {},
                 modal: false,
             }
@@ -67,6 +62,7 @@
             }
         },
         mounted () {
+            console.log(this.collection)
             this.$emit('activeCollectionChange', toKebabCase(this.collection.Title));
         },
         beforeDestroy() {
@@ -119,31 +115,27 @@
         }
     }
     .container {
-        // padding-left: 10vw;
-        // @media only screen and (max-width: 56.25em) {
-        //     padding-left: 8vw;
-        // }
         margin: 0 auto;
     }
     .image-container {
         margin: 0 auto;
         margin-bottom: 10px;
-        width: 20vw;
+        width: 27vw;
         position: absolute;
         @media only screen and (max-width: 75em) {
-            width: 32vw;
+            width: 42vw;
         };
         @media only screen and (max-width: 56.25em) {
-            width: 40vw
+            width: 80vw
          };
     }
     .gutter-sizer {
         width: 3vw;
         @media only screen and (max-width: 75em) {
-            width: 8vw;
+            width: 3vw;
         };
         @media only screen and (max-width: 56.25em) {
-            width: 3vw
+            width: 50px
          };
     }
     .another-one {

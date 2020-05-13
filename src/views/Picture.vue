@@ -91,9 +91,11 @@
                 toKebabCase(this.collection.Title)
             )
             this.$emit('showCollectionTabs', true)
-            const picture = this.collection.pictures.find(picture => {
+            const picture = this.collection.Pictures.pictures.find(picture => {
+                console.log(toKebabCase(picture.Title.toLowerCase()))
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
-            })
+            });
+            console.log(picture)
             this.picture = picture;
             this.selectedSize = this.picture.PriceSize.price_and_sizes[0].FrameSize;
 

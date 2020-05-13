@@ -88,7 +88,7 @@
         align-items: center;
     }
     .image {
-        height: 60%;
+        height: 95%;
         border-radius: 5px;
         @media only screen and (max-width: 45em) {
             width: 100%;
