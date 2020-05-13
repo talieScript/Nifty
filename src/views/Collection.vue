@@ -1,11 +1,11 @@
 <template>
     <div class="collection">
+        <div class="desc-container">
+            <h2 class="title">{{collection.Title}}</h2>
+            <p class="desc" v-html="collection.Description"></p>
+        </div>
         <div class="another-one">
             <div v-masonry percentPosition stamp=".desc" collumn-width=".image-container" gutter=".gutter-sizer" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
-                <div class="desc-container">
-                    <h2 class="title">{{collection.Title}}</h2>
-                    <p class="desc" v-html="collection.Description"></p>
-                </div>
                 <div class="gutter-sizer"></div>
                 <div v-masonry-tile fit-width="true" class="image-container item" v-for="(picture, index) in collection.pictures" :key="index">
                     <collection-image
@@ -90,7 +90,7 @@
 <style lang="scss" scoped>
     .collection {
         width: 100%;
-        padding-top: 60px;
+        padding-top: 30px;
 
         @media only screen and (min-width: 1000px) {
             margin-top: 40px;
@@ -100,17 +100,7 @@
         }
     }
     .desc-container {
-        position: absolute;
-        width: 24vw;
-        padding: 0 2vw;
-        margin: 0 auto;
-        margin-bottom: 10px;
-        @media only screen and (max-width: 75em) {
-            width: 30vw;
-        }
-        @media only screen and (max-width: 56.25em) {
-             width: 40vw;
-        }
+        margin: 10px 50px;
     }
     .title {
       font-size: 25px;
