@@ -17,7 +17,7 @@
                         {{ picture.Title }}
                     </p>
                     <md-button
-                        @click="goToCollection"
+                        @click="toPicture"
                         class="md-dense md-accent">
                         See More <md-icon>chevron_right</md-icon>
                     </md-button>
@@ -51,8 +51,9 @@
             }
         },
         methods: {
-            goToCollection() {
-                this.$emit('changeActiveCollection', this.collection)
+            toPicture() {
+                console.log(this.picture)
+                this.$emit('toPicturePage', this.picture)
             }
         },
         data() {

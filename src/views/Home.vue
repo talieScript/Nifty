@@ -16,7 +16,7 @@
                         :picture="picture"
                         :active="activeSlide === index"
                         :collection="toKebabCase(findCollection(picture.picture_collection).Title)"
-                        @changeActiveCollection="changeActiveCollection"
+                        @toPicturePage="toPicturePage"
                     />
                 </div>
             </div>
@@ -81,8 +81,8 @@
             findCollection(id) {
                 return this.collections.find(collection => collection.id == id);
             },
-            changeActiveCollection(collection) {
-                this.$emit('activeCollectionChange', collection)
+            toPicturePage(picture) {
+                this.$emit('toPicturePage', picture)
             }
         },
         watch: {

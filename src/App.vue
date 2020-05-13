@@ -49,6 +49,7 @@
               @activeCollectionChange="activeCollectionChange"
               @activePictureChange="changeActivePicture"
               @openModal="openModal"
+              @toPicturePage="toPicturePage"
               :collections="collections"
               :collection="activeCollection"
               :windowWidth="windowWidth"
@@ -125,7 +126,8 @@ export default {
       this.activeCollection = this.collections.find(collection => collection.id == picture.picture_collection);
       this.activePicture = picture;
     },
-    toPicturePage() {
+    toPicturePage(picture) {
+      this.activePicture = picture ? picture : this.activePicture;
       const path =
         `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
       this.$router.push({ path });
