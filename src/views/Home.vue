@@ -87,13 +87,13 @@
         },
         watch: {
             async sliderPics(val) {
-                console.log(val)
                 if(val && !this.loaded) {
                     setTimeout(() => {
                         this.swiper = new window.Swiper('.swiper-container', {
                             slidesPerView: 'auto',
                             centeredSlides: true,
                             speed: 1000,
+                            slideToClickedSlide: true,
                             navigation: {
                                 nextEl: '.swiper-button-next',
                                 prevEl: '.swiper-button-prev',

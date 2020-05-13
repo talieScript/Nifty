@@ -1,17 +1,27 @@
 <template>
     <div class="picture">
-        <div class="image">
-            <md-button @click="back" @click.stop class="md-accent back-btn">
-                <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
-            </md-button>
-            <collection-image
-                v-if="picture.Image"
-                :url="picture.Image.url"
-                :title="picture.Title"
-                :windowWidth="0"
-                :picturePage="true"
-            />
-        </div>
+         <!-- <md-button @click="back" @click.stop class="md-accent back-btn">
+            <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
+        </md-button> -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <img
+                        v-if="picture.Image"
+                        class="image swiper-slide"
+                        :src="getPicUrl(picture.Image.url)"
+                        :alt="'Nigel Emery - ' + picture.Title"
+                    >
+                    <img
+                        v-if="picture.Image"
+                        class="image swiper-slide"
+                        :src="getPicUrl(picture.Image.url)"
+                        :alt="'Nigel Emery - ' + picture.Title"
+                    >
+                </div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
         <div class="infomation">
            <h2>{{ picture.Title }}</h2>
             <p class="description" v-html="parsedDescription"></p>
@@ -39,7 +49,7 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import CollectionImage from '../components/CollectionImage.vue';
+    // import CollectionImage from '../components/CollectionImage.vue';
     import { toKebabCase, getPicUrl } from '../utils.js';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
     import { API } from '../API.ts';
@@ -72,8 +82,8 @@
             }
         },
         components: {
-            CollectionImage,
             VSelect,
+            // CollectionImage
         },
         props: {
             collections: {
@@ -108,10 +118,22 @@
         },
         created() {
              API.get('/picture-description')
-            .then(res => {
-                this.description = res.data.Description;
-            })
-            .catch(err => console.log(err))
+                .then(res => {
+                    this.description = res.data.Description;
+                    new window.Swiper('.swiper-container', {
+                        slidesPerView: '1',
+                        speed: 1000,
+                        loop: true,
+                        spaceBetween: 30,
+                        effect: 'flip',
+                        navigation: {
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        },
+                        centeredSlides: true,
+                    });
+                })
+                .catch(err => console.log(err))
         },
         methods: {
             setLoaded() {
@@ -209,11 +231,11 @@
 <style lang="scss" scoped>
     .picture {
         display: flex;
-        justify-content: flex-start;
         align-items: center;
+        justify-content: space-between;
+        padding: 10px;
         height: 100%;
         width: 100%;
-        padding: 40px;
         padding-top: 60px;
         color: rgb(145, 145, 145);
         @media only screen and (max-width: 56.25em) {
@@ -232,20 +254,27 @@
         top: 0;
         z-index: 0;
     }
-    .image {
+    .swiper-container {
+        height: fit-content;
+        width: 48%;
         padding-top: 50px;
-        position: relative;
-        width: 50%;
-        margin-right: 0;
-        @media only screen and (max-width: 56.25em) {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+         @media only screen and (max-width: 56.25em) {
             width: 100%;
         }
+    }
+    .image {
+        position: relative;
+        margin-right: 0;
+        box-shadow: none;
+        border-radius: 5px;
     }
     .infomation {
         display: flex;
         flex-direction: column;
-        width: 50%;
-        margin-left: 25px;
+        width: 48%;
+        // margin-left: 25px;
         padding-top: 60px;
         @media only screen and (max-width: 56.25em) {
             width: 100%;
@@ -285,6 +314,16 @@
         background-color: #2F89A0;
         button {
             color: #F0F3F4;
+        }
+    }
+    .swiper-button-next, .swiper-button-prev {
+        color: white;
+        border-radius: 5px;
+        height: 60px;
+        margin-top: calc(-1 * 60px/ 2);
+        transition: background-color .5s;
+        &:hover {
+            background-color: rgba(#F0F3F4, .4);
         }
     }
 </style>
