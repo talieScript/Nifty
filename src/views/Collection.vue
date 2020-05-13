@@ -8,7 +8,7 @@
             <div v-masonry fitWidth :gutter="25" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
                 <div v-masonry-tile fit-width="true" class="image-container item" v-for="(picture, index) in collection.Pictures.pictures" :key="index">
                     <collection-image
-                        :url="picture.Image.url"
+                        :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
                         @openModal="openModal"
@@ -71,7 +71,7 @@
         },
         methods: {
             openModal(title) {
-                const picture = this.collection.pictures.find(picture => picture.Title === title);
+                const picture = this.collection.Pictures.pictures.find(picture => picture.Title === title);
                 this.$emit('openModal', picture)
             },
             toImagePage(title) {

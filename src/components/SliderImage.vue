@@ -6,7 +6,7 @@
             />
             <img
                 class="slider-img"
-                :src="getPicUrl(picture.Image.url)"
+                :src="getPicUrl(picture.Images[0].url)"
                 :alt="picture.Title"
                 ref="image"
                 :style="`display: ${loading ? 'none' : 'block'}`"

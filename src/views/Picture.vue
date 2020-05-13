@@ -4,17 +4,12 @@
             <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
         </md-button> -->
             <div class="swiper-container">
-                <div class="swiper-wrapper">
+                <div v-if="picture.Image" class="swiper-wrapper">
                     <img
-                        v-if="picture.Image"
+                        v-for="(image) in picture.Images"
+                        :key="image.id"
                         class="image swiper-slide"
-                        :src="getPicUrl(picture.Image.url)"
-                        :alt="'Nigel Emery - ' + picture.Title"
-                    >
-                    <img
-                        v-if="picture.Image"
-                        class="image swiper-slide"
-                        :src="getPicUrl(picture.Image.url)"
+                        :src="getPicUrl(image.url)"
                         :alt="'Nigel Emery - ' + picture.Title"
                     >
                 </div>
