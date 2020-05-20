@@ -116,16 +116,15 @@
                 .then(res => {
                     this.description = res.data.Description;
                     new window.Swiper('.swiper-container', {
-                        slidesPerView: '1',
+                        autoHeight: true,
+                        slidesPerView: 'auto',
                         speed: 1000,
                         loop: true,
                         spaceBetween: 30,
-                        effect: 'flip',
                         navigation: {
                             nextEl: '.swiper-button-next',
                             prevEl: '.swiper-button-prev',
                         },
-                        centeredSlides: true,
                     });
                 })
                 .catch(err => console.log(err))

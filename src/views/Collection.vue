@@ -5,14 +5,15 @@
             <p class="desc" v-html="collection.Description"></p>
         </div>
         <div class="another-one">
-            <div v-masonry fitWidth :gutter="25" class="container" transition-duration="0.3s" item-selector=".item" stagger="0.03s">
-                <div v-masonry-tile fit-width="true" class="image-container item" v-for="(picture, index) in collection.Pictures.pictures" :key="index">
+            <div ref="masonary" class="masonary">
+                <div class="image-container item" v-for="(picture, index) in collection.Pictures.pictures" :key="index">
                     <collection-image
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
                         @openModal="openModal"
                         @toImagePage="toImagePage"
+                        @loaded="loaded"
                     />
                 </div>
             </div>
@@ -23,6 +24,7 @@
 <script>
      import { toKebabCase } from '../utils.js'
      import CollectionImage from '../components/CollectionImage.vue';
+     import Masonry from 'masonry-layout'
     export default {
         name: 'Collection',
         metaInfo() {
@@ -39,6 +41,7 @@
             return {
                 activePicture: {},
                 modal: false,
+                msnry: undefined,
             }
         },
         components: {
@@ -64,6 +67,13 @@
         mounted () {
             console.log(this.collection)
             this.$emit('activeCollectionChange', toKebabCase(this.collection.Title));
+            this.msnry = new Masonry( this.$refs.masonary, {
+                itemSelector: '.item',
+                gutter: 25,
+                percentPosition: true,
+                fitWidth: true,
+            })
+            console.log(this.msnry)
         },
         beforeDestroy() {
             this.$emit('showCollectionTabs', false),
@@ -78,12 +88,26 @@
                 const path =
                     `/collections/${toKebabCase(this.collection.Title)}/${toKebabCase(title)}`;
                 this.$router.push({ path });
+            },
+            loaded() {
+                console.log(this.msnry)
+                this.msnry.reloadItems();
+                this.msnry.layout();
+                // const container = this.$refs.masonary
+                // container.style.width = '0px';
+                // container.style.width = width;
+                // window.resizeTo(205, 250)
+                // container.style.width = (container.style.width + 1) + "px";
+                // container.style.width = (container.style.width - 1) + "px";
             }
         },
     }
 </script>
 
 <style lang="scss" scoped>
+    .masonary {
+        margin: 0 auto;
+    }
     .collection {
         width: 100%;
         padding-top: 30px;
