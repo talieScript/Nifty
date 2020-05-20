@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 import router from '@/router.ts';
 import 'vue-material/dist/vue-material.min.css'
 import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList, MdDialog, MdTooltip, MdSnackbar } from 'vue-material/dist/components'
-import { VueMasonryPlugin } from 'vue-masonry';
 import vSelect from 'vue-select';
 import VueMeta from 'vue-meta'
 
@@ -21,7 +20,6 @@ Vue.use(MdToolbar)
 Vue.use(MdButton)
 Vue.use(MdDrawer)
 Vue.use(MdList)
-Vue.use(VueMasonryPlugin);
 Vue.use(MdDialog);
 Vue.use(MdTooltip);
 Vue.use(MdSnackbar);
