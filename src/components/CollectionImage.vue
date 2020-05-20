@@ -1,9 +1,5 @@
 <template>
     <div @mouseleave="hover = false" class="image-card">
-        <ImageSkeletonLoader
-            :show="loading"
-            class="loader"
-        />
         <transition name="fade">
             <div
                 v-if="(hover || windowWidth < 1000) && !picturePage" @click="$emit('openModal', title)"
@@ -31,12 +27,12 @@
 <script>
     import Vue from 'vue';
     import { getPicUrl } from '../utils.js';
-    import ImageSkeletonLoader from './ImageSkeletonLoader.vue'
+    // import ImageSkeletonLoader from './ImageSkeletonLoader.vue'
 
     export default Vue.extend({
         name: 'CollectionImage',
         components: {
-            ImageSkeletonLoader,
+            // ImageSkeletonLoader,
         },
         props: {
             url: {
@@ -68,6 +64,7 @@
             this.$refs.image.addEventListener('load', () => {
                 this.loading = false;
                 this.imageHeight = this.$refs.image.height;
+                this.$emit('loaded');
             });
         },
     })
