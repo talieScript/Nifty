@@ -4,7 +4,7 @@
                 <md-button @click="back" @click.stop class="md-accent back-btn">
                 <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
             </md-button>
-                <div v-if="picture.Image" class="swiper-wrapper">
+                <div class="swiper-wrapper">
                     <img
                         v-for="(image) in picture.Images"
                         :key="image.id"
