@@ -101,9 +101,6 @@
                             autoplay: {
                                 delay: 10000,
                             },
-                            mousewheel: {
-                                invert: true,
-                            },
                         });
                      }, 10)
                     setTimeout(() => {

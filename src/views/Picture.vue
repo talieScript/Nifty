@@ -2,8 +2,8 @@
     <div class="picture">
             <div class="swiper-container">
                 <md-button @click="back" @click.stop class="md-accent back-btn">
-                <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
-            </md-button>
+                    <md-icon class="overlay-icon">keyboard_backspace</md-icon> Back to collection
+                </md-button>
                 <div class="swiper-wrapper">
                     <img
                         v-for="(image) in picture.Images"
@@ -97,7 +97,6 @@
             )
             this.$emit('showCollectionTabs', true)
             const picture = this.collection.Pictures.pictures.find(picture => {
-                console.log(toKebabCase(picture.Title.toLowerCase()))
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
             });
             console.log(picture)

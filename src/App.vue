@@ -127,7 +127,7 @@ export default {
       this.activePicture = picture;
     },
     toPicturePage(picture) {
-      this.activePicture = picture ? picture : this.activePicture;
+      this.changeActivePicture(picture)
       const path =
         `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
       this.$router.push({ path });

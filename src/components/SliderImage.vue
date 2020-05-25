@@ -52,7 +52,6 @@
         },
         methods: {
             toPicture() {
-                console.log(this.picture)
                 this.$emit('toPicturePage', this.picture)
             }
         },
