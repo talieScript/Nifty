@@ -90,15 +90,8 @@
                 this.$router.push({ path });
             },
             loaded() {
-                console.log(this.msnry)
                 this.msnry.reloadItems();
                 this.msnry.layout();
-                // const container = this.$refs.masonary
-                // container.style.width = '0px';
-                // container.style.width = width;
-                // window.resizeTo(205, 250)
-                // container.style.width = (container.style.width + 1) + "px";
-                // container.style.width = (container.style.width - 1) + "px";
             }
         },
     }
