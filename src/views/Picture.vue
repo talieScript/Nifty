@@ -70,7 +70,7 @@
                 description: '',
                 selectedSize: '',
                 paypal: {
-                    sandbox: 'AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K',
+                    sandbox: process.env.VUE_APP_PAYPAL_CLIENT_ID,
                     production: '<production client id>'
                 },
                 showSnackbar: false,

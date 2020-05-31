@@ -65,15 +65,13 @@
             }
         },
         mounted () {
-            console.log(this.collection)
             this.$emit('activeCollectionChange', toKebabCase(this.collection.Title));
             this.msnry = new Masonry( this.$refs.masonary, {
                 itemSelector: '.item',
                 gutter: 25,
                 percentPosition: true,
                 fitWidth: true,
-            })
-            console.log(this.msnry)
+            });
         },
         beforeDestroy() {
             this.$emit('showCollectionTabs', false),

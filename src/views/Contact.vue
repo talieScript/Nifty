@@ -54,6 +54,7 @@
                 address: '',
                 phone: '',
                 email: '',
+                openingTimes: ''
             }
         },
         created() {
@@ -64,6 +65,7 @@
                     this.address = data.Address;
                     this.phone = data.Phone;
                     this.email = data.Email;
+                    this.openingTimes = data.openTimes;
                 })
         },
         computed: {
