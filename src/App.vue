@@ -165,7 +165,6 @@ export default {
       this.loading = true;
       API.get('/collections')
       .then(res => {
-        console.log(res);
         this.collections = res.data;
         if(window.location.href.includes('/collections')) {
           const splitStr = window.location.href.split('/');

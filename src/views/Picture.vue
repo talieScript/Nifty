@@ -69,10 +69,6 @@
                 collection: {},
                 description: '',
                 selectedSize: '',
-                paypal: {
-                    sandbox: process.env.VUE_APP_PAYPAL_CLIENT_ID,
-                    production: '<production client id>'
-                },
                 showSnackbar: false,
             }
         },
@@ -99,13 +95,12 @@
             const picture = this.collection.Pictures.pictures.find(picture => {
                 return toKebabCase(picture.Title.toLowerCase()) === splitRoute[splitRoute.length - 1]
             });
-            console.log(picture)
             this.picture = picture;
             this.selectedSize = this.picture.PriceSize.price_and_sizes[0].FrameSize;
 
             // paypal stuff
             const script = document.createElement('script');
-            script.src = 'https://www.paypal.com/sdk/js?currency=GBP&client-id=AaCSLEPU-GZnVGLdovCiCiOrc9LvE7I5UJDM7tGSUmY2L-jx0BFo0h1VP_2w0tLupb59QenPcLPmJC6K';
+            script.src = `https://www.paypal.com/sdk/js?currency=GBP&client-id=${process.env.VUE_APP_PAYPAL_CLIENT_ID}`;
             script.addEventListener("load", this.setLoaded);
             document.body.appendChild(script);
 
@@ -146,10 +141,10 @@
                     ]
                     });
                 },
-                onApprove: async (data, actions) => {
-                    const order = await actions.order.capture();
+                onApprove: async () => {
+                    // const order = await actions.order.capture();
                     this.showSnackbar = true;
-                    console.log(order);
+                    console.log('Thank you')
                 },
                 onError: err => {
                     console.log(err);
