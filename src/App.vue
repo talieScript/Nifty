@@ -9,7 +9,7 @@
     />
     <transition name="fade">
       <spinner v-if="loading" />
-      <md-app v-else md-waterfall :md-mode="'fixed-last'">
+      <md-app v-else md-mode="fixed" md-waterfall>
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
@@ -215,6 +215,8 @@ export default {
     background-color: $tertiary !important;
     padding: 0;
     padding-bottom: 75px;
+    height: fit-content;
+    padding-bottom: 100px;
   }
 
   #tab-collections {

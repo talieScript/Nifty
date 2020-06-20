@@ -15,7 +15,7 @@
                     <silder-image
                         :picture="picture"
                         :active="activeSlide === index"
-                        :collection="toKebabCase(findCollection(picture.picture_collection).Title)"
+                        :collection="getPicureCollection(picture)"
                         @toPicturePage="toPicturePage"
                     />
                 </div>
@@ -66,6 +66,10 @@
             }
         },
         methods: {
+            getPicureCollection(picture) {
+                console.log(picture.picture_collection);
+                return toKebabCase(this.findCollection(picture.picture_collection).Title)
+            },
             getData() {
                 if(!this.loaded) {
                     API.get('/home-page')

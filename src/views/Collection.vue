@@ -103,9 +103,6 @@
         width: 100%;
         padding-top: 30px;
 
-        @media only screen and (min-width: 1000px) {
-            margin-top: 40px;
-        }
         @media only screen and (max-width: 1000px) {
             padding-top: 20px;
         }
