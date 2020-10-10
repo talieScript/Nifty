@@ -5,24 +5,19 @@
             <p v-html="into"></p>
         </div>
         <h3 class="recent-additions">Recent Additions</h3>
-        <div v-if="!loading" class="swiper-container">
-            <div class="swiper-wrapper">
-                <div
-                    v-for="(picture, index) in sliderPics"
-                    :key="picture.id"
-                    class="swiper-slide"
-                >
-                    <silder-image
-                        :picture="picture"
-                        :active="activeSlide === index"
-                        :collection="getPicureCollection(picture)"
-                        @toPicturePage="toPicturePage"
+        <div class="another-one">
+            <div ref="masonary" class="masonary">
+                <div class="image-container item" v-for="(picture, index) in sliderPics" :key="index">
+                    <collection-image
+                        :url="picture.Images[0].url"
+                        :title="picture.Title"
+                        :windowWidth="windowWidth"
+                        @loaded="imageLoaded"
+                        @openModal="openModal"
+                        @toImagePage="openModal"
                     />
                 </div>
             </div>
-            <!-- Add Arrows -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
         </div>
     </div>
 </template>
@@ -32,8 +27,8 @@
     import { API } from '../API.ts';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
     import { toKebabCase } from '../utils.js';
-    import SilderImage from '../components/SliderImage.vue'
-
+    import CollectionImage from '../components/CollectionImage.vue';
+    import Masonry from 'masonry-layout'
 
     export default Vue.extend({
         name: 'Home',
@@ -49,10 +44,14 @@
             collections: {
                 type: Array,
                 required: true,
+            },
+            windowWidth: {
+                type: Number,
+                required: true,
             }
         },
         components: {
-            SilderImage,
+            CollectionImage
         },
         data() {
             return {
@@ -62,10 +61,24 @@
                 loaded: false,
                 activeSlide: 0,
                 toKebabCase,
-                loadedImages: {}
+                loadedImages: {},
+                msnry: undefined,
             }
         },
         methods: {
+            toImagePage(title) {
+                const path =
+                    `/collections/${toKebabCase(this.collection.Title)}/${toKebabCase(title)}`;
+                this.$router.push({ path });
+            },
+            openModal(title) {
+                const picture = this.sliderPics.find(picture => picture.Title === title);
+                this.$emit('openModal', picture)
+            },
+            imageLoaded() {
+                this.msnry.reloadItems();
+                this.msnry.layout();
+            },
             getPicureCollection(picture) {
                 console.log(picture.picture_collection);
                 return toKebabCase(this.findCollection(picture.picture_collection).Title)
@@ -87,34 +100,6 @@
             },
             toPicturePage(picture) {
                 this.$emit('toPicturePage', picture)
-            }
-        },
-        watch: {
-            async sliderPics(val) {
-                if(val && !this.loaded) {
-                    setTimeout(() => {
-                        this.swiper = new window.Swiper('.swiper-container', {
-                            slidesPerView: 'auto',
-                            centeredSlides: true,
-                            speed: 1000,
-                            slideToClickedSlide: true,
-                            navigation: {
-                                nextEl: '.swiper-button-next',
-                                prevEl: '.swiper-button-prev',
-                            },
-                            autoplay: {
-                                delay: 10000,
-                            },
-                        });
-                     }, 10)
-                    setTimeout(() => {
-                        this.swiper.on('slideChange', () => {
-                            this.activeSlide = this.swiper.realIndex
-                        });
-                    }, 20)
-                    // create object with false values
-                    // set event listener to set value to true  when finnished loading
-                }
             }
         },
         computed: {
@@ -144,6 +129,12 @@
         },
         mounted () {
             this.getData()
+            this.msnry = new Masonry( this.$refs.masonary, {
+                itemSelector: '.item',
+                gutter: 25,
+                percentPosition: true,
+                fitWidth: true,
+            });
         },
     })
 </script>
@@ -151,7 +142,7 @@
 <style lang="scss" scoped>
     .home {
         padding-top: 10px;
-        background-color: #F0F3F4;
+        background-color: blue($color: #000000);
     }
     .nifty-header {
         padding: 30px 25px;
@@ -171,12 +162,6 @@
             line-height: 23px
         }
     }
-    .swiper-slide {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: fit-content;
-    }
     .heading {
         margin: 0;
         color: #5d5b6a;
@@ -187,18 +172,29 @@
         text-align: center;
         color: #5d5b6a;
     }
-    .swiper-container {
-        width: 100%;
-        height: 60vh;
+     .gutter-sizer {
+        width: 3vw;
+        @media only screen and (max-width: 75em) {
+            width: 3vw;
+        };
+        @media only screen and (max-width: 56.25em) {
+            width: 50px
+         };
     }
-    .swiper-button-next, .swiper-button-prev {
-        color: #222831;
-        border-radius: 5px;
-        height: 60px;
-        margin-top: calc(-1 * 60px/ 2);
-        transition: background-color .5s;
-        &:hover {
-            background-color: rgba(#F0F3F4, .4);
-        }
+      .image-container {
+        margin: 0 auto;
+        margin-bottom: 10px;
+        width: 27vw;
+        position: absolute;
+        @media only screen and (max-width: 75em) {
+            width: 42vw;
+        };
+        @media only screen and (max-width: 56.25em) {
+            width: 80vw
+         };
+    }
+    .another-one {
+        width: 90%;
+        margin: 0 auto;
     }
 </style>

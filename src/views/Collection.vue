@@ -54,7 +54,7 @@
             },
             windowWidth: {
                 type: Number,
-                requied: true,
+                required: true,
             }
         },
         watch: {

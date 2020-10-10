@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="content" id="app">
     <picture-modal
         :picture="activePicture"
         :collections="collections"
@@ -9,7 +9,7 @@
     />
     <transition name="fade">
       <spinner v-if="loading" />
-      <md-app v-else md-mode="fixed" md-waterfall>
+      <md-app class="content" v-else md-mode="fixed" md-waterfall>
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
@@ -42,7 +42,7 @@
             />
           </md-app-drawer>
         <!-- Page Content -->
-        <md-app-content>
+        <md-app-content class="content">
           <transition name="fade-delay">
             <router-view
               @showCollectionTabs='showCollectionTabs'
@@ -304,6 +304,10 @@ $text: rgb(145, 145, 145);
   @include respond(tab-port) {
     display: none;
   }
+}
+
+.content {
+  background-color: $tertiary !important;
 }
 
 </style>
