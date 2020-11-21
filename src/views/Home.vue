@@ -135,6 +135,9 @@
                 percentPosition: true,
                 fitWidth: true,
             });
+            setTimeout(() => {
+                this.msnry.layout()
+            }, 1000)
         },
     })
 </script>
