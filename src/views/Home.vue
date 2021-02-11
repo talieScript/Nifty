@@ -5,7 +5,7 @@
             <p v-html="into"></p>
         </div>
         <h3 class="recent-additions">Recent Additions</h3>
-        <div class="another-one">
+        <div class="masonary-wrapper">
             <div ref="masonary" class="masonary">
                 <div class="image-container item" v-for="(picture, index) in sliderPics" :key="index">
                     <collection-image
@@ -24,9 +24,9 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { API } from '../API.ts';
+    import { API } from '@/API.ts';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-    import { toKebabCase } from '../utils.js';
+    import { toKebabCase } from '@/utils.js';
     import CollectionImage from '../components/CollectionImage.vue';
     import Masonry from 'masonry-layout'
 
@@ -196,7 +196,7 @@
             width: 80vw
          };
     }
-    .another-one {
+    .masonary-wrapper {
         width: 90%;
         margin: 0 auto;
     }

@@ -1,15 +1,7 @@
 <template>
   <div class="content" id="app">
-    <picture-modal
-        :picture="activePicture"
-        :collections="collections"
-        :show="pictureModal"
-        @toPicturePage="toPicturePage"
-        @close="pictureModal = false"
-    />
     <transition name="fade">
-      <spinner v-if="loading" />
-      <md-app class="content" v-else md-mode="fixed" md-waterfall>
+      <md-app class="content" md-mode="fixed" md-waterfall>
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
@@ -50,7 +42,6 @@
               @activePictureChange="changeActivePicture"
               @openModal="openModal"
               @toPicturePage="toPicturePage"
-              :collections="collections"
               :collection="activeCollection"
               :windowWidth="windowWidth"
               :activePicture="activePicture"
@@ -68,10 +59,7 @@
 import MainNav from './components/Navigation/MainNav.vue';
 import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
-import Spinner from './components/Spinner.vue'
-import { API } from './API.ts'
 import { toKebabCase } from './utils.js'
-import PictureModal from './components/PictureModal.vue';
 
 
 export default {
@@ -89,33 +77,35 @@ export default {
   },
   data() {
     return {
-      collections: [],
       collectionTabs: false,
       activeCollection: {},
       activePicture: {},
       pictureModal: false,
       drawVisible: false,
-      loading: true,
       windowWidth: window.innerWidth,
       debouncedGetWindowWidth: this.debounce(() => {
         this.windowWidth = window.innerWidth
-      }, 200, false)
+      }, 200, false),
+      collectionTitles: [
+        'Abstract  Seascapes',
+        'Collages',
+        'Countryside',
+        'Cows & Sheep',
+        'Flora & Fauna',
+        'Seaside',
+        'Tasty Food'
+      ]
     }
   },
   components: {
     MainNav,
     Collections,
     Draw,
-    Spinner,
-    PictureModal
   },
   computed: {
     name() {
       return this.data
     },
-    collectionTitles() {
-      return this.collections.map(collection => collection.Title)
-    }
   },
   methods: {
     openModal(picture) {
@@ -161,42 +151,9 @@ export default {
         if (callNow) func.apply(context, args);
       };
     },
-    getCollections() {
-      this.loading = true;
-      API.get('/collections')
-      .then(res => {
-        this.collections = res.data;
-        if(window.location.href.includes('/collections')) {
-          const splitStr = window.location.href.split('/');
-          let collectionTitle = '';
-          if (splitStr.length === 5) {
-            collectionTitle = splitStr[splitStr.length - 1];
-          } else if (splitStr.length < 7) {
-            collectionTitle = splitStr[splitStr.length - 2];
-          } else {
-            this.activeCollection = this.collections[0];
-            this.$router.push('/')
-            this.loading = false;
-            return;
-          }
-          this.activeCollection = this.collections.find(collection => {
-            return collectionTitle === toKebabCase(collection.Title.toLowerCase());
-          });
-          this.collectionTabs = true;
-        } else {
-          this.activeCollection = this.collections[0]
-        }
-        if(!this.activeCollection) {
-          this.activeCollection = this.collections[0];
-          this.$router.push('/')
-        }
-        this.loading = false;
-      })
-    },
   },
   created() {
-    this.getCollections();
-     window.addEventListener('resize', () => {
+    window.addEventListener('resize', () => {
        this.debouncedGetWindowWidth()
     })
   },
