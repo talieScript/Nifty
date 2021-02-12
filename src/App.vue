@@ -7,7 +7,6 @@
           <main-nav
             @showCollections="showCollectionTabs"
             @drawVisible="drawVisible = !drawVisible"
-            :activeCollection="activeCollection.Title"
             class="main-tab"
             :windowWidth="windowWidth"
           />
@@ -17,7 +16,6 @@
             <collections
               @activeCollectionChange="activeCollectionChange"
               :collections="collectionTitles"
-              :activeCollection="activeCollection.Title"
               class="collections-tab"
               v-if="collectionTabs && windowWidth > 1000"
             />
@@ -28,7 +26,6 @@
           <md-app-drawer  v-if="windowWidth < 1000" class="drawer-menu" :md-active.sync="drawVisible">
             <draw
               :collections="collectionTitles"
-              :activeCollection="activeCollection.Title"
               @activeCollectionChange="activeCollectionChange"
               @close='drawVisible = false'
             />
@@ -38,13 +35,9 @@
           <transition name="fade-delay">
             <router-view
               @showCollectionTabs='showCollectionTabs'
-              @activeCollectionChange="activeCollectionChange"
-              @activePictureChange="changeActivePicture"
               @openModal="openModal"
               @toPicturePage="toPicturePage"
-              :collection="activeCollection"
               :windowWidth="windowWidth"
-              :activePicture="activePicture"
               class="router-view"
             >
             </router-view>
@@ -78,8 +71,6 @@ export default {
   data() {
     return {
       collectionTabs: false,
-      activeCollection: {},
-      activePicture: {},
       pictureModal: false,
       drawVisible: false,
       windowWidth: window.innerWidth,
@@ -112,27 +103,11 @@ export default {
       this.changeActivePicture(picture)
       this.pictureModal = true;
     },
-    changeActivePicture(picture) {
-      this.activeCollection = this.collections.find(collection => collection.id == picture.picture_collection);
-      this.activePicture = picture;
-    },
     toPicturePage(picture) {
       this.changeActivePicture(picture)
       const path =
         `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
       this.$router.push({ path });
-    },
-    activeCollectionChange(collectionTitle) {
-      this.activeCollection = this.collections.find(
-        collection => toKebabCase(collection.Title) === collectionTitle
-      );
-      if(!this.$router.currentRoute.path.includes(collectionTitle)) {
-        this.$router.push({
-          name: 'collections',
-          params: { name: collectionTitle },
-          props: { activeCollection: this.activeCollection }})
-      }
-      this.collectionTabs = true;
     },
     showCollectionTabs(value) {
       this.collectionTabs = value;
