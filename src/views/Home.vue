@@ -41,10 +41,6 @@
             }
         },
         props: {
-            collections: {
-                type: Array,
-                required: true,
-            },
             windowWidth: {
                 type: Number,
                 required: true,
@@ -103,6 +99,9 @@
             }
         },
         computed: {
+            collections() {
+                return this.store.state.collections
+            },
             sliderPics() {
                 return this.data.slider ? this.data.slider.pictures : null;
             },

@@ -5,9 +5,17 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    activeCollection: {},
+    activeCollection: 'Seaside',
     activePicture: {},
-    colections: []
+    colections: [
+      'Abstract  Seascapes',
+        'Collages',
+        'Countryside',
+        'Cows & Sheep',
+        'Flora & Fauna',
+        'Seaside',
+        'Tasty Food'
+    ]
   },
   mutations: {
     setActiveCollection (state, collection) {

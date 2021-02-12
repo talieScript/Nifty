@@ -36,16 +36,17 @@ export default Vue.extend({
     props: {
       windowWidth: {
         type: Number,
-        requied: true,
-      },
-      activeCollection: {
-        type: String,
         required: true,
-      }
+      },
     },
     data() {
       return {
         toKebabCase
+      }
+    },
+    computed: {
+      activeCollection() {
+        return this.$store.state.activeCollection
       }
     },
     methods: {

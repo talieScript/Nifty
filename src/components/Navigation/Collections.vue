@@ -36,10 +36,10 @@
         computed: {
             active: {
                 get() {
-                    return toKebabCase(this.activeCollection);
+                    return toKebabCase(this.store.state.activeCollection);
                 },
                 set(collection) {
-                    this.$emit('activeCollectionChange', toKebabCase(collection))
+                    this.store.commit('setActiveCollection', toKebabCase(collection))
                 }
             }
         },
