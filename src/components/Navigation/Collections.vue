@@ -1,10 +1,10 @@
 <template>
-    <md-tabs :md-active-tab="active.toLowerCase()" class="collection-tabs md-primary" @md-changed='active = $event'>
+    <md-tabs :md-active-tab="active" class="collection-tabs md-primary" @md-changed='active = $event'>
         <template v-for="collection in collections">
             <md-tab
-                v-bind:key="collection"
-                :id="`${toKebabCase(collection).toLowerCase()}`"
-                :md-label="collection"
+                v-bind:key="collection.id"
+                :id="collection.id"
+                :md-label="collection.Title"
                 exact
             />
         </template>
@@ -18,30 +18,26 @@
 
     export default Vue.extend({
         name: 'Collections',
-        props: {
-            collections: {
-                type: Array,
-                required: true,
-            },
-            activeCollection: {
-                type: String,
-                required: true,
-            }
-        },
         data() {
             return {
                 toKebabCase,
             }
         },
+        mounted() {
+            console.log(this.collections)
+        },
         computed: {
             active: {
                 get() {
-                    return toKebabCase(this.store.state.activeCollection);
+                    return toKebabCase(this.$store.state.activeCollection);
                 },
-                set(collection) {
-                    this.store.commit('setActiveCollection', toKebabCase(collection))
+                set(collectionId) {
+                    this.$store.commit('setActiveCollection', collectionId)
                 }
-            }
+            },
+            collections() {
+                return this.$store.state.collections;
+            },
         },
     })
 </script>

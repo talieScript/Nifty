@@ -64,10 +64,6 @@
                 type: String,
                 required: true,
             },
-            collections: {
-                type: Array,
-                required: true,
-            }
         },
         data() {
             return {
@@ -83,6 +79,9 @@
                 set(collection) {
                     this.$emit('activeCollectionChange', collection)
                 }
+            },
+            collections() {
+                return this.store.state.collections;
             }
         },
     })

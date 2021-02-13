@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    activeCollection: 'Seaside',
+    activeCollection: '',
     activePicture: {},
     collections: []
   },
@@ -24,8 +24,9 @@ const store = new Vuex.Store({
   actions: {
     async getCollections(context) {
       if(!context.state.collections.length) {
-        const collections = await API.get('/collections/names');
-        context.commit('setCollections', collections);
+        const collectionsRes = await API.get('/collections/names');
+        context.commit('setCollections', collectionsRes.data);
+        context.commit('activeCollection', collectionsRes.data[0].id);
       }
       return;
     }

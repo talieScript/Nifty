@@ -2,7 +2,7 @@
   <div class="content" id="app">
     <transition name="fade">
       <spinner v-if="loading" />
-      <md-app class="content" md-mode="fixed" md-waterfall>
+      <md-app v-else class="content" md-mode="fixed" md-waterfall>
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
@@ -15,10 +15,8 @@
           <!-- Collections tabs -->
           <transition name="fade">
             <collections
-              @activeCollectionChange="activeCollectionChange"
-              :collections="collectionTitles"
               class="collections-tab"
-              v-if="collectionTabs && windowWidth > 1000"
+              v-if="windowWidth > 1000"
             />
           </transition>
 
