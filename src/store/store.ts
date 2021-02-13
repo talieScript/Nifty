@@ -27,7 +27,7 @@ const store = new Vuex.Store({
       if(!context.state.collections.length) {
         const collectionsRes = await API.get('/collections/names');
         context.commit('setCollections', collectionsRes.data);
-        context.commit('setActiveCollection', collectionsRes.data[0].Title);
+        context.commit('setActiveCollection', collectionsRes.data[0].id);
       }
       return;
     }

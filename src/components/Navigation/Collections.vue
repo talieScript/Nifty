@@ -23,9 +23,6 @@
                 toKebabCase,
             }
         },
-        mounted() {
-            console.log(this.collections)
-        },
         computed: {
             active: {
                 get() {
