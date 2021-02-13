@@ -50,11 +50,6 @@
                 required: true
             }
         },
-        methods: {
-            toPicture() {
-                this.$emit('toPicturePage', this.picture)
-            }
-        },
         data() {
             return {
                 loading: true,

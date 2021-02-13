@@ -16,7 +16,7 @@
           <transition name="fade">
             <collections
               class="collections-tab"
-              v-if="windowWidth > 1000"
+              v-if="collectionTabs && windowWidth > 1000"
             />
           </transition>
 
@@ -33,9 +33,6 @@
         <md-app-content class="content">
           <transition name="fade-delay">
             <router-view
-              @showCollectionTabs='showCollectionTabs'
-              @openModal="openModal"
-              @toPicturePage="toPicturePage"
               :windowWidth="windowWidth"
               class="router-view"
             >
@@ -51,7 +48,6 @@
 import MainNav from './components/Navigation/MainNav.vue';
 import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
-import { toKebabCase } from './utils.js'
 import Spinner from './components/Spinner.vue'
 
 export default {
@@ -89,21 +85,11 @@ export default {
     name() {
       return this.data
     },
+    showCollectionTabs() {
+      return this.$store.state.showCollectionTabs;
+    }
   },
   methods: {
-    openModal(picture) {
-      this.$store.commit('setActivePicture', picture)
-      this.pictureModal = true;
-    },
-    toPicturePage(picture) {
-      this.$store.commit('setActivePicture', picture)
-      const path =
-        `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
-      this.$router.push({ path });
-    },
-    showCollectionTabs(value) {
-      this.collectionTabs = value;
-    },
     debounce(func, wait, immediate) {
       var timeout;
       return function() {

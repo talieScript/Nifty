@@ -8,19 +8,18 @@
           <img class="logo" src="../../assets/nifty-logo.svg" alt="nifty logo" />
           <span class="md-headline">Nifty</span>
         </div>
-        <md-tabs v-if="windowWidth > 1000" md-sync-route class="md-primary md-layout-item main-tabs" @click.native="changed">
+        <md-tabs v-if="windowWidth > 1000" md-sync-route class="md-primary md-layout-item main-tabs">
           <md-tab id="tab-home" md-label="Home" to="/" exact />
           <md-tab id="tab-artist" md-label="Artist" to="/artist" exact />
           <md-tab
             id="tab-collections"
             md-label="Collections"
             :to="`/collections/${toKebabCase(activeCollection.toLowerCase())}`"
-            @click="changed"
           />
         </md-tabs>
       </div>
       <div v-if="windowWidth > 1000" class="md-toolbar-section-end">
-        <md-tabs md-sync-route class="md-primary main-tabs" @click.native="changed">
+        <md-tabs md-sync-route class="md-primary main-tabs">
           <md-tab id="tab-contact" md-label="Contact" to="/contact" />
         </md-tabs>
       </div>
@@ -49,17 +48,6 @@ export default Vue.extend({
         return this.$store.state.activeCollection
       }
     },
-    methods: {
-        changed() {
-          setTimeout(() => {
-            if (this.$router.currentRoute.path.includes('/collections')) {
-                this.$emit('showCollectionTabs', true);
-            } else {
-                this.$emit('showCollectionTabs', false)
-            }
-          }, 50)
-        }
-    }
 });
 </script>
 

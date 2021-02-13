@@ -12,12 +12,11 @@
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
-                        :collection="picture.collection"
+                        :collection="picture.picture_collection || ''"
                         @loaded="imageLoaded"
                         @openModal="openModal"
                         @toImagePage="openModal"
                     />
-                    <pre>{{ picture }}</pre>
                 </div>
             </div>
         </div>
@@ -96,9 +95,6 @@
             findCollection(id) {
                 return this.collections.find(collection => collection.id == id);
             },
-            toPicturePage(picture) {
-                this.$emit('toPicturePage', picture)
-            }
         },
         computed: {
             collections() {

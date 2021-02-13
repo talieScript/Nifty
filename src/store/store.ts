@@ -8,7 +8,8 @@ const store = new Vuex.Store({
   state: {
     activeCollection: '',
     activePicture: {},
-    collections: []
+    collections: [],
+    showCollectionTabs: true,
   },
   mutations: {
     setActiveCollection (state, collection) {
@@ -26,7 +27,7 @@ const store = new Vuex.Store({
       if(!context.state.collections.length) {
         const collectionsRes = await API.get('/collections/names');
         context.commit('setCollections', collectionsRes.data);
-        context.commit('activeCollection', collectionsRes.data[0].id);
+        context.commit('setActiveCollection', collectionsRes.data[0].Title);
       }
       return;
     }
