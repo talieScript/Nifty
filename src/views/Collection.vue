@@ -4,14 +4,15 @@
             <h2 class="title">{{collectionData.Title}}</h2>
             <p class="desc" v-html="collectionData.Description"></p>
         </div>
-        <div class="another-one">
+        <spinner v-if="loading" />
+        <div v-else class="another-one">
             <div ref="masonary" class="masonary">
                 <div class="image-container item" v-for="(picture, index) in collectionData.Pictures.pictures" :key="index">
                     <collection-image
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
-                        :collection="picture.collection"
+                        :collection="picture.picture_collection"
                         @loaded="loaded"
                     />
                 </div>
@@ -21,10 +22,10 @@
 </template>
 
 <script>
-import { toKebabCase } from '../utils.js'
 import CollectionImage from '../components/CollectionImage.vue';
 import Masonry from 'masonry-layout';
 import { API } from '../API.ts'
+import Spinner from '../components/Spinner.vue'
 export default {
     name: 'Collection',
     metaInfo() {
@@ -43,10 +44,12 @@ export default {
             modal: false,
             msnry: undefined,
             collectionData: {},
+            loading: false,
         }
     },
     components: {
         CollectionImage,
+        Spinner
     },
     props: {
         windowWidth: {
@@ -58,9 +61,18 @@ export default {
         collectionId: {
             immediate: true,
             async handler() {
-                await this.getcollectionData()
-                this.msnry.reloadItems();
-                this.msnry.layout();
+                await this.getCollectionData()
+                this.loading = false;
+                this.msnry = new Masonry( this.$refs.masonary, {
+                    itemSelector: '.item',
+                    gutter: 25,
+                    percentPosition: true,
+                    fitWidth: true,
+                });
+                const noCollectionPics = this.collectionData.Pictures.pictures.filter(pic => {
+                    return !pic.picture_collection
+                })
+                console.log('no collection, fix in admin', noCollectionPics)
             },
         }
     },
@@ -70,38 +82,21 @@ export default {
             return id;
         }
     },
-    mounted () {
-        this.msnry = new Masonry( this.$refs.masonary, {
-            itemSelector: '.item',
-            gutter: 25,
-            percentPosition: true,
-            fitWidth: true,
-        });
-    },
     beforeDestroy() {
         this.$emit('showCollectionTabs', false),
         this.timeout = false;
     },
     methods: {
-        openModal(title) {
-            const picture = this.collection.Pictures.pictures.find(picture => picture.Title === title);
-            this.$emit('openModal', picture)
-        },
-        toImagePage(title) {
-            const path =
-                `/collections/${toKebabCase(this.collection.Title)}/${toKebabCase(title)}`;
-            this.$router.push({ path });
-        },
-        async getcollectionData() {
-            await API.get(`/collections/${this.collectionId}`)
+        async getCollectionData() {
+            return await API.get(`/collections/${this.collectionId}`)
                 .then((res) => {
                     this.collectionData = res.data
-                    console.log(this.collectionData.Pictures.pictures)
                 })
+            
         },
         loaded() {
-            // this.msnry.reloadItems();
-            // this.msnry.layout();
+            this.msnry.reloadItems();
+            this.msnry.layout();
         }
     },
 }
