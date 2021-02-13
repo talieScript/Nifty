@@ -1,14 +1,5 @@
 <template>
-    <div @mouseleave="hover = false" class="image-card">
-        <transition name="fade">
-            <div
-                v-if="(hover || windowWidth < 1000) && !picturePage" @click="$emit('openModal', title)"
-                class="expand-icon"
-            >
-                <md-icon class="overlay-icon">fullscreen</md-icon>
-                <md-tooltip md-direction="bottom">Fullscreen</md-tooltip>
-            </div>
-        </transition>
+    <router-link :to="imagePageRoute" class="image-card">
         <img
             class="image"
             :src="getPicUrl(url)"
@@ -16,24 +7,20 @@
             ref="image"
             :style="`display: ${loading ? 'none' : 'block'}; ${picturePage ? 'filter: brightness(100%); cursor: default;' : ''}`"
             @mouseover="hover = true"
-            @click="$emit('toImagePage', title)"
         >
         <p v-if="!picturePage" @mouseover="hover = false" class="caption">
             {{ title.split("-").join(" ") }}
         </p>
-    </div>
+    </router-link>
 </template>
 
 <script>
     import Vue from 'vue';
     import { getPicUrl } from '../utils.js';
-    // import ImageSkeletonLoader from './ImageSkeletonLoader.vue'
+    import { toKebabCase } from '../utils.js'
 
     export default Vue.extend({
         name: 'CollectionImage',
-        components: {
-            // ImageSkeletonLoader,
-        },
         props: {
             url: {
                 type: String,
@@ -50,6 +37,10 @@
             picturePage: {
                 type: Boolean,
                 default: false,
+            },
+            collection: {
+                type: String,
+                required: true
             }
         },
         data() {
@@ -57,7 +48,11 @@
                 getPicUrl,
                 loading: true,
                 imageHeight: 0,
-                hover: false,
+            }
+        },
+        computed: {
+            imagePageRoute() {
+                return `/collections/${this.collection}/${toKebabCase(this.title)}` 
             }
         },
         mounted() {

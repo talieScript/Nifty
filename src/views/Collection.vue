@@ -11,8 +11,7 @@
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
-                        @openModal="openModal"
-                        @toImagePage="toImagePage"
+                        :collection="picture.collection"
                         @loaded="loaded"
                     />
                 </div>

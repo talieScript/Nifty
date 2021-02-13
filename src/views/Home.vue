@@ -12,10 +12,12 @@
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
+                        :collection="picture.collection"
                         @loaded="imageLoaded"
                         @openModal="openModal"
                         @toImagePage="openModal"
                     />
+                    <pre>{{ picture }}</pre>
                 </div>
             </div>
         </div>

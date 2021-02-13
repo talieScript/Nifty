@@ -100,11 +100,11 @@ export default {
   },
   methods: {
     openModal(picture) {
-      this.changeActivePicture(picture)
+      this.$store.commit('setActivePicture', picture)
       this.pictureModal = true;
     },
     toPicturePage(picture) {
-      this.changeActivePicture(picture)
+      this.$store.commit('setActivePicture', picture)
       const path =
         `/collections/${toKebabCase(this.activeCollection.Title)}/${toKebabCase(this.activePicture.Title)}`;
       this.$router.push({ path });

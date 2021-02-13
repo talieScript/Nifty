@@ -91,7 +91,6 @@ export default Vue.extend({
   },
   components: {
     VSelect
-    // CollectionImage
   },
   props: {
     collections: {
