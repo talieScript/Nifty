@@ -30,10 +30,6 @@
                 type: String,
                 required: true,
             },
-            windowWidth: {
-                type: Number,
-                reuired: true,
-            },
             picturePage: {
                 type: Boolean,
                 default: false,

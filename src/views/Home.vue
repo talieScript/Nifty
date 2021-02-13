@@ -130,6 +130,7 @@
                 itemSelector: '.item',
                 gutter: 25,
                 percentPosition: true,
+                columnWidth: 0,
                 fitWidth: true,
             });
             setTimeout(() => {
@@ -192,6 +193,9 @@
         @media only screen and (max-width: 56.25em) {
             width: 80vw
          };
+    }
+    .masonary {
+        margin: 0 auto;
     }
     .masonary-wrapper {
         width: 90%;

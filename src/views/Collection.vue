@@ -11,7 +11,6 @@
                     <collection-image
                         :url="picture.Images[0].url"
                         :title="picture.Title"
-                        :windowWidth="windowWidth"
                         :collection="picture.picture_collection"
                         @loaded="loaded"
                     />
@@ -61,14 +60,20 @@ export default {
         collectionId: {
             immediate: true,
             async handler() {
+                this.loading = true;
                 await this.getCollectionData()
                 this.loading = false;
-                this.msnry = new Masonry( this.$refs.masonary, {
-                    itemSelector: '.item',
-                    gutter: 25,
-                    percentPosition: true,
-                    fitWidth: true,
-                });
+                setTimeout(() => {
+                    this.msnry = new Masonry( this.$refs.masonary, {
+                        itemSelector: '.item',
+                        gutter: 25,
+                        percentPosition: true,
+                        columnWidth: 0,
+                        fitWidth: true,
+                    });
+                    this.msnry.reloadItems();
+                    this.msnry.layout();
+                }, 100)
                 const noCollectionPics = this.collectionData.Pictures.pictures.filter(pic => {
                     return !pic.picture_collection
                 })
@@ -95,8 +100,10 @@ export default {
             
         },
         loaded() {
-            this.msnry.reloadItems();
-            this.msnry.layout();
+            if (this.msnry) {
+                this.msnry.reloadItems();
+                this.msnry.layout();
+            }
         }
     },
 }
@@ -159,6 +166,9 @@ export default {
     }
     .another-one {
         width: 90%;
+        margin: 0 auto;
+    }
+    .masonary {
         margin: 0 auto;
     }
 
