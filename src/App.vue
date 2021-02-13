@@ -6,7 +6,6 @@
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
           <main-nav
-            @showCollections="showCollectionTabs"
             @drawVisible="drawVisible = !drawVisible"
             class="main-tab"
             :windowWidth="windowWidth"
@@ -16,7 +15,7 @@
           <transition name="fade">
             <collections
               class="collections-tab"
-              v-if="collectionTabs && windowWidth > 1000"
+              v-if="showCollectionTabs && windowWidth > 1000"
             />
           </transition>
 
@@ -65,7 +64,6 @@ export default {
   },
   data() {
     return {
-      collectionTabs: false,
       pictureModal: false,
       drawVisible: false,
       windowWidth: window.innerWidth,

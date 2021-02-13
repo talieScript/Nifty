@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     activeCollection: '',
     activePicture: {},
     collections: [],
-    showCollectionTabs: true,
+    showCollectionTabs: false,
   },
   mutations: {
     setActiveCollection (state, collection) {
@@ -20,6 +20,9 @@ const store = new Vuex.Store({
     },
     setCollections(state, collections) {
       state.collections = collections
+    },
+    setShowCollectionTabs(state, value) {
+      state.showCollectionTabs = value
     }
   },
   actions: {

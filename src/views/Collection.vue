@@ -87,8 +87,11 @@ export default {
             return id;
         }
     },
+    mounted () {
+        this.$store.commit('setShowCollectionTabs', true);
+    },
     beforeDestroy() {
-        this.$emit('showCollectionTabs', false),
+        this.$store.commit('setShowCollectionTabs', false),
         this.timeout = false;
     },
     methods: {
