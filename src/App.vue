@@ -1,6 +1,7 @@
 <template>
   <div class="content" id="app">
     <transition name="fade">
+      <spinner v-if="loading" />
       <md-app class="content" md-mode="fixed" md-waterfall>
         <!-- Main -->
         <md-app-toolbar class="md-large md-dense md-primary">
@@ -53,7 +54,7 @@ import MainNav from './components/Navigation/MainNav.vue';
 import Collections from './components/Navigation/Collections.vue';
 import Draw from './components/Navigation/Draw.vue';
 import { toKebabCase } from './utils.js'
-
+import Spinner from './components/Spinner.vue'
 
 export default {
   name: 'App',
@@ -77,21 +78,14 @@ export default {
       debouncedGetWindowWidth: this.debounce(() => {
         this.windowWidth = window.innerWidth
       }, 200, false),
-      collectionTitles: [
-        'Abstract  Seascapes',
-        'Collages',
-        'Countryside',
-        'Cows & Sheep',
-        'Flora & Fauna',
-        'Seaside',
-        'Tasty Food'
-      ]
+      loading: true,
     }
   },
   components: {
     MainNav,
     Collections,
     Draw,
+    Spinner,
   },
   computed: {
     name() {
@@ -127,10 +121,16 @@ export default {
       };
     },
   },
-  created() {
+  async created() {
+    this.loading = true;
     window.addEventListener('resize', () => {
        this.debouncedGetWindowWidth()
     })
+    try {
+      await this.$store.dispatch('getCollections')
+    } finally {
+      this.loading = false;
+    }
   },
 }
 </script>

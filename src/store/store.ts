@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { API } from '../API.ts'
 
 Vue.use(Vuex)
 
@@ -7,15 +8,7 @@ const store = new Vuex.Store({
   state: {
     activeCollection: 'Seaside',
     activePicture: {},
-    colections: [
-      'Abstract  Seascapes',
-        'Collages',
-        'Countryside',
-        'Cows & Sheep',
-        'Flora & Fauna',
-        'Seaside',
-        'Tasty Food'
-    ]
+    collections: []
   },
   mutations: {
     setActiveCollection (state, collection) {
@@ -24,9 +17,18 @@ const store = new Vuex.Store({
     setActivePicture (state, picture) {
       state.activePicture = picture
     },
+    setCollections(state, collections) {
+      state.collections = collections
+    }
   },
   actions: {
-    // put get a collection request here
+    async getCollections(context) {
+      if(!context.state.collections.length) {
+        const collections = await API.get('/collections/names');
+        context.commit('setCollections', collections);
+      }
+      return;
+    }
   }
 })
 
