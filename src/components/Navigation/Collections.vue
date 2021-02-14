@@ -5,6 +5,7 @@
                 v-bind:key="collection.id"
                 :id="collection.id"
                 :md-label="collection.Title"
+                @click="toCollections(collection.id)"
                 exact
             />
         </template>
@@ -35,6 +36,14 @@
             collections() {
                 return this.$store.state.collections;
             },
+        },
+        methods: {
+            toCollections(id) {
+                 const splitRoute = this.$router.currentRoute.path.split("/");
+                 if(splitRoute.length > 3) {
+                     this.$router.push("/collections/" + id);
+                 }
+            }
         },
     })
 </script>
