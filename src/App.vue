@@ -23,8 +23,6 @@
         <!-- Phone navigation  -->
           <md-app-drawer  v-if="windowWidth < 1000" class="drawer-menu" :md-active.sync="drawVisible">
             <draw
-              :collections="collectionTitles"
-              @activeCollectionChange="activeCollectionChange"
               @close='drawVisible = false'
             />
           </md-app-drawer>

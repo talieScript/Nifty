@@ -21,7 +21,7 @@
                 </router-link>
             </md-list-item>
             <md-list-item md-expand :md-expanded.sync="expandCollections">
-                <router-link :to="`/collections/${activeCollection}`" class="link">
+                <router-link :to="`/collections/${active}`" class="link">
                     <md-icon>collections</md-icon>
                     <span class="md-list-item-text">Collections</span>
                 </router-link>
@@ -30,11 +30,11 @@
                         v-for="collection in collections"
                     >
                         <md-list-item
-                            :key="collection"
+                            :key="collection.id"
                             class="md-inset"
-                            @click="active = toKebabCase(collection)"
+                            @click="active = collection.id"
                         >
-                            {{ collection }}
+                            {{ collection.Title }}
                         </md-list-item>
                     </template>
                 </md-list>
@@ -59,12 +59,6 @@
         components: {
             Icon,
         },
-        props: {
-            activeCollection: {
-                type: String,
-                required: true,
-            },
-        },
         data() {
             return {
                 expandCollections: false,
@@ -74,14 +68,14 @@
         computed: {
             active: {
                 get() {
-                    return this.activeCollection;
+                    return this.$store.state.activeCollection;
                 },
                 set(collection) {
-                    this.$emit('activeCollectionChange', collection)
+                    this.$store.commit('setActiveCollection', collection)
                 }
             },
             collections() {
-                return this.store.state.collections;
+                return this.$store.state.collections;
             }
         },
     })
