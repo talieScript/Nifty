@@ -7,7 +7,7 @@ import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList
 import vSelect from 'vue-select';
 import VueMeta from 'vue-meta';
 import store from './store/store.ts'
-import VueAnalytics from 'vue-analytics';
+import VueAnalytics from 'vue-analytics'
 
 
 Vue.use(VueAnalytics, {
