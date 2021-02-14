@@ -68,6 +68,9 @@
                     this.openingTimes = data.openTimes;
                 })
         },
+        mounted () {
+            this.$store.commit('setShowCollectionTabs', false);
+        },
         computed: {
             parsedContent() {
                 if (this.content){

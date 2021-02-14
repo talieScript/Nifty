@@ -128,6 +128,7 @@
             },
         },
         mounted () {
+            this.$store.commit('setShowCollectionTabs', false);
             this.getData()
             this.msnry = new Masonry( this.$refs.masonary, {
                 itemSelector: '.item',
