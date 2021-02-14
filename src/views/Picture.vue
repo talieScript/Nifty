@@ -107,6 +107,20 @@ export default Vue.extend({
     this.picture = (await API.get(`/pictures/${pictureId}`)).data
     this.selectedSize = this.picture.PriceSize.price_and_sizes[0].FrameSize;
 
+    setTimeout(() => {
+      new window.Swiper(".swiper-container", {
+        autoHeight: true,
+        slidesPerView: "auto",
+        speed: 1000,
+        loop: true,
+        spaceBetween: 30,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        }
+      });
+    }, 200) 
+
     // paypal stuff
     const script = document.createElement("script");
     script.src = `https://www.paypal.com/sdk/js?currency=GBP&client-id=${this.paypal.production}`;
@@ -117,17 +131,6 @@ export default Vue.extend({
     API.get("/picture-description")
       .then(res => {
         this.description = res.data.Description;
-        new window.Swiper(".swiper-container", {
-          autoHeight: true,
-          slidesPerView: "auto",
-          speed: 1000,
-          loop: true,
-          spaceBetween: 30,
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev"
-          }
-        });
       })
       .catch(err => console.log(err));
   },
