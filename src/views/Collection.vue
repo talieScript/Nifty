@@ -11,7 +11,8 @@
                     <collection-image
                         :url="picture.Images[0].url"
                         :title="picture.Title"
-                        :collection="picture.picture_collection"
+                        :collectionId="picture.picture_collection"
+                        :id="picture.id"
                         @loaded="loaded"
                     />
                 </div>

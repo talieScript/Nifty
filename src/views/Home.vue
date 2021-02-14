@@ -12,10 +12,9 @@
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
-                        :collection="picture.picture_collection || ''"
+                        :collectionId="picture.picture_collection || ''"
+                        :id="picture.id"
                         @loaded="imageLoaded"
-                        @openModal="openModal"
-                        @toImagePage="openModal"
                     />
                 </div>
             </div>
@@ -27,7 +26,7 @@
     import Vue from 'vue';
     import { API } from '@/API.ts';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-    import { toKebabCase } from '@/utils.js';
+    import { toKebabCase } from '@/utils';
     import CollectionImage from '../components/CollectionImage.vue';
     import Masonry from 'masonry-layout'
 

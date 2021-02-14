@@ -7,7 +7,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     activeCollection: '',
-    activePicture: {},
+    activePicture: null,
     collections: [],
     showCollectionTabs: false,
   },

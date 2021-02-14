@@ -54,7 +54,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-// import CollectionImage from '../components/CollectionImage.vue';
 import { toKebabCase, getPicUrl } from "../utils.js";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import { API } from "../API.ts";
@@ -79,7 +78,7 @@ export default Vue.extend({
     return {
       picture: {},
       getPicUrl,
-      collection: {},
+      collectionName: {},
       description: "",
       selectedSize: "",
       paypal: {
@@ -92,30 +91,20 @@ export default Vue.extend({
   components: {
     VSelect
   },
-  props: {
-    collections: {
-      type: Array,
-      required: true
-    }
-  },
-  mounted() {
+  async mounted() {
     const splitRoute = this.$router.currentRoute.path.split("/");
-    this.collection = this.collections.find(collection => {
-      return (
-        toKebabCase(collection.Title.toLowerCase()) ===
-        splitRoute[splitRoute.length - 2]
-      );
-    });
-    this.$emit("activeCollectionChange", toKebabCase(this.collection.Title));
-    this.$emit("showCollectionTabs", true);
-    const picture = this.collection.Pictures.pictures.find(picture => {
-      return (
-        toKebabCase(picture.Title.toLowerCase()) ===
-        splitRoute[splitRoute.length - 1]
-      );
-    });
-    console.log(picture);
-    this.picture = picture;
+    const collectionId = splitRoute[splitRoute.length - 2];
+    this.$store.commit('setShowCollectionTabs', true)
+    this.$store.commit('setActiveCollection', collectionId)
+
+    // check there is a active picture and set the current picture
+    const pictureId = splitRoute[splitRoute.length - 1];
+    if(!(this.$store.state.activePicture && toKebabCase(this.$store.state.activePicture) === pictureId)) {
+      this.$store.commit('setActivePicture', pictureId)
+    }
+
+    // Get picture info
+    this.picture = (await API.get(`/pictures/${pictureId}`)).data
     this.selectedSize = this.picture.PriceSize.price_and_sizes[0].FrameSize;
 
     // paypal stuff
@@ -144,7 +133,6 @@ export default Vue.extend({
   },
   methods: {
     setLoaded() {
-      this.loaded = true;
       window.paypal
         .Buttons({
           createOrder: (data, actions) => {
@@ -172,7 +160,7 @@ export default Vue.extend({
         .render(this.$refs.paypal);
     },
     back() {
-      this.$router.push("/collections/" + toKebabCase(this.collection.Title));
+      this.$router.push("/collections/" + this.$store.state.activePicture);
     },
     changeSize(value) {
       this.selectedSize = value;

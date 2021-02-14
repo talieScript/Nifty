@@ -62,7 +62,6 @@ export default {
   },
   data() {
     return {
-      pictureModal: false,
       drawVisible: false,
       windowWidth: window.innerWidth,
       debouncedGetWindowWidth: this.debounce(() => {

@@ -1,23 +1,24 @@
 <template>
-    <router-link :to="imagePageRoute" class="image-card">
-        <img
-            class="image"
-            :src="getPicUrl(url)"
-            :alt="'Nigel Emery - ' + title"
-            ref="image"
-            :style="`display: ${loading ? 'none' : 'block'}; ${picturePage ? 'filter: brightness(100%); cursor: default;' : ''}`"
-            @mouseover="hover = true"
-        >
-        <p v-if="!picturePage" @mouseover="hover = false" class="caption">
-            {{ title.split("-").join(" ") }}
-        </p>
-    </router-link>
+    <div @click="setActivePicture">
+        <router-link :to="imagePageRoute" class="image-card">
+            <img
+                class="image"
+                :src="getPicUrl(url)"
+                :alt="'Nigel Emery - ' + title"
+                ref="image"
+                :style="`display: ${loading ? 'none' : 'block'}; ${picturePage ? 'filter: brightness(100%); cursor: default;' : ''}`"
+                @mouseover="hover = true"
+            >
+            <p v-if="!picturePage" @mouseover="hover = false" class="caption">
+                {{ title.split("-").join(" ") }}
+            </p>
+        </router-link>
+    </div>
 </template>
 
 <script>
     import Vue from 'vue';
     import { getPicUrl } from '../utils.js';
-    import { toKebabCase } from '../utils.js'
 
     export default Vue.extend({
         name: 'CollectionImage',
@@ -34,9 +35,13 @@
                 type: Boolean,
                 default: false,
             },
-            collection: {
+            collectionId: {
                 type: String,
                 required: true
+            },
+            id: {
+                type: String,
+                required: true,
             }
         },
         data() {
@@ -48,7 +53,12 @@
         },
         computed: {
             imagePageRoute() {
-                return `/collections/${this.collection}/${toKebabCase(this.title)}` 
+                return `/collections/${this.collectionId}/${this.id}` 
+            }
+        },
+        methods: {
+            setActivePicture() {
+                this.$store.commit('setActivePicture', this.title)
             }
         },
         mounted() {
