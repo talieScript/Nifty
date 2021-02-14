@@ -37,6 +37,9 @@
                 })
                 .catch(err => console.log(err))
         },
+        mounted () {
+            this.$store.commit('setShowCollectionTabs', false);
+        },
         computed: {
             parsedContent() {
                 if (this.content){

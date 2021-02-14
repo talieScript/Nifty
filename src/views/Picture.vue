@@ -173,7 +173,7 @@ export default Vue.extend({
         .render(this.$refs.paypal);
     },
     back() {
-      this.$router.push("/collections/" + toKebabCase(this.collection.Title));
+      this.$router.push("/collections/" + this.collection.id);
     },
     changeSize(value) {
       this.selectedSize = value;
