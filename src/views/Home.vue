@@ -5,16 +5,16 @@
             <p v-html="into"></p>
         </div>
         <h3 class="recent-additions">Recent Additions</h3>
-        <div class="another-one">
+        <div class="masonary-wrapper">
             <div ref="masonary" class="masonary">
                 <div class="image-container item" v-for="(picture, index) in sliderPics" :key="index">
                     <collection-image
                         :url="picture.Images[0].url"
                         :title="picture.Title"
                         :windowWidth="windowWidth"
+                        :collectionId="picture.picture_collection || ''"
+                        :id="picture.id"
                         @loaded="imageLoaded"
-                        @openModal="openModal"
-                        @toImagePage="openModal"
                     />
                 </div>
             </div>
@@ -24,9 +24,9 @@
 
 <script lang="ts">
     import Vue from 'vue';
-    import { API } from '../API.ts';
+    import { API } from '@/API.ts';
     import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-    import { toKebabCase } from '../utils.js';
+    import { toKebabCase } from '@/utils';
     import CollectionImage from '../components/CollectionImage.vue';
     import Masonry from 'masonry-layout'
 
@@ -41,10 +41,6 @@
             }
         },
         props: {
-            collections: {
-                type: Array,
-                required: true,
-            },
             windowWidth: {
                 type: Number,
                 required: true,
@@ -98,11 +94,11 @@
             findCollection(id) {
                 return this.collections.find(collection => collection.id == id);
             },
-            toPicturePage(picture) {
-                this.$emit('toPicturePage', picture)
-            }
         },
         computed: {
+            collections() {
+                return this.store.state.collections
+            },
             sliderPics() {
                 return this.data.slider ? this.data.slider.pictures : null;
             },
@@ -133,6 +129,7 @@
                 itemSelector: '.item',
                 gutter: 25,
                 percentPosition: true,
+                columnWidth: 0,
                 fitWidth: true,
             });
             setTimeout(() => {
@@ -196,7 +193,10 @@
             width: 80vw
          };
     }
-    .another-one {
+    .masonary {
+        margin: 0 auto;
+    }
+    .masonary-wrapper {
         width: 90%;
         margin: 0 auto;
     }
