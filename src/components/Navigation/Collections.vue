@@ -1,10 +1,11 @@
 <template>
-    <md-tabs :md-active-tab="active.toLowerCase()" class="collection-tabs md-primary" @md-changed='active = $event'>
+    <md-tabs :md-active-tab="active" class="collection-tabs md-primary" @md-changed='active = $event'>
         <template v-for="collection in collections">
             <md-tab
-                v-bind:key="collection"
-                :id="`${toKebabCase(collection).toLowerCase()}`"
-                :md-label="collection"
+                v-bind:key="collection.id"
+                :id="collection.id"
+                :md-label="collection.Title"
+                @click="toCollections(collection.id)"
                 exact
             />
         </template>
@@ -18,16 +19,6 @@
 
     export default Vue.extend({
         name: 'Collections',
-        props: {
-            collections: {
-                type: Array,
-                required: true,
-            },
-            activeCollection: {
-                type: String,
-                required: true,
-            }
-        },
         data() {
             return {
                 toKebabCase,
@@ -36,11 +27,22 @@
         computed: {
             active: {
                 get() {
-                    return toKebabCase(this.activeCollection);
+                    return toKebabCase(this.$store.state.activeCollection);
                 },
-                set(collection) {
-                    this.$emit('activeCollectionChange', toKebabCase(collection))
+                set(collectionId) {
+                    this.$store.commit('setActiveCollection', collectionId)
                 }
+            },
+            collections() {
+                return this.$store.state.collections;
+            },
+        },
+        methods: {
+            toCollections(id) {
+                 const splitRoute = this.$router.currentRoute.path.split("/");
+                 if(splitRoute.length > 3) {
+                     this.$router.push("/collections/" + id);
+                 }
             }
         },
     })

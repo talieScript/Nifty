@@ -7,6 +7,8 @@ import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList
 import vSelect from 'vue-select';
 import VueMeta from 'vue-meta'
 import VueAnalytics from 'vue-analytics';
+import store from './store/store.ts'
+
 
 Vue.use(VueAnalytics, {
   id: process.env.VUE_APP_GOOGLE_ANALYTICS,
@@ -36,5 +38,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')
