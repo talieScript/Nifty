@@ -6,6 +6,12 @@ import 'vue-material/dist/vue-material.min.css'
 import { MdApp, MdTabs, MdIcon, MdToolbar, MdButton, MdDrawer, MdContent, MdList, MdDialog, MdTooltip, MdSnackbar } from 'vue-material/dist/components'
 import vSelect from 'vue-select';
 import VueMeta from 'vue-meta'
+import VueAnalytics from 'vue-analytics';
+
+Vue.use(VueAnalytics, {
+  id: process.env.VUE_APP_GOOGLE_ANALYTICS,
+  router
+})
 
 Vue.use(VueMeta, { refreshOnceOnNavigation: true })
 
