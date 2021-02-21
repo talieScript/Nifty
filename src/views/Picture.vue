@@ -163,7 +163,7 @@ export default Vue.extend({
         .render(this.$refs.paypal);
     },
     back() {
-      this.$router.push("/collections/" + this.collection.id);
+      this.$router.push("/collections/" + this.$store.state.activeCollection);
     },
     changeSize(value) {
       this.selectedSize = value;
@@ -249,11 +249,6 @@ export default Vue.extend({
   @media only screen and (max-width: 37.5em) {
     padding: 10px;
   }
-}
-.back-btn {
-  position: absolute;
-  top: 0;
-  z-index: 0;
 }
 .swiper-container {
   height: fit-content;
