@@ -21,6 +21,11 @@ const router = new Router({
             component: loadView('Artist'),
         },
         {
+            path: '/tour',
+            name: 'tour',
+            component: loadView('Tour'),
+        },
+        {
             path: '/collections/:name',
             name: 'collections',
             component: loadView('Collection'),

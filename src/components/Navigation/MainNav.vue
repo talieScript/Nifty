@@ -11,6 +11,7 @@
         <md-tabs v-if="windowWidth > 1000" md-sync-route class="md-primary md-layout-item main-tabs">
           <md-tab id="tab-home" md-label="Home" to="/" exact />
           <md-tab id="tab-artist" md-label="Artist" to="/artist" exact />
+          <md-tab id="tab-tour" md-label="Virtual Tour" to="/tour" exact />
           <md-tab
             id="tab-collections"
             md-label="Collections"
